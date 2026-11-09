@@ -12,6 +12,8 @@ const VARIANTS = {
  * Button or link styled as a button.
  * - `to` renders a router Link, `href` a plain anchor, otherwise a <button>.
  * - `busy` locks the button (stays focusable, ignores presses) and shows the loader + `busyLabel`.
+ * - `locked` looks disabled and sets aria-disabled but stays focusable and still receives presses
+ *   (the form explains what's missing).
  * - `block` makes it full width (main actions on phones: pass `className="w-full sm:w-auto"`).
  */
 export function Button({
@@ -19,6 +21,7 @@ export function Button({
   to,
   href,
   busy = false,
+  locked = false,
   busyLabel = "Sending…",
   type = "button",
   className = "",
@@ -26,7 +29,8 @@ export function Button({
   onClick,
   ...rest
 }) {
-  const classes = `btn ${VARIANTS[variant]} ${className}`.trim();
+  const classes =
+    `btn ${VARIANTS[variant]} ${locked && !busy ? "is-locked" : ""} ${className}`.trim();
 
   if (to) {
     return (
@@ -47,7 +51,7 @@ export function Button({
     <button
       type={type}
       className={classes}
-      aria-disabled={busy || undefined}
+      aria-disabled={busy || locked || undefined}
       onClick={(event) => {
         if (busy) {
           event.preventDefault();
