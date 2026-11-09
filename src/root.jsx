@@ -44,7 +44,7 @@ export default function App() {
 export function ErrorBoundary({ error }) {
   if (isRouteErrorResponse(error) && error.status === 404) {
     return (
-      <SiteLayout>
+      <SiteLayout darkTop>
         <NotFoundContent />
       </SiteLayout>
     );
