@@ -2,7 +2,7 @@
 
 - **Updated:** 2026-11-09 (logo, work stories and socials)
 - **Live:** [eratechgh.com](https://eratechgh.com).
-- **Where we are:** [PR #14](https://github.com/FranzAfun/eratechgh/pull/14) is merged in the `main` baseline. The owner reviewed the logo/work/social/email screenshots and the four final refinements are complete on `feat/logo-work-socials`. Build, lint, all 93 tests and all 82 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Updated screenshots and independent review pass; branch push and one PR are authorised. Nothing is merged by this work.
+- **Where we are:** [PR #14](https://github.com/FranzAfun/eratechgh/pull/14) is merged in the `main` baseline. The logo/work/social/email work and four final refinements are pushed on `feat/logo-work-socials` in [PR #15](https://github.com/FranzAfun/eratechgh/pull/15). Build, lint, all 93 tests and all 82 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Updated screenshots and independent review pass. PR #15 is open for review; nothing is merged by this work.
 
 ## Current work: supplied logo, work stories and socials
 
@@ -28,7 +28,8 @@
 - Ten reviewed screenshots (hero, Our work, footer, team email and visitor email at 390/1440 px)
   are in `.email-previews/review/`; open its `index.html` for paired previews. Both email HTML files
   are regenerated, with an additional 360 px hero capture. All artifacts stay ignored. The new PR
-  is being opened; no live email was sent. The owner approved the previews; final email headers use 18 px semibold
+  is [PR #15](https://github.com/FranzAfun/eratechgh/pull/15), open for review. No live email was sent.
+  The owner approved the previews; final email headers use 18 px semibold
   product text with middle alignment, and desktop smart-lock copy now aligns to the image's top edge.
   Actual Outlook/dark mail-client and physical-device acceptance is separate.
 
@@ -106,7 +107,7 @@ Stages 1–10 and v2 polish are present in the `main` baseline for this work.
 
 ## Next
 
-Push the final refinements and open one PR from `feat/logo-work-socials`. Do not merge.
+Review [PR #15](https://github.com/FranzAfun/eratechgh/pull/15). Do not merge as part of this task.
 Actual mail-client/inbox acceptance remains separate from browser previews.
 
 ## Need from the owner
