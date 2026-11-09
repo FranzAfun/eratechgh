@@ -41,6 +41,23 @@ export const brandLogo = {
   email: { src: "/email/logo-white.png", width: 120, height: 70 },
 };
 
+export const socials = [
+  ["linkedin", "LinkedIn", "https://www.linkedin.com/company/era-axis"],
+  ["x", "X", "https://x.com/ERRAAXIS"],
+  ["instagram", "Instagram", "https://www.instagram.com/era_axis"],
+  ["tiktok", "TikTok", "https://www.tiktok.com/@eraaxis"],
+  ["whatsapp", "WhatsApp", "https://whatsapp.com/channel/0029Va9foNM002T9PHdytX1h"],
+].map(([id, name, url]) => ({
+  id,
+  name,
+  url,
+  icon: `/images/social/${id}-24.webp`,
+  icon2x: `/images/social/${id}-48.webp`,
+  png: `/images/social/${id}-24.png`,
+  png2x: `/images/social/${id}-48.png`,
+  emailIcon: `/email/${id}.png`,
+}));
+
 const workImage = (id, width, height, kind, caption, alt) => ({
   id,
   src: `/images/work/${id}-640.webp`,
@@ -58,6 +75,7 @@ export const site = {
   legalName,
   siteTitle,
   logo: brandLogo,
+  socials,
   tagline: "Built for students, makers and innovators in Ghana",
 
   /** ERA's privacy policy (decided 2026-11-09). Opens in a new tab. */
@@ -152,6 +170,7 @@ export const site = {
   },
 
   footer: {
+    followUs: "Follow us",
     navLabel: "Footer",
     about:
       "Project Desk is the ERA Tech team's request desk for students, makers and innovators in Ghana: source components, check your project plans and get expert advice.",
