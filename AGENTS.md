@@ -4,14 +4,18 @@ Source of truth: `docs/BRIEF.md` (scope, content, form, emails, states — do no
 `design-system/DESIGN-SYSTEM.md` (look and rules). Where they differ on look, the design system wins:
 calm and dense, not big and bold.
 
-- Normal sessions: plan first and wait for Franz's OK before building.
+- Normal sessions: plan first and wait for the owner's OK before building.
 - Ask instead of guessing. Never invent prices, legal text, contact details, URLs or ERA Store features.
-  Unknowns go in `docs/STATUS.md` under "Need from Franz"; in code they are `null` / hidden, never made up.
+  Unknowns go in `docs/STATUS.md` under "Need from the owner"; in code they are `null` / hidden, never made up.
 - The name on the site is "ERA Tech". Never "ERA AXIS".
 - Hard limits: no database, accounts, dashboard, payments, file uploads, analytics, or EDOS/ERA Store
   integration. One Netlify Function only. Nothing stored beyond the emails.
-- No secrets or real customer data in any file. Example people use fictional Ghanaian names.
-  Cloudflare's public Turnstile test keys may appear in README and tests.
+- No secrets or real customer data in any file. Cloudflare's public Turnstile test keys may appear in
+  README and tests.
+- No personal names in `src/`, `public/`, `netlify/` or the build output — not in copy, test data or
+  code comments. Test data uses obvious placeholders ("Sample Placeholder"). Refer to people by role:
+  "the owner", "the ERA Tech team" (e.g. "Need from the owner").
+- Branding: the product is "Project Desk", made by "ERA Tech" (names live in `src/content/site.js`).
 - Exact dependency versions only (no `^` or `~`; `save-exact=true`). Light theme only.
 - Branches: `<type>/<short-kebab-name>` (`chore/`, `feat/`, `fix/`, `docs/`). Small Conventional Commits
   (`feat:`, `fix:`, `chore:`, `docs:`, `style:`, `refactor:`, `test:`), one logical change each.

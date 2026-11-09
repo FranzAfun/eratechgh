@@ -104,3 +104,30 @@ rules and the function require `consent: true`; the team email shows "Consent: y
 `favicon.ico` / `favicon.png` and the Dev Board photos come from `design-system/assets/` (ERA's own
 assets). `favicon.svg` is redrawn from the E proportions in DESIGN-DIRECTION.md §9 (white in dark
 scheme); `apple-touch-icon.png` (180 px) is a white E on `#3B1174`.
+
+## 2026-11-09 — Naming: ERA Tech · Project Desk
+
+- **Wordmark:** "ERA Tech · Project Desk", both names the same size and weight, lilac mid-dot. Text only,
+  in one component (`src/components/layout/Wordmark.jsx`) so the real logo can replace it later.
+- **"ERA Tech"** is the everyday brand: wordmark, headings, body copy ("the ERA Tech team").
+- **"ERA Technologies"** is for formal spots only: footer "© year ERA Technologies. All rights
+  reserved.", the sign-off on both emails ("— ERA Technologies, Project Desk") and the consent line
+  ("I agree to ERA Technologies using these details…").
+- **"Project Desk"** is the product: page titles ("<Page> · ERA Tech · Project Desk", home "ERA Tech ·
+  Project Desk"), meta descriptions, the 404 text, the hero eyebrow. Email sender name:
+  "ERA Tech · Project Desk".
+- All three names live in one place: `brandName`, `productName`, `legalName` in `src/content/site.js`.
+- **Later move:** when the full ERA Tech site launches, `/` becomes the ERA Tech home and Project Desk
+  moves to its own page (e.g. `/project-desk`, with a 301 from old anchors where needed).
+  `/request` and `/request/<service>` never change.
+
+## 2026-11-09 — No personal names in the code
+
+No individual's name in `src/`, `public/`, `netlify/` or the build output (copy, test data, comments).
+Test data uses placeholders; people are referred to by role ("the owner", "the ERA Tech team").
+
+## 2026-11-09 — Dark top band under the header on every page
+
+`/`, `/request`, `/request/<service>` and the 404 page all open with a dark band that runs under the
+fixed header (content padded by the header height). The header is transparent there and turns glass
+after 24 px of scroll, so no page starts with grey glass over white.
