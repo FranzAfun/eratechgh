@@ -8,8 +8,8 @@ export const site = {
   wordmark: "ERA Tech · Project Desk",
   tagline: "Built for students, makers and innovators in Ghana",
 
-  /** eraaxis.com privacy policy URL — pending from ERA. While null, "Privacy policy" is plain text. */
-  privacyUrl: null,
+  /** ERA's privacy policy (decided 2026-11-09). Opens in a new tab. */
+  privacyUrl: "https://eraaxis.com/privacy",
   /** Public contact email for the footer and error messages — pending from ERA. While null, it's hidden. */
   teamEmail: null,
   /**
@@ -19,6 +19,15 @@ export const site = {
   portfolio: [],
   /** The minimum number of real photos before "Our work" appears. */
   portfolioMinimum: 3,
+
+  /** Real ERA Dev Board photo (from ERA's own assets). */
+  devBoardPhoto: {
+    src: "/images/dev-board-main-640.webp",
+    srcSet: "/images/dev-board-main-640.webp 640w, /images/dev-board-main-768.webp 768w",
+    width: 640,
+    height: 800,
+    alt: "The ERA Dev Board: a blue board with a four-battery holder, power switch and two breadboard strips",
+  },
 
   startRequest: { label: "Start a request", to: "/request" },
 

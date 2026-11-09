@@ -302,7 +302,8 @@ export function RequestForm({ service }) {
                     <a
                       className="text-primary-text underline underline-offset-3"
                       href={site.privacyUrl}
-                      rel="noopener"
+                      target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {t.privacy}
                     </a>

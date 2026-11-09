@@ -49,7 +49,8 @@ export function Footer() {
             <a
               className="text-text-secondary underline underline-offset-3 hover:text-text-primary"
               href={site.privacyUrl}
-              rel="noopener"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               {site.footer.privacy}
             </a>
