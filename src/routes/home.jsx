@@ -8,9 +8,9 @@ export const meta = () =>
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-content px-4 py-16">
+    <section className="mx-auto max-w-content px-4 py-16">
       <h1 className="text-h1 font-semibold">ERA Tech · Project Desk</h1>
       <p className="mt-4 text-text-secondary">Home page placeholder.</p>
-    </main>
+    </section>
   );
 }
