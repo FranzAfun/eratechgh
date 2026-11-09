@@ -38,7 +38,11 @@ export function Header({ overHero = false }) {
         {site.header.skipLink}
       </a>
       <div className="mx-auto flex h-16 max-w-content items-center justify-between gap-4 px-4 md:px-6">
-        <Link to="/" aria-label={site.header.homeLabel} className="rounded-control no-underline">
+        <Link
+          to="/"
+          aria-label={site.header.homeLabel}
+          className="inline-flex min-h-11 shrink-0 items-center rounded-control no-underline"
+        >
           <Wordmark />
         </Link>
 

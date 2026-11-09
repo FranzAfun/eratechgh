@@ -16,8 +16,15 @@ export function Footer() {
       <div className="mx-auto max-w-content px-4 pt-14 pb-8 md:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="max-w-80">
-            <Wordmark />
+            <Link
+              to="/"
+              aria-label={site.header.homeLabel}
+              className="inline-flex min-h-11 items-center rounded-control no-underline"
+            >
+              <Wordmark variant="footer" />
+            </Link>
             <p className="mt-3 text-sm">{t.about}</p>
+
           </div>
 
           <nav aria-labelledby="footer-services">

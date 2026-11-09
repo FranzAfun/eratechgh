@@ -6,7 +6,7 @@ import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { brandName, productName, shareImage } from "../src/content/site.js";
+import { productName, shareImage } from "../src/content/site.js";
 
 const require = createRequire(import.meta.url);
 const tokens = await readFile(new URL("../src/styles/tokens.css", import.meta.url), "utf8");
@@ -25,6 +25,11 @@ const primary = colour("primary");
 const accent = colour("accent");
 const white = colour("text-inverse");
 const muted = colour("text-on-dark");
+const logo = (
+  await readFile(
+    new URL("../design-system/assets/logo/era-technologies-logo-white.png", import.meta.url),
+  )
+).toString("base64");
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <defs>
@@ -43,8 +48,10 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <circle cx="1104" cy="204" r="6"/><circle cx="1120" cy="252" r="6"/><circle cx="976" cy="488" r="6"/><circle cx="1004" cy="512" r="6"/><circle cx="848" cy="92" r="6"/>
 </g>
 <g font-family="Inter" font-weight="600">
-  <text x="72" y="260" font-size="52" fill="${white}">${xml(brandName)} <tspan fill="${accent}">·</tspan> ${xml(productName)}</text>
-  <text x="72" y="328" font-size="28" font-weight="400" fill="${muted}">${xml(shareImage.subtitle)}</text>
+  <image href="data:image/png;base64,${logo}" x="72" y="180" width="192" height="112"/>
+  <text x="296" y="254" font-size="52" fill="${accent}">·</text>
+  <text x="336" y="254" font-size="52" fill="${white}">${xml(productName)}</text>
+  <text x="72" y="344" font-size="28" font-weight="400" fill="${muted}">${xml(shareImage.subtitle)}</text>
 </g>
 <path d="M72 392h80" stroke="${accent}" stroke-width="4" stroke-linecap="round"/>
 </svg>`;

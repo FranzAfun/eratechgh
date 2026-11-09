@@ -142,7 +142,14 @@ export function Drawer({ open, onClose, returnFocusRef, activeHash }) {
         className={`drawer-panel absolute top-0 right-0 flex h-dvh w-[86%] max-w-96 flex-col overflow-y-auto bg-surface-dark pb-[env(safe-area-inset-bottom)] ${visible ? "is-open" : ""}`}
       >
         <div className="flex h-16 flex-none items-center justify-between gap-3 border-b border-glass-line px-4">
-          <Wordmark size="sm" />
+          <Link
+            to="/"
+            aria-label={site.header.homeLabel}
+            onClick={() => close({ restoreFocus: false })}
+            className="inline-flex min-h-11 shrink-0 items-center rounded-control no-underline"
+          >
+            <Wordmark variant="drawer" />
+          </Link>
           <button
             ref={closeRef}
             type="button"

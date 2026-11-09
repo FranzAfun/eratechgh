@@ -25,11 +25,28 @@ export const shareImage = {
   alt: `${siteTitle} — ${shareSubtitle}`,
 };
 
+const logoVariant = (role, width, height) => ({
+  src: `/images/brand/logo-white-${role}.webp`,
+  srcSet: `/images/brand/logo-white-${role}.webp 1x, /images/brand/logo-white-${role}@2x.webp 2x`,
+  fallback: `/images/brand/logo-white-${role}.png`,
+  fallbackSrcSet: `/images/brand/logo-white-${role}.png 1x, /images/brand/logo-white-${role}@2x.png 2x`,
+  width,
+  height,
+});
+
+export const brandLogo = {
+  header: logoVariant("header", 69, 40),
+  drawer: logoVariant("drawer", 62, 36),
+  footer: logoVariant("footer", 82, 48),
+  email: { src: "/email/logo-white.png", width: 120, height: 70 },
+};
+
 export const site = {
   brandName,
   productName,
   legalName,
   siteTitle,
+  logo: brandLogo,
   tagline: "Built for students, makers and innovators in Ghana",
 
   /** ERA's privacy policy (decided 2026-11-09). Opens in a new tab. */
@@ -157,7 +174,7 @@ export const site = {
 
   home: {
     hero: {
-      eyebrow: `For students and makers in Ghana`,
+      eyebrow: productName,
       title: "Parts, project reviews and expert advice. One request.",
       body: "Tell us what you're building. We source your components, review your project or set up time with an expert, and you see the price before you pay anything.",
       primary: { label: "Source components", to: "/request/sourcing" },
