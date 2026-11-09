@@ -1,11 +1,25 @@
 /**
  * All site text and settings live here.
- * Unknown values are null (or empty), never invented. See docs/STATUS.md → "Need from Franz".
+ * Unknown values are null (or empty), never invented. See docs/STATUS.md → "Need from the owner".
  */
 
+/**
+ * Names (decided 2026-11-09). Change them here only; everything else reads them.
+ * - brandName: the everyday brand (wordmark, headings, body copy: "the ERA Tech team").
+ * - productName: this site's product.
+ * - legalName: formal spots only (footer ©, email sign-off, consent line).
+ */
+export const brandName = "ERA Tech";
+export const productName = "Project Desk";
+export const legalName = "ERA Technologies";
+/** "ERA Tech · Project Desk": wordmark, home <title>, the end of every other <title>. */
+export const siteTitle = `${brandName} · ${productName}`;
+
 export const site = {
-  name: "ERA Tech",
-  wordmark: "ERA Tech · Project Desk",
+  brandName,
+  productName,
+  legalName,
+  siteTitle,
   tagline: "Built for students, makers and innovators in Ghana",
 
   /** ERA's privacy policy (decided 2026-11-09). Opens in a new tab. */
@@ -37,13 +51,12 @@ export const site = {
     { label: "Design", hash: "design" },
     { label: "Our work", hash: "work", requiresPortfolio: true },
     { label: "How it works", hash: "how-it-works" },
+    { label: "ERA Store", hash: "store" },
     { label: "FAQ", hash: "faq" },
   ],
 
   header: {
-    brand: "ERA Tech",
-    label: "Project Desk",
-    homeLabel: "ERA Tech Project Desk, home",
+    homeLabel: `${siteTitle}, home`,
     menuOpen: "Open menu",
     menuClose: "Close menu",
     menuTitle: "Menu",
@@ -54,7 +67,7 @@ export const site = {
   footer: {
     navLabel: "Footer",
     about:
-      "ERA Tech helps students, makers and innovators in Ghana source components, check their project plans and get expert advice.",
+      "Project Desk is the ERA Tech team's request desk for students, makers and innovators in Ghana: source components, check your project plans and get expert advice.",
     servicesTitle: "Services",
     siteTitle: "Site",
     contactTitle: "Contact",
@@ -62,8 +75,8 @@ export const site = {
     contactFallback: "Send us a request",
     contactFallbackNote: "The team replies by email, phone or WhatsApp.",
     privacy: "Privacy policy",
-    copyright: (year) => `© ${year} ERA Tech. All rights reserved.`,
-    drawerCopyright: (year) => `© ${year} ERA Tech`,
+    copyright: (year) => `© ${year} ${legalName}. All rights reserved.`,
+    drawerCopyright: (year) => `© ${year} ${legalName}`,
     /** Footer "Site" column: home sections (+ ERA Store) and the request page. */
     siteLinks: [
       { label: "Services", hash: "services" },
@@ -85,7 +98,7 @@ export const site = {
       price: "Free quote",
       priceNote: "You pay for parts and delivery only after you approve the quote.",
       summary:
-        "Send your parts list. We track down the components and send you an itemised quote, delivery included.",
+        "Send your parts list. We track down the components and send you an itemised quote that shows the delivery cost.",
       steps: [
         "List the parts and quantities you need",
         "Get an itemised quote with delivery",
@@ -134,7 +147,7 @@ export const site = {
 
   home: {
     hero: {
-      eyebrow: "For students, makers and innovators in Ghana",
+      eyebrow: `${siteTitle} — for makers in Ghana`,
       title: "Parts, project reviews and expert advice. One request.",
       body: "Tell us what you're building. We source your components, review your project or set up time with an expert, and you see the price before you pay anything.",
       primary: { label: "Source components", to: "/request/sourcing" },
@@ -149,18 +162,19 @@ export const site = {
     },
     services: {
       eyebrow: "Services",
-      title: "Three ways we can help",
+      title: "Three ways Project Desk can help",
       intro:
-        "Pick what you need. Every request goes straight to the ERA Tech team, who reply with the next step.",
+        "Pick what you need. Every Project Desk request goes straight to the ERA Tech team, who reply with the next step.",
       stepsLabel: "How it goes",
     },
     design: {
       eyebrow: "Design",
       title: "Need more than parts? We design too",
       intro:
-        "ERA Tech also designs and builds hardware with you, from the circuit to the enclosure.",
+        "ERA Tech also designs and builds hardware as paid work, from the circuit to the enclosure.",
       caption: "Illustration — not a client project",
-      footnote: "Detailed design and fabrication are quoted separately.",
+      footnote:
+        "Design and fabrication are paid work, quoted separately once we understand your project. Start with a consultation or mention it in your request.",
       tiles: [
         {
           key: "pcb",
@@ -249,8 +263,12 @@ export const site = {
           a: "No. A consultation is advice and guidance. Design work and prototypes are quoted separately.",
         },
         {
+          q: "Can ERA Tech design my PCB or enclosure?",
+          a: "Yes. PCB, 3D CAD, IoT and automation design are paid work, quoted after we understand your project. Start with a consultation, or mention it in your request.",
+        },
+        {
           q: "Is delivery included?",
-          a: "Delivery is quoted together with your parts, so you see the full cost before you pay.",
+          a: "Delivery isn't free: its cost is shown in your quote with the parts, so you see the full price before you pay.",
         },
         {
           q: "How will you contact me?",
@@ -283,8 +301,7 @@ export const site = {
     priceLabel: "Price",
     /** Consent checkbox (DESIGN-DIRECTION.md §7). The link wraps "privacy policy". */
     consent: {
-      before:
-        "I agree to ERA Tech using these details to reply to my request, as described in the ",
+      before: `I agree to ${legalName} using these details to reply to my request, as described in the `,
       link: "privacy policy",
       after: ".",
       newTab: "(opens in a new tab)",
@@ -340,8 +357,8 @@ export const site = {
 
   notFound: {
     title: "Page not found",
-    metaDescription: "This page doesn't exist on ERA Tech Project Desk.",
-    body: "The page you're looking for doesn't exist or has moved.",
+    metaDescription: `This page doesn't exist on ${siteTitle}.`,
+    body: "This page isn't part of Project Desk, or it has moved. Head home or start a request.",
     home: "Go to the home page",
     request: "Start a request",
   },

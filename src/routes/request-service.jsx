@@ -3,19 +3,19 @@ import { pageMeta } from "../lib/meta.js";
 const META = {
   "request-index": [
     "Start a request",
-    "Request component sourcing, a project assessment or an expert consultation from ERA Tech.",
+    "Start a Project Desk request: component sourcing, a project assessment or an expert consultation from the ERA Tech team.",
   ],
   "request-sourcing": [
     "Request component sourcing",
-    "Tell ERA Tech the parts you need and get a free itemised quote.",
+    "Tell Project Desk the parts you need and get a free itemised quote from the ERA Tech team.",
   ],
   "request-assessment": [
     "Request a project assessment",
-    "ERA Tech reviews your project idea, recommends parts and quotes them. GH₵50.",
+    "A Project Desk assessment: the ERA Tech team reviews your project idea, recommends parts and quotes them. GH₵50.",
   ],
   "request-consultation": [
     "Request an expert consultation",
-    "Ask for a session with an ERA Tech expert for guidance on your project. GH₵250.",
+    "Book a Project Desk consultation with an ERA Tech expert for guidance on your project. GH₵250.",
   ],
 };
 
