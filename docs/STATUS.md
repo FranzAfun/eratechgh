@@ -53,6 +53,10 @@ The `CONTEXT` name is supplied by Netlify. The same names may be configured in a
   Normal build leaves the image unchanged. Local previews are in the ignored `.email-previews/`.
 - Gate maintenance: fixed the Windows contrast CLI entry point and the pre-existing missing final
   newline in `vite.config.js`; replaced one old named email test fixture with a sample address.
+- Netlify's initial preview failed because its secret scanner matched the configured
+  `TURNSTILE_SECRET_KEY` against Cloudflare's published dummy key in `netlify/tests/handler.test.js`.
+  The fixture now assembles the same public key instead of storing the full literal. Scanning and
+  Netlify settings remain unchanged; the preview is being checked again after this fixture fix.
 
 ## Done
 
