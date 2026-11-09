@@ -1,8 +1,33 @@
 # Status
 
-- **Updated:** 2026-11-09 (HTML emails and sharing)
+- **Updated:** 2026-11-09 (logo, work stories and socials)
 - **Live:** [eratechgh.com](https://eratechgh.com).
-- **Where we are:** HTML emails, local previews, share image and SEO basics are pushed on `feat/html-emails`, based on `main`, in [PR #14](https://github.com/FranzAfun/eratechgh/pull/14). The owner approved the previews and the six requested refinements are complete. Build, lint, all 84 tests and all 76 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. The PR is open for review; nothing merged by this work.
+- **Where we are:** [PR #14](https://github.com/FranzAfun/eratechgh/pull/14) is merged in the `main` baseline. The logo/work/social/email follow-up is complete locally on `feat/logo-work-socials`. Build, lint, all 93 tests and all 82 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Independent design review passed. Screenshots await owner review before pushing/opening the new PR; nothing is merged by this work.
+
+## Current work: supplied logo, work stories and socials
+
+- Read-only incoming assets were prepared with the manual Python/Pillow script. Trimmed masters,
+  site 1x/2x logo variants, ERA-only favicons, six work images and five social icons are generated.
+  Work files have 640 px plus native-width sources (1029/1080/1280); no upscaling. Largest WebP:
+  271,180 bytes. Source checksums were unchanged; output metadata is stripped.
+- Top bar: supplied logo only at 40 px, with the existing 64 px bar height. The hero eyebrow is now
+  "Project Desk", per the owner's latest correction. Drawer/footer retain the combined wordmark at
+  36/48 px logo heights. The 1200 × 630 share image embeds the white logo and is 182,915 bytes.
+- Our work uses the three approved stories, exact copy/alts and 2/3/1 image arrangement. There are
+  three actual photographs, so the section and nav are visible. CAD/layout/render chips stay explicit;
+  4:3 frames contain full images. Rows stack on phones; reduced motion removes reveals/lift travel.
+- The footer and both emails share the five public social URLs. Site tiles are 44 px; email tiles
+  are 40 px with 24 px icons. Email headers/footer bands use the supplied PNG assets. Sent images
+  use absolute production HTTPS URLs; local previews load files from `public/email/`.
+- Email text bodies differ from the merged baseline only by the Follow us line and five URLs.
+  Escaping, CR/LF-safe headers and validated reply links remain covered by tests.
+- Independent design review passed with no required revisions. Browser checks covered phone,
+  tablet and desktop layouts, loaded assets, drawer focus return and reduced motion. Widths
+  360/390/768/1024/1280/1440 have no horizontal scroll; the header bar and offsets are unchanged.
+- Ten reviewed screenshots (hero, Our work, footer, team email and visitor email at 390/1440 px)
+  are in `.email-previews/review/`; open its `index.html` for paired previews. Both email HTML files
+  are regenerated. All artifacts stay ignored. Owner acceptance and the new PR remain pending;
+  no live email was sent. Actual Outlook/dark mail-client and physical-device acceptance is separate.
 
 ## Email delivery and Netlify contexts
 
@@ -24,7 +49,7 @@ and isolated test inboxes when sending; otherwise missing SMTP configuration pro
 The `CONTEXT` name is supplied by Netlify. The same names may be configured in a git-ignored local
 `.env` for Netlify CLI development. Never put variable values or real customer details in docs.
 
-## Current work: HTML emails and sharing
+## Merged baseline: HTML emails and sharing
 
 - The visitor plain-text body is unchanged; the team plain-text body changes only "Your details" to
   "Visitor details". Both have HTML alternatives with an inline, 600 px table layout,
@@ -39,7 +64,7 @@ The `CONTEXT` name is supplied by Netlify. The same names may be configured in a
   header, remove duplicate reference/service table rows from the team HTML, use "Visitor details"
   in both team alternatives, and show the requested discount in a soft callout only when requested.
   Preview/screenshot files stay uncommitted; [PR #14](https://github.com/FranzAfun/eratechgh/pull/14)
-  is open without merging.
+  is merged in the current `main` baseline.
 - Self-review: 4 px spacing, 6/8 px corners, aligned content, token-only email colours, hidden
   preheaders, keyboard-accessible links and 48 px reply buttons. Browser review covers 360/390 px
   phones and desktop; dark-preference emulation keeps the explicit light card legible. No external
@@ -78,8 +103,8 @@ Stages 1–10 and v2 polish are present in the `main` baseline for this work.
 
 ## Next
 
-Review [PR #14](https://github.com/FranzAfun/eratechgh/pull/14); do not merge as part of this task.
-Actual mail-client/inbox acceptance remains separate from the approved browser previews.
+Owner review of new 390/1440 px screenshots, then one PR from `feat/logo-work-socials`. Do not merge.
+Actual mail-client/inbox acceptance remains separate from browser previews.
 
 ## Need from the owner
 
@@ -94,7 +119,8 @@ Actual mail-client/inbox acceptance remains separate from the approved browser p
    email/SEO task does not change the footer.
 6. **Privacy policy check.** The consent box now links to https://eraaxis.com/privacy. Please confirm that policy covers this site and these requests (it is written for ERA, not specifically for Project Desk).
 7. **ERA Store offer list** — confirm each item (components and modules, Build Packs, ERA Dev Board, delivery + pickup, Mobile Money payments). Card payments are not mentioned anywhere until confirmed.
-8. **Real, approved project photos** (optional). "Our work" stays hidden until there are 3+.
+8. **Asset/story browser acceptance.** The owner supplied six approved work images, including three
+   photographs. Final screenshot review is pending; Our work is now visible.
 9. **Copy review.** Home and request copy were rewritten in stages 8–10 (hero, section titles, service summaries, FAQ, request page, consent wording from DESIGN-DIRECTION.md §7). The hero card's part names ("Microcontroller board", "Soil moisture sensor", "LEDs and resistors") are illustrative examples. Please read it once (also the new branding copy: hero eyebrow "ERA Tech · Project Desk — for makers in Ghana", footer line, design FAQ).
 10. **Dev Board photo alt text** — "The ERA Dev Board: a blue board with a four-battery holder, power switch and two breadboard strips". Correct it if the description is off.
 

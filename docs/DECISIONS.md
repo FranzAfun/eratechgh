@@ -1,5 +1,35 @@
 # Decisions
 
+## 2026-11-09 — Supplied logo, work stories and shared socials
+
+- The owner supplied all logo colours, work images and social icons from the incoming `logos/`,
+  `work/` and `social/` folders. These inputs remain read-only; trimmed PNG logo masters are kept in
+  `design-system/assets/logo/`. The one-off preparation script requires Python 3 + Pillow and runs
+  only when assets change. Its generated files are committed; it is never a build hook.
+- Use the supplied white logo at 40 px in the 64 px header, 36 px in the drawer and 48 px in the
+  footer, with WebP/PNG 1x/2x variants and fixed dimensions. Latest owner steering replaces the
+  top-bar placeholder with the logo alone and changes the hero eyebrow to "Project Desk". Drawer
+  and footer retain the logo, lilac dot and Project Desk text. The home link owns one accessible name.
+- Favicon crops use only the ERA letters from that logo, on a rounded primary-purple square.
+  The old E-based SVG is removed. The manual resvg share-image generator embeds the trimmed logo.
+- Our work is three stories with the owner's exact copy/alts: sand sieve (CAD plus finished build),
+  prototype to PCB (three stages), and smart lock (one photograph). Count only photographs towards
+  the three-image visibility threshold. Labels distinguish CAD, PCB layout and 3D render assets.
+  Frames are uncropped 4:3 soft surfaces; image rows stack on phones, reveals are restrained, and
+  hover lift requires a hover-capable device without a reduced-motion preference.
+- Never upscale work images: generate 640 px plus each original width, with matching source sets
+  and layout-specific sizes. All WebP files stay at or below 400 KB and omit source metadata.
+- Social URLs are public content constants shared by the site and emails. Site social links have
+  44 px targets, 8 px corners, accessible new-tab labels and the existing dark glass treatment.
+- Email images are limited to absolute production HTTPS URLs under `/email/`. Local previews rewrite
+  image sources after message composition to load `public/email/` files; this is not a sending mode.
+  Footer bands include Follow us, five PNG icon links, the exact recipient note, visitor privacy link
+  and copyright; sign-offs stay in place. The only text-body addition is the Follow us line and URLs.
+  A small embedded media query makes the outer card edge-to-edge at 600 px and below.
+- Capture hero, Our work, footer and both email previews at 390/1440 px for owner review before the
+  PR. Keep all preview/screenshot artifacts ignored. Use one branch and at least one commit for each
+  numbered work item; no merge is authorised.
+
 ## 2026-11-09 — HTML email alternatives, local previews and sharing
 
 - Preserve the visitor plain-text body and update only the team's details heading; add nodemailer's `html` field, yielding
