@@ -15,7 +15,7 @@
 | 6 Brand foundation  | `feat/brand-foundation` | [FranzAfun/eratechgh#6](https://github.com/FranzAfun/eratechgh/pull/6) | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL                                               |
 | 7 Header and footer | `feat/header-footer`    | [FranzAfun/eratechgh#7](https://github.com/FranzAfun/eratechgh/pull/7) | Fixed glass header, right-side drawer (portal, focus trap, scroll lock), dark 4-column footer                                                       |
 | 8 Dark hero         | `feat/dark-hero`        | [FranzAfun/eratechgh#8](https://github.com/FranzAfun/eratechgh/pull/8) | Dark hero with our own living PCB and glass quote card, purple closing band                                                                         |
-| 9 Home sections     | `feat/home-sections`    | PR_9                                                                   | Services cards, glass design band with trace-draw, connected steps, ERA Store split card with Dev Board photo, FAQ accordion, reveals, sharper copy |
+| 9 Home sections     | `feat/home-sections`    | [FranzAfun/eratechgh#9](https://github.com/FranzAfun/eratechgh/pull/9) | Services cards, glass design band with trace-draw, connected steps, ERA Store split card with Dev Board photo, FAQ accordion, reveals, sharper copy |
 
 Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10).
 
