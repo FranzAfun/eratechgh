@@ -1,5 +1,45 @@
 # Decisions
 
+## 2026-11-09 — Header branding: owner's choice
+
+Header shows the ERA Technologies logo only (owner's choice: cleaner top bar). 'Project Desk' is named in the hero eyebrow, the footer wordmark, page titles and emails.
+
+The hero eyebrow is "Project Desk · For students and makers in Ghana": it fits on one line at
+360 px with the existing typography. The header stays logo-only. Both email headers pair the logo
+with 18 px semibold "· Project Desk", vertically centred in a table cell. The desktop smart-lock
+story aligns the copy and image to the same top edge. These final refinements follow owner review
+of the screenshots; pushing this branch and opening one PR are authorised, with no merge.
+
+## 2026-11-09 — Supplied logo, work stories and shared socials
+
+- The owner supplied all logo colours, work images and social icons from the incoming `logos/`,
+  `work/` and `social/` folders. These inputs remain read-only; trimmed PNG logo masters are kept in
+  `design-system/assets/logo/`. The one-off preparation script requires Python 3 + Pillow and runs
+  only when assets change. Its generated files are committed; it is never a build hook.
+- Use the supplied white logo at 40 px in the 64 px header, 36 px in the drawer and 48 px in the
+  footer, with WebP/PNG 1x/2x variants and fixed dimensions. Latest owner steering replaces the
+  top-bar placeholder with the logo alone and names Project Desk in the hero eyebrow. Drawer
+  and footer retain the logo, lilac dot and Project Desk text. The home link owns one accessible name.
+- Favicon crops use only the ERA letters from that logo, on a rounded primary-purple square.
+  The old E-based SVG is removed. The manual resvg share-image generator embeds the trimmed logo.
+- Our work is three stories with the owner's exact copy/alts: sand sieve (CAD plus finished build),
+  prototype to PCB (three stages), and smart lock (one photograph). Count only photographs towards
+  the three-image visibility threshold. Labels distinguish CAD, PCB layout and 3D render assets.
+  Frames are uncropped 4:3 soft surfaces; image rows stack on phones, reveals are restrained, and
+  hover lift requires a hover-capable device without a reduced-motion preference.
+- Never upscale work images: generate 640 px plus each original width, with matching source sets
+  and layout-specific sizes. All WebP files stay at or below 400 KB and omit source metadata.
+- Social URLs are public content constants shared by the site and emails. Site social links have
+  44 px targets, 8 px corners, accessible new-tab labels and the existing dark glass treatment.
+- Email images are limited to absolute production HTTPS URLs under `/email/`. Local previews rewrite
+  image sources after message composition to load `public/email/` files; this is not a sending mode.
+  Footer bands include Follow us, five PNG icon links, the exact recipient note, visitor privacy link
+  and copyright; sign-offs stay in place. The only text-body addition is the Follow us line and URLs.
+  A small embedded media query makes the outer card edge-to-edge at 600 px and below.
+- Capture hero, Our work, footer and both email previews at 390/1440 px for owner review before the
+  PR. Keep all preview/screenshot artifacts ignored. Use one branch and at least one commit for each
+  numbered work item; no merge is authorised.
+
 ## 2026-11-09 — HTML email alternatives, local previews and sharing
 
 - Preserve the visitor plain-text body and update only the team's details heading; add nodemailer's `html` field, yielding
@@ -133,11 +173,12 @@ scheme); `apple-touch-icon.png` (180 px) is a white E on `#3B1174`.
 
 ## 2026-11-09 — Naming: ERA Tech · Project Desk
 
-- **Wordmark:** "ERA Tech · Project Desk", both names the same size and weight, lilac mid-dot. Text only,
-  in one component (`src/components/layout/Wordmark.jsx`) so the real logo can replace it later.
-- **"ERA Tech"** is the everyday brand: wordmark, headings, body copy ("the ERA Tech team").
-- **"ERA Technologies"** is for formal spots only: footer "© year ERA Technologies. All rights
-  reserved.", the sign-off on both emails ("— ERA Technologies, Project Desk") and the consent line
+- **Header:** the supplied ERA Technologies logo only, per the dated owner decision above.
+  The drawer/footer wordmark pairs the supplied logo with a lilac mid-dot and "Project Desk";
+  variants live in `src/components/layout/Wordmark.jsx`.
+- **"ERA Tech"** is the everyday brand in headings, body copy ("the ERA Tech team") and metadata.
+- **"ERA Technologies"** appears in the supplied logo and formal spots: footer "© year ERA Technologies.
+  All rights reserved.", the sign-off on both emails ("— ERA Technologies, Project Desk") and the consent line
   ("I agree to ERA Technologies using these details…").
 - **"Project Desk"** is the product: page titles ("<Page> · ERA Tech · Project Desk", home "ERA Tech ·
   Project Desk"), meta descriptions, the 404 text, the hero eyebrow. Email sender name:

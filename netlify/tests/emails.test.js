@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildEmails, firstName, formatGmt, headerSafe } from "../lib/emails.js";
-import { EMAIL_COLOURS, escapeHtml, replyHref } from "../lib/email-html.js";
+import { EMAIL_COLOURS, escapeHtml, followUsLine, replyHref } from "../lib/email-html.js";
 import { DETAIL_FIELDS, SERVICE_FIELDS, validateField } from "../../src/lib/request-rules.js";
 import { site } from "../../src/content/site.js";
 import { readFileSync } from "node:fs";
@@ -117,7 +117,7 @@ describe("emails", () => {
 });
 
 describe("HTML email alternatives", () => {
-  it("preserves visitor text and changes only the team details heading", () => {
+  it("adds only the Follow us line to the existing plain-text bodies", () => {
     const { team, visitor } = build(consultation);
     expect(team.text).toBe(`New Project Desk request
 
@@ -148,6 +148,8 @@ Sent: 9 Nov 2026, 14:05 GMT
 
 Reply to this email to answer the visitor directly.
 
+${followUsLine()}
+
 — ERA Technologies, Project Desk`);
     expect(visitor.text).toBe(`Hi Sample,
 
@@ -156,6 +158,8 @@ Thanks — we received your expert consultation request. Your reference is PD-7K
 What happens next: We'll confirm a time and payment with you. Nothing is booked yet.
 
 Reply to this email to add details or photos.
+
+${followUsLine()}
 
 — ERA Technologies, Project Desk`);
   });
@@ -205,7 +209,7 @@ Reply to this email to add details or photos.
 
   it("shows the visitor reference chip only in the dark header, keeping the hidden preheader", () => {
     const { visitor } = build(consultation);
-    const header = visitor.html.match(/<td bgcolor="#200940"[\s\S]*?<\/td>/)[0];
+    const header = visitor.html.match(/class="email-header"[\s\S]*?<\/h1>[\s\S]*?<\/td>/)[0];
     expect(header).toContain(">PD-7K3QX2</span>");
     expect(visitor.html.match(/>PD-7K3QX2<\/span>/g)).toHaveLength(1);
     expect(visitor.html).toContain("Your reference is PD-7K3QX2</div>");
@@ -250,7 +254,7 @@ Reply to this email to add details or photos.
       expect(message.html).toContain("&lt;script&gt;&quot;&amp;?Sample&lt;/script&gt;");
       expect(message.html).toContain(escapeHtml(reference));
       expect(message.html).toContain('style="display:none;max-height:0');
-      expect(message.html).not.toMatch(/<style|<script|<img|<link|@font-face/i);
+      expect(message.html).not.toMatch(/<script|<link|@font-face/i);
       expect(message.html.match(/<h1\b/g)).toHaveLength(1);
     }
     expect(team.html).toContain(escapeHtml(abstract).replace("\n", "<br>"));
@@ -333,5 +337,54 @@ Reply to this email to add details or photos.
       expect(mime).toContain("Content-Type: text/plain; charset=utf-8");
       expect(mime).toContain("Content-Type: text/html; charset=utf-8");
     }
+  });
+
+  it("uses only absolute production-site image URLs in sent HTML", () => {
+    for (const message of Object.values(build(consultation))) {
+      const images = [...message.html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)].map((m) => m[1]);
+      expect(images).toHaveLength(6);
+      expect(images[0]).toBe("https://eratechgh.com/email/logo-white.png");
+      for (const src of images) {
+        const url = new URL(src);
+        expect(url.origin).toBe("https://eratechgh.com");
+        expect(url.pathname).toMatch(/^\/email\/[a-z-]+\.png$/);
+        expect(url.search).toBe("");
+        expect(url.hash).toBe("");
+      }
+      expect(message.html).not.toContain("../public/");
+      expect(message.html).not.toContain("file:");
+    }
+  });
+
+  it("includes the branded header, role-specific footer and responsive edge-to-edge rules", () => {
+    const { team, visitor } = build(consultation);
+    for (const message of [team, visitor]) {
+      expect(message.html).toContain('width="120" height="70" alt="ERA Tech · Project Desk"');
+      expect(message.html).toMatch(
+        /<td valign="middle" style="[^"]*font-size:18px;[^"]*font-weight:600;[^"]*"><span[^>]*>·<\/span> Project Desk<\/td>/,
+      );
+      expect(message.html).toContain('class="email-footer"');
+      expect(message.html).toContain("© 2026 ERA Technologies. All rights reserved.");
+      expect(message.html).toContain("— ERA Technologies, Project Desk");
+      expect(message.html).toContain("@media only screen and (max-width:600px)");
+      expect(message.html).toContain(".email-outer{padding:0!important}");
+      expect(message.html).toContain(".email-card{border:0!important;border-radius:0!important}");
+      expect(message.html).toContain(".email-header,.email-footer{border-radius:0!important}");
+      for (const social of site.socials) {
+        expect(message.html).toContain(`alt="${escapeHtml(social.name)}"`);
+        expect(message.html).toContain(`href="${escapeHtml(social.url)}"`);
+        expect(message.text).toContain(social.url);
+      }
+      expect(message.text.match(/Follow us:/g)).toHaveLength(1);
+    }
+    expect(team.html).toContain(
+      "Internal notification. Reply to this email to answer the visitor.",
+    );
+    expect(team.html).not.toContain("You're receiving this because");
+    expect(visitor.html).toContain(
+      "You&#39;re receiving this because you sent a request on eratechgh.com.",
+    );
+    expect(visitor.html).toContain(`href="${escapeHtml(site.privacyUrl)}"`);
+    expect(visitor.html).not.toContain("Internal notification.");
   });
 });

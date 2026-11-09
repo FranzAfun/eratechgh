@@ -16,6 +16,7 @@ import {
   emailDocument,
   escapeHtml,
   fieldRow,
+  followUsLine,
   paragraph,
   referenceChip,
   replyButton,
@@ -140,6 +141,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
     "",
     "Reply to this email to answer the visitor directly.",
     "",
+    followUsLine(),
+    "",
     SIGN_OFF,
   );
 
@@ -155,6 +158,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
       headerDetails: `<p style="margin:16px 0;font-size:16px;line-height:24px;color:${EMAIL_COLOURS.white};">${escapeHtml(service.name)}</p>${referenceChip(reference)}`,
       content: `<table aria-label="Request details" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;table-layout:fixed;border-collapse:collapse;margin:0 0 24px;">${rows.join("")}</table>${paragraph("Reply to this email to answer the visitor directly.")}${replyButton(data.email, reference, `Reply to ${first}`)}`,
       signOff: SIGN_OFF,
+      audience: "team",
+      year: sentAt.getUTCFullYear(),
     }),
   };
 
@@ -172,6 +177,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
       "",
       "Reply to this email to add details or photos.",
       "",
+      followUsLine(),
+      "",
       SIGN_OFF,
     ].join("\n"),
     html: emailDocument({
@@ -180,6 +187,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
       headerDetails: `<p style="margin:16px 0 0;">${referenceChip(reference)}</p>`,
       content: `${paragraph(`Hi ${first},`)}${paragraph(`Thanks — we received your ${service.name.toLowerCase()} request.`)}${paragraph(`What happens next: ${NEXT_STEP[data.service]}`)}${paragraph("Reply to this email to add details or photos.")}${replyButton(teamInbox, reference, "Reply to the team")}`,
       signOff: SIGN_OFF,
+      audience: "visitor",
+      year: sentAt.getUTCFullYear(),
     }),
   };
 

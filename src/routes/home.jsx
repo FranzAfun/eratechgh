@@ -8,6 +8,7 @@ import { Reveal } from "../components/ui/Reveal.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { hasPortfolio, site } from "../content/site.js";
 import { pageMeta } from "../lib/meta.js";
+import "../styles/work.css";
 
 // The home page opens with a dark hero: the header starts transparent over it.
 export const handle = { darkHero: true };
@@ -192,26 +193,56 @@ function Design() {
 
 function Work() {
   const t = site.home.work;
+  const images = new Map(site.portfolio.map((image) => [image.id, image]));
+  const imageSizes = {
+    1: "(min-width: 1200px) 539px, (min-width: 768px) calc((100vw - 122px) / 2), calc(100vw - 66px)",
+    2: "(min-width: 1200px) 539px, (min-width: 768px) calc((100vw - 122px) / 2), calc(100vw - 66px)",
+    3: "(min-width: 1200px) 351.34px, (min-width: 768px) calc((100vw - 146px) / 3), calc(100vw - 66px)",
+  };
   return (
     <section id="work" aria-labelledby="work-title" className={`bg-background ${section}`}>
       <div className={wrap}>
-        <SectionHeading id="work-title" eyebrow={t.eyebrow} title={t.title} intro={t.intro} />
-        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {site.portfolio.map((p, i) => (
-            <Reveal as="li" key={p.src} delay={i * 80}>
-              <figure>
-                <img
-                  src={p.src}
-                  width={p.width}
-                  height={p.height}
-                  alt={p.alt}
-                  loading="lazy"
-                  className="h-auto w-full rounded-card bg-surface-soft"
-                />
-                {p.caption ? (
-                  <figcaption className="mt-2 text-sm text-text-secondary">{p.caption}</figcaption>
-                ) : null}
-              </figure>
+        <Reveal>
+          <SectionHeading id="work-title" eyebrow={t.eyebrow} title={t.title} intro={t.intro} />
+        </Reveal>
+        <ul className="work-stories mt-10">
+          {t.stories.map((story) => (
+            <Reveal as="li" key={story.id}>
+              <article
+                className={`work-story ${story.imageIds.length === 1 ? "work-story-single" : ""}`}
+                aria-labelledby={`work-${story.id}-title`}
+              >
+                <div className="work-story-copy">
+                  <h3 id={`work-${story.id}-title`} className="text-h3 font-semibold">
+                    {story.title}
+                  </h3>
+                  <p className="mt-3 max-w-text text-base text-text-secondary">{story.copy}</p>
+                </div>
+                <div className={`work-story-images work-story-images-${story.imageIds.length}`}>
+                  {story.imageIds.map((imageId) => {
+                    const image = images.get(imageId);
+                    return (
+                      <figure key={image.id} className="work-story-figure">
+                        <div className="work-story-frame">
+                          <img
+                            src={image.src}
+                            srcSet={image.srcSet}
+                            sizes={imageSizes[story.imageIds.length]}
+                            width={image.width}
+                            height={image.height}
+                            alt={image.alt}
+                            loading="lazy"
+                            decoding="async"
+                          />
+                        </div>
+                        {image.caption ? (
+                          <figcaption className="work-story-caption">{image.caption}</figcaption>
+                        ) : null}
+                      </figure>
+                    );
+                  })}
+                </div>
+              </article>
             </Reveal>
           ))}
         </ul>

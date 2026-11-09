@@ -35,6 +35,13 @@ describe("prerendered SEO", () => {
     expect(metaValue(html, "twitter:description")).toBe(metaValue(html, "description"));
     expect(metaValue(html, "twitter:image")).toBe("https://eratechgh.com/og.png");
     expect(metaValue(html, "robots")).toBeUndefined();
+    expect(tags(html, "link")).toContainEqual({
+      rel: "icon",
+      href: "/favicon.png",
+      type: "image/png",
+      sizes: "32x32",
+    });
+    expect(tags(html, "link").some((link) => link.href === "/favicon.svg")).toBe(false);
   });
 
   it.each(["404/index.html", "404.html"])(

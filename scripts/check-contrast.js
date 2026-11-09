@@ -73,6 +73,17 @@ const DARK = ["bg-dark", "surface-dark", "primary-deep", "primary", "primary-hov
 
 /** [what, foreground, background (stack), kind] — kind: "text" (4.5) or "ui" (3). */
 export const PAIRS = [
+  ["brand wordmark dot on dark", T("accent"), T("bg-dark"), "text"],
+  ["brand wordmark dot on glass", T("accent"), [GLASS, T("background")], "text"],
+  [
+    "social tile accessible fallback on dark",
+    T("text-inverse"),
+    [GLASS_FILL, T("bg-dark")],
+    "text",
+  ],
+  ["social tile focus ring", T("accent"), [GLASS_FILL, T("bg-dark")], "ui"],
+  ["email icon fallback on purple tile", T("on-primary"), T("primary"), "text"],
+  ["email social links on soft footer", T("primary-text"), T("surface-soft"), "text"],
   // Light sections
   ...LIGHT.flatMap((bg) => [
     ["text primary", T("text-primary"), bg, "text"],

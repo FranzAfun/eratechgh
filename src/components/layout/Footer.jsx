@@ -16,8 +16,48 @@ export function Footer() {
       <div className="mx-auto max-w-content px-4 pt-14 pb-8 md:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="max-w-80">
-            <Wordmark />
+            <Link
+              to="/"
+              aria-label={site.header.homeLabel}
+              className="inline-flex min-h-11 items-center rounded-control no-underline"
+            >
+              <Wordmark variant="footer" />
+            </Link>
             <p className="mt-3 text-sm">{t.about}</p>
+            <div className="mt-6">
+              <h2 id="footer-socials" className={heading}>
+                {t.followUs}
+              </h2>
+              <ul aria-labelledby="footer-socials" className="mt-3 flex flex-wrap gap-2">
+                {site.socials.map((social) => (
+                  <li key={social.id}>
+                    <a
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${social.name} (opens in a new tab)`}
+                      className="grid size-11 place-items-center rounded-card border border-glass-line bg-glass-fill no-underline transition-colors hover:border-accent/40 hover:bg-glass-fill-hover"
+                    >
+                      <picture className="block">
+                        <source
+                          type="image/webp"
+                          srcSet={`${social.icon} 1x, ${social.icon2x} 2x`}
+                        />
+                        <img
+                          src={social.png}
+                          srcSet={`${social.png} 1x, ${social.png2x} 2x`}
+                          width="24"
+                          height="24"
+                          alt=""
+                          loading="lazy"
+                          className="block"
+                        />
+                      </picture>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <nav aria-labelledby="footer-services">

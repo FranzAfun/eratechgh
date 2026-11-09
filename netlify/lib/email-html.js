@@ -1,5 +1,5 @@
 /** Email-safe markup: user values enter only through escapeHtml or a validated link. */
-import { site } from "../../src/content/site.js";
+import { site, siteBaseUrl } from "../../src/content/site.js";
 import { validateField } from "../../src/lib/request-rules.js";
 
 // Exact colours from src/styles/tokens.css; kept inline for mail clients.
@@ -15,6 +15,19 @@ export const EMAIL_COLOURS = {
 };
 const c = EMAIL_COLOURS;
 const FONT = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif";
+
+/** Only the site's dedicated public email assets may appear in sent messages. */
+function emailImageUrl(path) {
+  const url = new URL(path, siteBaseUrl);
+  if (url.origin !== siteBaseUrl || !url.pathname.startsWith("/email/") || url.search || url.hash) {
+    throw new Error("Email images must use the production site's email asset directory");
+  }
+  return url.href;
+}
+
+export function followUsLine() {
+  return `${site.footer.followUs}: ${site.socials.map((social) => `${social.name} ${social.url}`).join(" · ")}`;
+}
 
 export function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (character) => {
@@ -65,21 +78,56 @@ export function calloutRow(text) {
   return `<tr><td colspan="2" style="padding:16px 0 0;"><p style="margin:0;padding:12px 16px;background-color:${c.soft};color:${c.primary};border-radius:6px;font-size:14px;line-height:24px;">${escapeHtml(text)}</p></td></tr>`;
 }
 
+function emailFooter(audience, year) {
+  const icons = site.socials
+    .map((social, index) => {
+      const spacer =
+        index === 0 ? "" : '<td width="8" style="width:8px;font-size:0;line-height:0;">&nbsp;</td>';
+      return `${spacer}<td width="40" height="40" bgcolor="${c.primary}" style="width:40px;height:40px;background-color:${c.primary};border-radius:8px;"><a href="${escapeHtml(social.url)}" target="_blank" rel="noopener noreferrer" style="display:block;padding:8px;border-radius:8px;color:${c.white};text-decoration:none;"><img src="${escapeHtml(emailImageUrl(social.emailIcon))}" width="24" height="24" alt="${escapeHtml(social.name)}" style="display:block;width:24px;height:24px;border:0;color:${c.white};font-family:${FONT};font-size:12px;"></a></td>`;
+    })
+    .join("");
+  const note =
+    audience === "team"
+      ? "Internal notification. Reply to this email to answer the visitor."
+      : "You're receiving this because you sent a request on eratechgh.com.";
+  const privacy =
+    audience === "visitor"
+      ? ` <a href="${escapeHtml(site.privacyUrl)}" target="_blank" rel="noopener noreferrer" style="color:${c.primary};text-decoration:underline;">${escapeHtml(site.footer.privacy)}</a>`
+      : "";
+  return `<tr><td class="email-footer" bgcolor="${c.soft}" style="padding:24px;background-color:${c.soft};border-radius:0 0 8px 8px;color:${c.secondary};font-family:${FONT};">
+<p style="margin:0 0 12px;font-size:14px;line-height:24px;font-weight:500;color:${c.primary};">${escapeHtml(site.footer.followUs)}</p>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:separate;border-spacing:0;margin:0 0 16px;"><tr>${icons}</tr></table>
+<p style="margin:0 0 8px;font-size:12px;line-height:20px;color:${c.secondary};">${escapeHtml(note)}${privacy}</p>
+<p style="margin:0;font-size:12px;line-height:20px;color:${c.secondary};">${escapeHtml(site.footer.copyright(year))}</p>
+</td></tr>`;
+}
+
 /** content/headerDetails are composed only from the escaping helpers in this module. */
-export function emailDocument({ preheader, heading, headerDetails = "", content, signOff }) {
+export function emailDocument({
+  preheader,
+  heading,
+  headerDetails = "",
+  content,
+  signOff,
+  audience,
+  year,
+}) {
+  const logo = site.logo.email;
   return `<!doctype html>
 <html lang="en-GB">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>${escapeHtml(site.siteTitle)}</title></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><meta name="supported-color-schemes" content="light"><title>${escapeHtml(site.siteTitle)}</title>
+<style>@media only screen and (max-width:600px){.email-outer{padding:0!important}.email-card{border:0!important;border-radius:0!important}.email-header,.email-footer{border-radius:0!important}}</style></head>
 <body bgcolor="${c.soft}" style="margin:0;padding:0;width:100%;background-color:${c.soft};font-family:${FONT};color:${c.text};-webkit-text-size-adjust:100%;">
 <div aria-hidden="true" style="display:none;max-height:0;max-width:0;overflow:hidden;opacity:0;mso-hide:all;font-size:1px;line-height:1px;color:${c.secondary};">${escapeHtml(preheader)}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background-color:${c.soft};font-family:${FONT};"><tr><td align="center" style="padding:24px 16px;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;background-color:${c.soft};font-family:${FONT};"><tr><td class="email-outer" align="center" style="padding:24px 16px;">
 <!--[if mso]><table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0"><tr><td><![endif]-->
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${c.white}" style="width:100%;max-width:600px;border:1px solid ${c.border};border-radius:8px;border-spacing:0;background-color:${c.white};table-layout:fixed;font-family:${FONT};">
-<tr><td bgcolor="${c.deep}" style="padding:24px;background-color:${c.deep};border-radius:8px 8px 0 0;color:${c.white};">
-<p style="margin:0 0 24px;font-size:16px;line-height:24px;font-weight:600;color:${c.white};">${escapeHtml(site.brandName)} <span style="color:${c.accent};">·</span> ${escapeHtml(site.productName)}</p>
+<table class="email-card" role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${c.white}" style="width:100%;max-width:600px;border:1px solid ${c.border};border-radius:8px;border-spacing:0;background-color:${c.white};table-layout:fixed;font-family:${FONT};">
+<tr><td class="email-header" bgcolor="${c.deep}" style="padding:24px;background-color:${c.deep};border-radius:8px 8px 0 0;color:${c.white};">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin:0 0 24px;"><tr><td width="${escapeHtml(logo.width)}" valign="middle" style="width:${escapeHtml(logo.width)}px;color:${c.white};"><img src="${escapeHtml(emailImageUrl(logo.src))}" width="${escapeHtml(logo.width)}" height="${escapeHtml(logo.height)}" alt="${escapeHtml(site.siteTitle)}" style="display:block;width:${escapeHtml(logo.width)}px;height:${escapeHtml(logo.height)}px;border:0;color:${c.white};font-family:${FONT};font-size:12px;line-height:20px;"></td><td valign="middle" style="padding-left:16px;font-size:18px;line-height:24px;font-weight:600;color:${c.white};font-family:${FONT};"><span style="color:${c.accent};">·</span> ${escapeHtml(site.productName)}</td></tr></table>
 <h1 style="margin:0;font-size:24px;line-height:32px;font-weight:600;color:${c.white};">${escapeHtml(heading)}</h1>${headerDetails}
 </td></tr>
 <tr><td style="padding:24px;overflow-wrap:anywhere;">${content}<p style="margin:0;padding-top:24px;border-top:1px solid ${c.border};font-size:14px;line-height:24px;color:${c.secondary};">${escapeHtml(signOff)}</p></td></tr>
+${emailFooter(audience, year)}
 </table>
 <!--[if mso]></td></tr></table><![endif]-->
 </td></tr></table>
