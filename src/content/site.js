@@ -45,6 +45,175 @@ export const site = {
     copyright: (year) => `© ${year} ERA Tech`,
   },
 
+  /** The three services. `slug` is the URL: /request/<slug>. Prices are exactly as approved; no "was" prices. */
+  services: [
+    {
+      slug: "sourcing",
+      name: "Component sourcing",
+      shortName: "Sourcing",
+      price: "Free quote",
+      priceNote: "Parts and delivery are paid only after you approve the itemised quote.",
+      summary:
+        "Send us your parts list. We find the components, check what's in stock and send you an itemised quote.",
+      steps: [
+        "List the parts and quantities you need",
+        "Get an itemised quote with delivery",
+        "Approve and pay, then we get your parts to you",
+      ],
+      cta: "Request a quote",
+      featured: false,
+    },
+    {
+      slug: "assessment",
+      name: "Project assessment",
+      shortName: "Assessment",
+      price: "GH₵50",
+      priceNote: "The fee doesn't cover parts or full design work.",
+      summary:
+        "We review your project idea, recommend the parts it needs and quote them, so you start on the right track.",
+      steps: [
+        "Tell us about your project",
+        "Pay GH₵50 and send your full abstract",
+        "Get our review, a parts list and a quote",
+      ],
+      cta: "Request an assessment",
+      featured: true,
+      badge: "Good place to start",
+    },
+    {
+      slug: "consultation",
+      name: "Expert consultation",
+      shortName: "Consultation",
+      price: "GH₵250",
+      priceNote:
+        "Did an assessment and bought the parts through us? Ask for 70 % off: GH₵75. We check eligibility.",
+      summary:
+        "A session with an ERA Tech expert on your project: design choices, problems you're stuck on and next steps.",
+      steps: [
+        "Share your abstract and what you need help with",
+        "We confirm a time and send payment details",
+        "Meet the expert and get clear next steps",
+      ],
+      cta: "Book a consultation",
+      featured: false,
+    },
+  ],
+
+  home: {
+    hero: {
+      title: "Parts, project reviews and expert advice in one request",
+      body: "Tell ERA Tech what you're building. We source your components, assess your project or set up a session with an expert, and confirm the price before you pay anything.",
+      primary: { label: "Source components", to: "/request/sourcing" },
+      secondary: { label: "Book a consultation", to: "/request/consultation" },
+    },
+    services: {
+      title: "Services",
+      intro:
+        "Pick what you need. Every request goes to the ERA Tech team, who reply with the next step.",
+      stepsLabel: "How it goes",
+    },
+    design: {
+      title: "What we can design",
+      intro: "Beyond sourcing and advice, ERA Tech designs and builds hardware with you.",
+      caption: "Illustration — not a client project",
+      footnote: "Detailed design and fabrication are quoted separately.",
+      tiles: [
+        {
+          key: "pcb",
+          title: "Electronics & PCB",
+          body: "Circuit design, schematics and printed circuit boards.",
+        },
+        {
+          key: "cad",
+          title: "3D CAD & product design",
+          body: "Enclosures, mechanical parts and models ready to print or machine.",
+        },
+        {
+          key: "iot",
+          title: "IoT & connected systems",
+          body: "Sensors, microcontrollers and devices that talk to the internet.",
+        },
+        {
+          key: "automation",
+          title: "Automation & prototyping",
+          body: "Motors, control and working prototypes you can test.",
+        },
+      ],
+    },
+    work: {
+      title: "Our work",
+      intro: "Projects we've helped build.",
+    },
+    howItWorks: {
+      title: "How it works",
+      steps: [
+        {
+          title: "Tell us what you're building",
+          body: "Pick a service and fill in one short form.",
+        },
+        {
+          title: "We confirm the next step",
+          body: "The team replies with your quote, payment details and timing.",
+        },
+        {
+          title: "Get your parts or your session",
+          body: "We deliver the components or meet you for the consultation.",
+        },
+      ],
+    },
+    store: {
+      title: "ERA Store is coming soon",
+      badge: "Coming soon",
+      intro: "Our online store for makers in Ghana. It will offer:",
+      // Offer list from the brief, still to be confirmed by ERA (see docs/STATUS.md).
+      offers: [
+        "Electronic components and modules",
+        "Build Packs",
+        "ERA Dev Board",
+        "Delivery across Ghana, and pickup",
+        "Mobile Money and card payments",
+      ],
+      notify: "Want to know when it opens? Tick the box when you send a request.",
+      logoAlt: "ERA Store",
+    },
+    faq: {
+      title: "Questions",
+      items: [
+        {
+          q: "Is the sourcing quote really free?",
+          a: "Yes. We send you an itemised quote for free. You pay for the parts and delivery only after you approve it.",
+        },
+        {
+          q: "What does the GH₵50 assessment cover?",
+          a: "We review your project idea, recommend the parts it needs and quote them. The fee doesn't cover the parts themselves or full design work.",
+        },
+        {
+          q: "How does the 70 % off a consultation work?",
+          a: "If you did an ERA Tech assessment and bought the parts through ERA Tech, tick the box on the consultation form. We check your eligibility, and if it's confirmed the consultation costs GH₵75 instead of GH₵250.",
+        },
+        {
+          q: "Is my consultation booked when I send the form?",
+          a: "No. The team gets back to you to confirm a time and payment. Nothing is booked until they do.",
+        },
+        {
+          q: "Does a consultation include CAD, PCB design or a prototype?",
+          a: "No. A consultation is advice and guidance. Design work and prototypes are quoted separately.",
+        },
+        {
+          q: "Is delivery included?",
+          a: "Delivery is quoted together with your parts, so you see the full cost before you pay.",
+        },
+        {
+          q: "How will you contact me?",
+          a: "The ERA Tech team replies by email, phone or WhatsApp, using the details you give in the form.",
+        },
+      ],
+    },
+    closing: {
+      title: "Ready to start your project?",
+    },
+  },
+
   notFound: {
     title: "Page not found",
     metaDescription: "This page doesn't exist on ERA Tech Project Desk.",

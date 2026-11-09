@@ -48,6 +48,7 @@
   --color-text-secondary: #4b5563; /* 6.20 */
   --color-text-muted: #606877; /* 4.60, the lowest allowed */
   --color-text-inverse: #ffffff;
+  --color-text-on-dark: #d8d0e6; /* secondary words on dark bands: 11.99 on #200940, 9.28 on #3B1174 */
 
   /* Lines */
   --color-border: #e5e7eb; /* decorative only */
