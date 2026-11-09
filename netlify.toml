@@ -10,13 +10,6 @@
   directory = "netlify/functions"
   node_bundler = "esbuild"
 
-# Unknown URLs get the prerendered 404 page with a real 404 status.
-# (Netlify serves 404.html automatically; this rule makes it explicit.)
-[[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
-
 # Security headers for every page.
 # The Content-Security-Policy is NOT here: it lists hashes of React Router's inline
 # hydration scripts, which change with every build, so scripts/finalize-build.js writes
