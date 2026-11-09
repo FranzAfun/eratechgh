@@ -214,6 +214,69 @@ export const site = {
     },
   },
 
+  request: {
+    title: "Start a request",
+    intro:
+      "Pick a service and tell us about your project. The ERA Tech team replies with the next step.",
+    pickerLabel: "What do you need?",
+    pickerHint: "Choose a service to see its form.",
+    detailsTitle: "Your details",
+    extrasTitle: "Extras",
+    checkTitle: "Quick check",
+    checkHint: "This helps us stop spam.",
+    send: "Send request",
+    sending: "Sending…",
+    priceLabel: "Price",
+    consent: "We use these details only to reply to your request.",
+    privacy: "Privacy policy",
+    labels: {
+      fullName: "Full name",
+      email: "Email",
+      phone: "Phone / WhatsApp",
+      town: "Town or city",
+      components: "Components and quantities",
+      neededBy: "Needed by",
+      projectTitle: "Project title",
+      projectArea: "Project area",
+      description: "What should it do?",
+      abstract: "Project abstract",
+      guidance: "What guidance do you need most?",
+      preferredDate: "Preferred date",
+      preferredTime: "Preferred time",
+      discountRequested:
+        "I did an ERA Tech assessment and bought the parts through ERA Tech — I'd like to ask for 70 % off",
+      storeOptIn: "Tell me when ERA Store opens",
+    },
+    hints: {
+      phone: "Digits, spaces and + only. We may reply on WhatsApp.",
+      components: "One part per line helps, e.g. “ESP32 dev board × 2”.",
+      abstract: "What the project is, how it should work and where you are with it.",
+    },
+    placeholders: {
+      choose: "Choose…",
+    },
+    notes: {
+      sourcing: "Your quote is free. You pay for parts and delivery only after you approve it.",
+      assessment: "We send GH₵50 payment details first, then ask for your full abstract.",
+      consultation: "Nothing is booked until the team confirms a time and payment with you.",
+    },
+    errors: {
+      check: "Please complete the check and try again.",
+      tooMany: "Too many requests from your connection. Wait a minute and try again.",
+      server: "We couldn't send your request. Your details are still here — try again",
+      serverEmail: (email) => `, or email ${email}.`,
+      fixFields: "Please fix the highlighted fields.",
+      checkMissing: "The spam check isn't set up on this preview (no site key).",
+    },
+    sent: {
+      title: "Request sent",
+      reference: "Your reference",
+      copy: (email) =>
+        `We've emailed a copy to ${email} — check spam if it's not there in a few minutes.`,
+      again: "Send another request",
+    },
+  },
+
   notFound: {
     title: "Page not found",
     metaDescription: "This page doesn't exist on ERA Tech Project Desk.",
