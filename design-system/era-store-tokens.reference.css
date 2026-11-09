@@ -1,0 +1,435 @@
+/*
+ * ERA Store — design tokens (Tailwind CSS v4). The only place design values live (D-085).
+ *
+ * Colour: the eraaxis.com purple family (anchor #3B1174, accent #D0ADFF).
+ * Shape, spacing, shadow: EDOS's (tight 4/6/8/12 corners, 4px grid).
+ * Type: fixed steps per breakpoint (D-097, 07 §5.3). Motion: transitions.dev scale (D-091, 07 §7.1).
+ * Dark mode: true black (neutral #0A0A0A), not EDOS's navy.
+ *
+ * Every text colour is measured (WCAG 2.x) against every surface of its theme;
+ * the lowest ratio is in its comment. AA = 4.5 for words, 3 for UI and large
+ * text. Change a colour only after measuring it again (see guides/design-system.md).
+ *
+ * Tailwind's default theme is not loaded (packages/config/tailwind/preset.css), so a
+ * utility exists only if a token below creates it: bg-primary, text-text-muted,
+ * rounded-card, p-4, text-h1, font-semibold, ease-smooth-out. Tokens outside
+ * Tailwind's namespaces (shadows, z-layers, glass, durations…) are used through
+ * the variable form: `shadow-(--shadow-resting)`, `z-(--z-header)`.
+ *
+ * Light values live in @theme; dark values follow (data-theme="dark", or the system
+ * setting when no data-theme is set).
+ */
+
+@theme static {
+  /* ── Font ──────────────────────────────────────────────────────────────── */
+  --font-sans: "Inter Variable", "Inter", ui-sans-serif, system-ui, sans-serif; /* self-hosted name first (D-115) */
+  --default-font-family: var(--font-sans);
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ── Breakpoints (07 §8.1) ─────────────────────────────────────────────── */
+  --breakpoint-sm: 40rem;  /* 640  large phone / small tablet */
+  --breakpoint-md: 48rem;  /* 768  tablet */
+  --breakpoint-lg: 64rem;  /* 1024 laptop */
+  --breakpoint-xl: 80rem;  /* 1280 desktop */
+  --breakpoint-2xl: 96rem; /* 1536 wide (content capped at --content-max) */
+
+  /* ── Container queries (D-111, 07 §8.1): cards adapt to their column ─── */
+  --container-2xs: 16rem;  /* 256  compact product card */
+  --container-xs: 20rem;   /* 320  standard card + add to cart */
+  --container-sm: 24rem;   /* 384  standard with key specs line */
+  --container-md: 28rem;   /* 448  admin widgets */
+  --container-lg: 32rem;   /* 512  horizontal list row */
+  --container-xl: 40rem;   /* 640  admin widgets, tables → cards switch */
+
+  /* ── Brand ─────────────────────────────────────────────────────────────── */
+  --color-primary: #3b1174;          /* buttons, fills. White on it 13.83 */
+  --color-primary-hover: #2f0e5d;    /* D-167 darker fill; white on it 15.65 */
+  --color-primary-deep: #200940;     /* browser theme-color, deep bands */
+  --color-auth-brand-end: #2f0e5d;   /* A01 brand panel gradient end */
+  --color-primary-soft: #583589;     /* disabled primary fill */
+  --color-accent: #d0adff;           /* lilac; on primary 7.31, on deep 9.45 */
+  --color-primary-text: #3b1174;     /* brand as WORDS: links, prices. min 11.35 */
+  --color-on-primary: #ffffff;
+
+  /* ── Surfaces (lightest to strongest) ──────────────────────────────────── */
+  --color-background: #ffffff;       /* the page */
+  --color-surface: #ffffff;          /* cards */
+  --color-surface-soft: #f7f5f9;     /* sections, table stripes */
+  --color-surface-raised: #ffffff;   /* menus, dialogs, dropdowns */
+  --color-surface-strong: #f1eef5;   /* selected rows, chips */
+  --color-surface-hover: #ebe7f1;    /* hover on any of the above */
+
+  /* ── Words (min ratio across all four light surfaces) ──────────────────── */
+  --color-text-primary: #111111;     /* 15.50 */
+  --color-text-secondary: #4b5563;   /* 6.20 */
+  --color-text-muted: #606877;       /* 4.60 — labels, hints, placeholders */
+  --color-text-inverse: #ffffff;
+
+  /* ── Lines ─────────────────────────────────────────────────────────────── */
+  --color-border: #e5e7eb;           /* decorative only (1.24, not for controls) */
+  --color-border-soft: #ebe7f1;      /* decorative */
+  --color-ui-border: #76589e;        /* essential outlines: inputs, checkboxes. min 4.71 */
+  --color-focus-ring: #3b1174;       /* 2px outline, 3px offset. 13.83 */
+
+  /* ── Status: fills for dots/badges, -text for words ────────────────────── */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-danger-fill: #b91c1c;      /* solid danger button, ConfirmDialog final confirm only (D-116). White on it 6.47 */
+  --color-danger-fill-hover: #991b1b; /* D-167 darker fill; white on it 8.31 */
+  --color-info: #3b82f6;
+  --color-success-text: #047857;     /* 4.50 (exactly AA on hover; prefer page/card) */
+  --color-warning-text: #a14a08;     /* 4.93 */
+  --color-danger-text: #b91c1c;      /* 5.31 — sale price, errors */
+  --color-info-text: #1d4ed8;        /* 5.50 */
+  /* Vivid inverse-card ink (D-157); existing semantic fills in light, text inks in dark. */
+  --color-success-text-inverse: #10b981;
+  --color-warning-text-inverse: #f59e0b;
+  --color-danger-text-inverse: #ef4444;
+  --color-info-text-inverse: #3b82f6;
+  --color-rating: #b45309;           /* star fills (graphic, 3:1) */
+
+  /* ── Corners (EDOS): tight corners are the ERA look ────────────────────── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-control: var(--radius-sm);   /* buttons, inputs: 6 */
+  --radius-card: var(--radius-md);      /* cards, product tiles: 8 */
+  --radius-dialog: var(--radius-lg);    /* dialogs, sheets: 12 */
+  --radius-pill: 999px;                 /* chips, badges, quantity steppers */
+
+  /* ── Spacing: 4px grid (p-1 … p-8; no in-between values exist) ─────────── */
+  --spacing-0: 0px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;   /* phone side gutter */
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 48px;
+  --spacing-8: 64px;
+
+  /* ── Type: fixed steps (D-097). Phone values here; tablet/laptop below ── */
+  --text-hero: 2.25rem;              /* 36 → 48 → 64 */
+  --text-hero--line-height: 1.1;
+  --text-hero--letter-spacing: -0.022em;  /* D-119, provisional until the type prototype (07 §6.4) */
+  --text-h1: 1.75rem;                /* 28 → 32 → 40 */
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.021em;
+  --text-h2: 1.375rem;               /* 22 → 24 → 28 */
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.019em;
+  --text-h3: 1.125rem;               /* 18 → 20 → 20 */
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: 0em;
+  --text-lg: 1.125rem;               /* 18 */
+  --text-lg--line-height: 1.5;
+  --text-lg--letter-spacing: 0em;
+  --text-base: 1rem;                 /* 16 — body and inputs; never smaller on inputs (iOS zoom) */
+  --text-base--line-height: 1.5;
+  --text-base--letter-spacing: 0em;
+  --text-sm: 0.875rem;               /* 14 */
+  --text-sm--line-height: 1.45;
+  --text-sm--letter-spacing: 0em;
+  --text-xs: 0.75rem;                /* 12 — captions, never key information */
+  --text-xs--line-height: 1.4;
+  --text-xs--letter-spacing: 0em;
+
+  /* ── Motion: transitions.dev scale (D-091) ─────────────────────────────── */
+  --duration-stagger: 40ms;     /* per-item stagger offset */
+  --duration-micro: 80ms;       /* tooltip/path delay, shake segment */
+  --duration-quick: 150ms;      /* hover, press; modal/dropdown close, text swap */
+  --duration-fast: 250ms;       /* icon swap, dropdown/modal open, tabs, page slide */
+  --duration-medium: 350ms;     /* panel close, toast close */
+  --duration-slow: 400ms;       /* panel open, skeleton reveal, input clear */
+  --duration-very-slow: 500ms;  /* emphasis, badge appear, text reveal, success check */
+  --duration-reveal: 800ms;     /* ERA: scroll reveals */
+  --delay-filled-hover: 100ms;  /* D-167 halo starts before the fill darkens */
+
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);     /* most things */
+  --ease-filled-hover: ease;                             /* D-167 filled-button paint */
+  --ease-in-out: ease-in-out;                            /* icon/text swap, reveals */
+  --ease-out: ease-out;                                  /* tooltips */
+  --ease-linear: linear;                                 /* shimmer, skeleton pulse */
+  --ease-bounce: cubic-bezier(0.34, 1.36, 0.64, 1);      /* counts, badges */
+  --ease-bounce-strong: cubic-bezier(0.34, 3.85, 0.64, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);      /* ERA "liquid" chrome. Provisional: tuned in the glass prototype (07 §6.4) */
+
+  --distance-micro: 4px;   /* text swap */
+  --distance-small: 6px;   /* error shake (small segment) */
+  --distance-base: 8px;    /* badge reveal, page slide, error shake (large segment) */
+  --distance-medium: 12px; /* text reveal */
+  --distance-large: 30px;  /* check badge appear */
+
+  --scale-large: 0.96;     /* modal open/close */
+  --scale-medium: 0.97;    /* dropdown open */
+  --scale-small: 0.98;     /* tooltip open */
+  --scale-tiny: 0.99;      /* dropdown close */
+
+  --blur-small: 2px;       /* panel reveal, icon/text swap, skeleton reveal, number pop-in */
+  --blur-medium: 3px;      /* page slide, text reveal */
+  --blur-large: 8px;       /* success check open */
+
+  --default-transition-duration: var(--duration-quick);
+  --default-transition-timing-function: var(--ease-smooth-out);
+
+  /* ── Layers (07 §5.2) ──────────────────────────────────────────────────── */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-header: 20;
+  --z-bottom-nav: 30;
+  --z-sheet: 40;
+  --z-dialog: 50;
+  --z-toast: 60;
+
+  /* ── Layout and sizes ──────────────────────────────────────────────────── */
+  --content-max: 1440px;                  /* wide screens: content capped and centred (07 §8.1) */
+  --content-text-max: 72ch;               /* text blocks stay readable */
+  --auth-card-max: 400px;                 /* D-165: compact A01 card on every step */
+  --gutter: clamp(16px, 4vw, 32px);
+  --section-y: clamp(48px, 8vw, 96px);
+  --header-height: 64px;
+  --tap-min: 44px;                        /* smallest touch target */
+  --menu-max-height: 256px;               /* SelectField and menu panels (ui-kit §3.2) */
+  --sheet-max-height: 90dvh;              /* phone bottom sheet */
+  --control-sm: 36px;                     /* small buttons: admin dense tables, laptop only (ui-kit §3.1) */
+  --control-md: var(--tap-min);           /* buttons and fields */
+  --control-lg: 52px;
+  --icon-sm: 16px;                        /* icons (ui-kit §4) */
+  --icon-md: 20px;
+  --icon-field: 18px;                    /* D-165: decorative identity-field icons */
+  --icon-lg: 24px;
+  --icon-stroke: 1.75;
+  --orb-sm: 20px;                         /* thinking-orbs: only the two tuned sizes (R07 §3) */
+  --orb-lg: 64px;
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 3px;
+
+  /* ── Safe areas: iPhone and Android gesture bars, notches (07 §8.2) ──── */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* ── Image tile: product photos sit on this, never raw white in dark ──── */
+  --tile-bg: #f7f5f9;
+
+  /* ── Scrim under text on images/hero. Provisional: measure on the real hero (07 §6.3) */
+  --scrim: linear-gradient(to top, rgb(0 0 0 / 0.6), rgb(0 0 0 / 0) 60%);
+
+  /* ── ERA glass (07 §5.2, §6). Provisional: final blur and opacity come from
+        the build-week prototype on a mid-range Android (07 §6.4). Opacity is the
+        lowest that keeps muted, secondary and primary words at 4.5:1 over white or
+        black content, dimmed or not (D-120; checked by packages/config/src/design-rules/glass-contrast.test.ts) ── */
+  --glass-bg: rgb(255 255 255 / 0.91);
+  --glass-blur: 16px;
+  --glass-saturate: 1.4;
+  --glass-ring: inset 0 0 0 1px rgb(255 255 255 / 0.5);
+  --glass-sheen: linear-gradient(to bottom, rgb(255 255 255 / 0.06), rgb(255 255 255 / 0.02));
+  --glass-solid: var(--color-surface-raised);
+
+  /* ── Backdrop behind dialogs and sheets: dim only, no blur, so a glass panel over
+        it is the only blur on screen (07 §6.3). Provisional ─────────────────── */
+  --backdrop: rgb(10 10 10 / 0.45);
+}
+
+:root {
+  color-scheme: light;
+
+  /* ── Elevation (EDOS dual shadow: ambient + crisp). Kept out of @theme because
+        Tailwind would copy the light values into shadow-* classes and the dark
+        theme would never apply; use them as shadow-(--shadow-resting). ──────── */
+  --shadow-resting: 0 4px 20px rgb(17 17 17 / 0.04), 0 2px 8px rgb(17 17 17 / 0.06);
+  --shadow-primary-halo: 0 0 0 3px rgb(124 77 204 / 25%); /* D-167 fixed #7c4dcc, both themes */
+  --shadow-danger-halo: 0 0 0 3px rgb(239 68 68 / 25%);   /* D-167 fixed #ef4444, both themes */
+  --shadow-field-focus: 0 0 0 3px color-mix(in srgb, var(--color-focus-ring) 20%, transparent);
+  --shadow-field-focus-error: 0 0 0 3px color-mix(in srgb, var(--color-danger-text) 20%, transparent);
+  --shadow-hover: 0 8px 30px rgb(17 17 17 / 0.12), 0 4px 12px rgb(17 17 17 / 0.08);
+  --shadow-overlay: 0 20px 60px rgb(17 17 17 / 0.12);
+  --shadow-dialog: 0 24px 56px -12px rgb(15 15 15 / 0.30), 0 8px 20px -8px rgb(15 15 15 / 0.14);
+}
+
+/* Tablet and up: headings step up (D-097). */
+@media (width >= 48rem) {
+  :root {
+    --text-hero: 3rem;      /* 48 */
+    --text-h1: 2rem;        /* 32 */
+    --text-h2: 1.5rem;      /* 24 */
+    --text-h3: 1.25rem;     /* 20 */
+  }
+}
+
+/* Laptop and up. */
+@media (width >= 64rem) {
+  :root {
+    --text-hero: 4rem;      /* 64 */
+    --text-h1: 2.5rem;      /* 40 */
+    --text-h2: 1.75rem;     /* 28 */
+  }
+}
+
+/* True black. Elevation comes from lighter surfaces, not shadows (shadows
+   vanish on black). Brand fill is lifted to #7C4DCC so a button still reads
+   against the page; brand words use the lilac accent. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-primary: #7c4dcc;          /* white on it 5.54; vs page 3.57 (UI) */
+  --color-primary-hover: #7446c8;    /* D-167 darker fill; white on it 6.08 */
+  --color-primary-deep: #0a0a0a;
+  --color-auth-brand-end: #7446c8;
+  --color-primary-soft: #4a3473;
+  --color-accent: #d0adff;
+  --color-primary-text: #d0adff;     /* min 7.59 */
+  --color-on-primary: #ffffff;
+
+  --color-background: #0a0a0a;       /* page (not #000000: pure black smears on OLED scroll) */
+  --color-surface: #141414;          /* cards */
+  --color-surface-soft: #141414;
+  --color-surface-raised: #1c1c1c;   /* menus, dialogs */
+  --color-surface-strong: #262626;   /* selected, chips */
+  --color-surface-hover: #2a2a2a;
+
+  --color-text-primary: #f5f5f5;     /* min 13.17 */
+  --color-text-secondary: #b3b3b3;   /* min 6.85 */
+  --color-text-muted: #a1a1a1;       /* min 5.56 */
+  --color-text-inverse: #0a0a0a;
+
+  --color-border: rgb(255 255 255 / 0.08);
+  --color-border-soft: rgb(255 255 255 / 0.06);
+  --color-ui-border: #7a7a7a;        /* min 3.34 */
+  --color-focus-ring: #d0adff;       /* 10.47 on page */
+
+  --color-success-text: #6ee7b7;     /* min 9.42 */
+  --color-warning-text: #fbbf24;     /* min 8.60 */
+  --color-danger-text: #fca5a5;      /* min 7.56 */
+  --color-danger-fill: #dc2626;      /* white on it 4.83; vs page 4.10, vs raised 3.53 (UI) */
+  --color-danger-fill-hover: #b91c1c; /* D-167 darker fill; white on it 6.47 */
+  --color-info-text: #7dbbff;        /* min 7.12 */
+  --color-success-text-inverse: #047857;
+  --color-warning-text-inverse: #a14a08;
+  --color-danger-text-inverse: #b91c1c;
+  --color-info-text-inverse: #1d4ed8;
+  --color-rating: #fbbf24;
+
+  --shadow-resting: 0 0 0 1px rgb(255 255 255 / 0.06);
+  --shadow-hover: 0 0 0 1px rgb(255 255 255 / 0.12);
+  --shadow-overlay: 0 0 0 1px rgb(255 255 255 / 0.08), 0 20px 60px rgb(0 0 0 / 0.6);
+  --shadow-dialog: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 56px -12px rgb(0 0 0 / 0.7);
+
+  --tile-bg: #141414;
+  --glass-bg: rgb(20 20 20 / 0.9);
+  --glass-ring: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+  --backdrop: rgb(0 0 0 / 0.6);
+}
+
+/* No data-theme set: follow the system. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --color-primary: #7c4dcc;
+    --color-primary-hover: #7446c8; /* D-167; white on it 6.08 */
+    --color-primary-deep: #0a0a0a;
+    --color-auth-brand-end: #7446c8;
+    --color-primary-soft: #4a3473;
+    --color-primary-text: #d0adff;
+    --color-background: #0a0a0a;
+    --color-surface: #141414;
+    --color-surface-soft: #141414;
+    --color-surface-raised: #1c1c1c;
+    --color-surface-strong: #262626;
+    --color-surface-hover: #2a2a2a;
+    --color-text-primary: #f5f5f5;
+    --color-text-secondary: #b3b3b3;
+    --color-text-muted: #a1a1a1;
+    --color-text-inverse: #0a0a0a;
+    --color-border: rgb(255 255 255 / 0.08);
+    --color-border-soft: rgb(255 255 255 / 0.06);
+    --color-ui-border: #7a7a7a;
+    --color-focus-ring: #d0adff;
+    --color-success-text: #6ee7b7;
+    --color-warning-text: #fbbf24;
+    --color-danger-text: #fca5a5;
+    --color-danger-fill: #dc2626;
+    --color-danger-fill-hover: #b91c1c; /* D-167; white on it 6.47 */
+    --color-info-text: #7dbbff;
+    --color-success-text-inverse: #047857;
+    --color-warning-text-inverse: #a14a08;
+    --color-danger-text-inverse: #b91c1c;
+    --color-info-text-inverse: #1d4ed8;
+    --color-rating: #fbbf24;
+    --shadow-resting: 0 0 0 1px rgb(255 255 255 / 0.06);
+    --shadow-hover: 0 0 0 1px rgb(255 255 255 / 0.12);
+    --shadow-overlay: 0 0 0 1px rgb(255 255 255 / 0.08), 0 20px 60px rgb(0 0 0 / 0.6);
+    --shadow-dialog: 0 0 0 1px rgb(255 255 255 / 0.08), 0 24px 56px -12px rgb(0 0 0 / 0.7);
+    --tile-bg: #141414;
+    --glass-bg: rgb(20 20 20 / 0.9);
+    --glass-ring: inset 0 0 0 1px rgb(255 255 255 / 0.08);
+    --backdrop: rgb(0 0 0 / 0.6);
+  }
+}
+
+/* Glass falls back to solid where blur is missing or people ask for less
+   transparency (07 §6.3 rules 2–3). The selector list matches the theme blocks
+   above in weight and comes after them, so it wins in dark mode too. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root,
+  :root[data-theme],
+  :root:not([data-theme]) {
+    --glass-bg: var(--glass-solid);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root,
+  :root[data-theme],
+  :root:not([data-theme]) {
+    --glass-bg: var(--glass-solid);
+    --glass-blur: 0px;
+  }
+}
+
+/* More contrast (07 §9, D-118): glass turns solid with a visible border, and muted
+   words use the normal words colour. */
+@media (prefers-contrast: more) {
+  :root,
+  :root[data-theme],
+  :root:not([data-theme]) {
+    --glass-bg: var(--glass-solid);
+    --glass-blur: 0px;
+    --glass-ring: inset 0 0 0 1px var(--color-ui-border);
+    --glass-sheen: none;
+    --color-text-muted: var(--color-text-primary);
+  }
+}
+
+/* Reduced motion: nothing travels or scales, fades stay (07 §7.1). */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --distance-micro: 0px;
+    --distance-small: 0px;
+    --distance-base: 0px;
+    --distance-medium: 0px;
+    --distance-large: 0px;
+    --scale-large: 1;
+    --scale-medium: 1;
+    --scale-small: 1;
+    --scale-tiny: 1;
+  }
+}
+
+/* Safe-area helpers for bottom pill, sticky bars and full-bleed headers. */
+@utility pt-safe {
+  padding-top: var(--safe-top);
+}
+@utility pb-safe {
+  padding-bottom: var(--safe-bottom);
+}
+@utility px-safe {
+  padding-left: var(--safe-left);
+  padding-right: var(--safe-right);
+}
