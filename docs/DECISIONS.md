@@ -2,7 +2,7 @@
 
 ## 2026-11-09 — HTML email alternatives, local previews and sharing
 
-- Preserve both current plain-text bodies and add nodemailer's `html` field, yielding
+- Preserve the visitor plain-text body and update only the team's details heading; add nodemailer's `html` field, yielding
   `multipart/alternative`. Use inline styles, tables, a 600 px maximum, existing colour tokens and no
   external images/fonts/tracking. Explicit light surfaces and text colours keep the design legible
   in clients that honour them; inbox testing is still needed for client-specific dark-mode changes.
@@ -21,8 +21,10 @@
 - SEO integration tests read actual `build/client` HTML, so run `pnpm build` before `pnpm test`.
 - Repair the contrast script's Windows entry-point check so `pnpm check:contrast` actually measures
   and reports every pair on this platform.
-- Keep this branch local until the owner has reviewed the email HTML files and committed share
-  image; push and open the single PR afterwards. No merge is authorised.
+- The owner reviewed the previews and authorised the six follow-up fixes, branch push and one PR.
+  No merge is authorised. Show each reference once in the visible HTML header; the team table starts
+  at the shown price. Use "Visitor details" in both team alternatives and a soft discount callout only
+  when requested. The share-image subtitle includes students and uses a larger size for small previews.
 
 Newest last. Each entry: date — decision — why/notes.
 
@@ -67,7 +69,7 @@ The section and its nav link stay hidden until 3 or more real, approved photos e
 
 ## 2026-11-09 — Repo
 
-Private `FranzAfun/eratechgh`, pnpm, `main` protected, short PRs, Netlify preview builds per PR.
+Public `FranzAfun/eratechgh`, pnpm, `main` protected, short PRs, Netlify preview builds per PR.
 
 ## 2026-11-09 — Implementation notes (scaffold)
 

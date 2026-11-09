@@ -2,7 +2,7 @@
 
 - **Updated:** 2026-11-09 (HTML emails and sharing)
 - **Live:** [eratechgh.com](https://eratechgh.com).
-- **Where we are:** HTML emails, local previews, share image and SEO basics are complete on the local `feat/html-emails` branch, based on `main`. Build, lint, all 82 tests and all 76 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Waiting for the owner's browser review before pushing/opening the PR; nothing merged by this work.
+- **Where we are:** HTML emails, local previews, share image and SEO basics are complete on `feat/html-emails`, based on `main`. The owner approved the previews and requested six final refinements, now implemented. Build, lint, all 84 tests and all 76 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Push and one PR are authorised; nothing merged by this work.
 
 ## Email delivery and Netlify contexts
 
@@ -26,7 +26,8 @@ The `CONTEXT` name is supplied by Netlify. The same names may be configured in a
 
 ## Current work: HTML emails and sharing
 
-- Team and visitor HTML alternatives retain the existing text bodies. Inline, 600 px table layout,
+- The visitor plain-text body is unchanged; the team plain-text body changes only "Your details" to
+  "Visitor details". Both have HTML alternatives with an inline, 600 px table layout,
   token colours, hidden escaped preheaders, validated/encoded reply links, no remote assets.
 - `pnpm preview:emails` writes fictional `.email-previews/team.html` and
   `.email-previews/visitor.html`; the whole preview directory is ignored.
@@ -34,15 +35,20 @@ The `CONTEXT` name is supplied by Netlify. The same names may be configured in a
   decoder. The 1200 × 630 PNG is committed; normal builds never run the generator.
 - Centralised route Open Graph/Twitter/canonical metadata, 404 noindex without canonical,
   `robots.txt` and the five-route sitemap. Build-output tests cover the prerendered pages.
-- Preview/screenshot files stay uncommitted. Owner review and PR remain pending.
+- The owner approved the previews. Final refinements put the visitor reference chip in its dark
+  header, remove duplicate reference/service table rows from the team HTML, use "Visitor details"
+  in both team alternatives, and show the requested discount in a soft callout only when requested.
+  Preview/screenshot files stay uncommitted; one PR is being opened without merging.
 - Self-review: 4 px spacing, 6/8 px corners, aligned content, token-only email colours, hidden
   preheaders, keyboard-accessible links and 48 px reply buttons. Browser review covers 360/390 px
   phones and desktop; dark-preference emulation keeps the explicit light card legible. No external
   assets or motion in emails. Actual mail-client rendering and live SMTP remain pending.
-- Text compatibility: compared all three services and both consultation prices against `main`;
-  all eight plain-text bodies match byte for byte. Tests cover HTML escaping, header controls,
+- Text compatibility: compared all three services and both consultation prices against the approved
+  preview baseline; all four visitor bodies are unchanged and all four team bodies change only the
+  details heading. Tests cover HTML escaping, header controls,
   validated/encoded mailto links, multipart output and actual prerendered metadata.
-- Share image: 1200 × 630, 167,937 bytes; deterministic across local Node 24 and pinned Node 26.
+- Share image: 1200 × 630, 173,643 bytes; manually regenerated with the larger subtitle "Parts,
+  project reviews and expert advice for students and makers in Ghana". Alt text matches the image.
   Normal build leaves the image unchanged. Local previews are in the ignored `.email-previews/`.
 - Gate maintenance: fixed the Windows contrast CLI entry point and the pre-existing missing final
   newline in `vite.config.js`; replaced one old named email test fixture with a sample address.
@@ -67,7 +73,8 @@ Stages 1–10 and v2 polish are present in the `main` baseline for this work.
 
 ## Next
 
-Owner browser review of both email previews and `public/og.png`, then one PR from `feat/html-emails`.
+Push `feat/html-emails` and open one PR for review; do not merge. Actual mail-client/inbox acceptance
+remains separate from the approved browser previews.
 
 ## Need from the owner
 
