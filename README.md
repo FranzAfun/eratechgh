@@ -5,7 +5,7 @@ service â€” component sourcing, a project assessment or an expert consultation â
 form. A single Netlify Function emails the ERA Tech team and sends the visitor a short confirmation.
 Nothing is stored.
 
-Scope and content: [`docs/BRIEF.md`](docs/BRIEF.md). Look: [`design-system/DESIGN-SYSTEM.md`](design-system/DESIGN-SYSTEM.md).
+Scope and content: [`docs/BRIEF.md`](docs/BRIEF.md). Look: [`docs/DESIGN-DIRECTION.md`](docs/DESIGN-DIRECTION.md) (v2, wins where it differs) and [`design-system/DESIGN-SYSTEM.md`](design-system/DESIGN-SYSTEM.md).
 Rules: [`AGENTS.md`](AGENTS.md). Decisions: [`docs/DECISIONS.md`](docs/DECISIONS.md). Progress: [`docs/STATUS.md`](docs/STATUS.md).
 
 ## Stack
@@ -29,6 +29,7 @@ pnpm preview       # serve build/client
 pnpm lint          # ESLint + Prettier check
 pnpm format        # Prettier write
 pnpm test          # Vitest
+pnpm check:contrast  # measure every colour pair the site uses; fails below WCAG AA
 ```
 
 To run the pages **and** the function together locally, use the Netlify CLI (not a repo dependency):

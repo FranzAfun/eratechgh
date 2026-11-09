@@ -1,7 +1,7 @@
 # Status
 
-- **Updated:** 2026-11-09 (stage 9)
-- **Where we are:** Stages 1–5 merged. v2 visual upgrade in progress: stages 6–9 done (brand foundation, header and footer, dark hero, home sections); stage 10 (request page) next.
+- **Updated:** 2026-11-09 (after stage 10)
+- **Where we are:** Stages 1–5 merged. v2 visual upgrade (stages 6–10) done and pushed as stacked PRs; nothing merged. Stopped — waiting for Franz.
 
 ## Done
 
@@ -16,12 +16,13 @@
 | 7 Header and footer | `feat/header-footer`    | [FranzAfun/eratechgh#7](https://github.com/FranzAfun/eratechgh/pull/7) | Fixed glass header, right-side drawer (portal, focus trap, scroll lock), dark 4-column footer                                                       |
 | 8 Dark hero         | `feat/dark-hero`        | [FranzAfun/eratechgh#8](https://github.com/FranzAfun/eratechgh/pull/8) | Dark hero with our own living PCB and glass quote card, purple closing band                                                                         |
 | 9 Home sections     | `feat/home-sections`    | [FranzAfun/eratechgh#9](https://github.com/FranzAfun/eratechgh/pull/9) | Services cards, glass design band with trace-draw, connected steps, ERA Store split card with Dev Board photo, FAQ accordion, reveals, sharper copy |
+| 10 Request page     | `feat/request-page`     | PR_10                                                                  | Dark page band, overlapping form card, picker cards, sticky "What happens next", required consent (form, rules, function, email)                    |
 
-Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10).
+Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10). After each merge the next PR's diff shrinks to its own stage.
 
 ## Next
 
-Stage 10 — `feat/request-page`: dark page header, overlapping form card, picker cards, side card, consent gate.
+Stopped — waiting for Franz.
 
 ## Need from Franz
 
@@ -29,17 +30,23 @@ Stage 10 — `feat/request-page`: dark page header, overlapping form card, picke
 2. **Sending mailbox + SMTP login** (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`). Recommendation: a dedicated no-reply mailbox on the ERA domain, port 587, with SPF, DKIM and DMARC set so confirmations don't land in spam.
 3. **Turnstile keys** for eratechgh.com (Managed widget): site key → `VITE_TURNSTILE_SITE_KEY`, secret → `TURNSTILE_SECRET_KEY`, production context only. Previews: Cloudflare's test keys (README).
 4. **Test inbox for deploy previews.** Recommendation: set `TEAM_INBOX` + SMTP for the deploy-preview context to a test mailbox. Without SMTP, previews dry-run and write the emails (with visitor details) to the function log.
-5. **Footer / fallback contact email** (`teamEmail` in `src/content/site.js`). Until then it's hidden and the error message just says "try again".
-6. **ERA Store offer list** — confirm each item (components and modules, Build Packs, ERA Dev Board, delivery + pickup, Mobile Money + card).
-7. **Real, approved project photos** (optional). "Our work" stays hidden until there are 3+.
-8. **Copy review.** Home and form copy is being rewritten in this run (stages 9–10). Please read it once.
+5. **Footer / fallback contact email** (`teamEmail` in `src/content/site.js`). Until then the footer links to the request form and the error message just says "try again".
+6. **Privacy policy check.** The consent box now links to https://eraaxis.com/privacy. Please confirm that policy covers this site and these requests (it is written for ERA, not specifically for Project Desk).
+7. **ERA Store offer list** — confirm each item (components and modules, Build Packs, ERA Dev Board, delivery + pickup, Mobile Money + card).
+8. **Real, approved project photos** (optional). "Our work" stays hidden until there are 3+.
+9. **Copy review.** Home and request copy were rewritten in stages 8–10 (hero, section titles, service summaries, FAQ, request page, consent wording from DESIGN-DIRECTION.md §7). The hero card's part names ("Microcontroller board", "Soil moisture sensor", "LEDs and resistors") are illustrative examples. Please read it once.
+10. **Dev Board photo alt text** — "The ERA Dev Board: a blue board with a four-battery holder, power switch and two breadboard strips". Correct it if the description is off.
 
 ## Known issues
 
 - Turnstile couldn't be reached from the build sandbox (network blocks Cloudflare); the widget was tested with a stub. Check the real widget on a Netlify preview with the test keys.
 - The function was tested with Vitest and a local end-to-end run (dry run), not on Netlify itself: `rateLimit` and the generated `_headers` CSP need a check on the first preview deploy.
 - Netlify's support for Node 26.13.0 and pnpm 12.18.0 is assumed from the pins; if the first build fails on either, lower `NODE_VERSION`/`PNPM_VERSION` in `netlify.toml`.
+- Screenshots were taken with headless Chromium only (360, 390, 768, 1024, 1280, 1440 px + open drawer); not checked in Safari/Firefox or on real phones. `backdrop-filter` has a solid fallback.
 - Phones and tablets (< 1024 px): the living board sits faintly (25 %) behind the hero words and the glass quote card is hidden, so the first screen stays readable.
+- The locked Send button (before consent) is shown at 50 % opacity; disabled controls are exempt from contrast rules, and the hint under it explains what to do.
+- The FAQ accordion needs JavaScript to open answers (the answers are in the HTML for search engines).
+- The `dev-board-front.webp` asset looks like a 3D render rather than a photo, so the site uses the `dev-board-main-*` photos only (the render is not shipped).
 - Without `VITE_TURNSTILE_SITE_KEY` at build time the check is empty and sending says the check isn't set up.
 - Deploy previews without SMTP log emails including visitor details to the function log (see Need from Franz #4).
 
@@ -47,12 +54,15 @@ Stage 10 — `feat/request-page`: dark page header, overlapping form card, picke
 
 ```bash
 pnpm install
-pnpm build && pnpm lint && pnpm test
+pnpm build && pnpm lint && pnpm test && pnpm check:contrast
 ```
 
 Pages only: `pnpm preview`. Pages + function: create `.env` with the Turnstile test keys from the README
 (leave SMTP empty for a dry run) and run `npx netlify-cli dev`.
 
-Click through: `/` (nav anchors, service buttons, FAQ) → `/request` (pick a service, URL changes, values
-stay) → send empty (first error focused and shakes) → fill in and send (busy "Sending…", then "Request sent"
-with a reference; the emails appear in the terminal in dry run). Unknown URL → 404.
+Click through:
+
+- `/` — the header is transparent over the dark hero and turns glass after a short scroll; pulses run on the board and light the LEDs. Scroll: sections fade up, design tiles draw in. FAQ opens with Enter/Space.
+- Below 1024 px, open ☰ — the drawer slides in, focus is on ✕, Tab stays inside, Esc closes and returns focus, and a link closes it and scrolls to the section.
+- `/request` → pick a card (URL changes, typed values stay) → Send is greyed out: pressing it focuses the privacy box and shows its error → tick it → send empty (first error focused, shakes once) → fill in and send ("Sending…", then "Request sent" with a reference; dry-run emails in the terminal show "Consent: yes").
+- Unknown URL → 404.
