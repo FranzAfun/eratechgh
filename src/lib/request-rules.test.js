@@ -10,7 +10,7 @@ import {
 
 const today = "2026-11-09";
 const details = {
-  fullName: "Kwame O'Neil-Boateng Jr.",
+  fullName: "Sample O'Placeholder-Test Jr.",
   email: "kwame.boateng@example.com",
   phone: "+233 24 555 0101",
   town: "Kumasi",
@@ -66,8 +66,8 @@ describe("validateRequest — bad input", () => {
   it.each([
     ["fullName", "A"],
     ["fullName", "A".repeat(81)],
-    ["fullName", "Ama2 Mensah"],
-    ["fullName", "Ama <script>"],
+    ["fullName", "Sample2 Placeholder"],
+    ["fullName", "Sample <script>"],
     ["email", "not-an-email"],
     ["email", `${"a".repeat(250)}@x.com`],
     ["email", "ama@example.com\r\nBcc: x@y.z"],
