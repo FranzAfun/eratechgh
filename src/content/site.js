@@ -14,6 +14,16 @@ export const productName = "Project Desk";
 export const legalName = "ERA Technologies";
 /** "ERA Tech · Project Desk": wordmark, home <title>, the end of every other <title>. */
 export const siteTitle = `${brandName} · ${productName}`;
+/** Canonical production origin for metadata and sharing. */
+export const siteBaseUrl = "https://eratechgh.com";
+const shareSubtitle = "Parts, project reviews and expert advice for students and makers in Ghana";
+export const shareImage = {
+  path: "/og.png",
+  width: 1200,
+  height: 630,
+  subtitle: shareSubtitle,
+  alt: `${siteTitle} — ${shareSubtitle}`,
+};
 
 export const site = {
   brandName,

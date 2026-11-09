@@ -1,5 +1,31 @@
 # Decisions
 
+## 2026-11-09 — HTML email alternatives, local previews and sharing
+
+- Preserve the visitor plain-text body and update only the team's details heading; add nodemailer's `html` field, yielding
+  `multipart/alternative`. Use inline styles, tables, a 600 px maximum, existing colour tokens and no
+  external images/fonts/tracking. Explicit light surfaces and text colours keep the design legible
+  in clients that honour them; inbox testing is still needed for client-specific dark-mode changes.
+- Escape every dynamic HTML value, including hidden preheaders. Shared email validation must pass
+  before any visitor address becomes a link; URI-encode the address and reply subject. Double-quoted
+  addresses remain invalid under the existing shared rules. Both subjects strip control characters.
+- Local previews contain only fictional placeholders, send nothing and live in the ignored
+  `.email-previews/` directory. Receiving is forwarded via ImprovMX to the team inbox; the forwarding
+  destination is never documented. SMTP credentials and all environment values stay out of the repo.
+- The approved share image is an original SVG design rendered by pinned `@resvg/resvg-js` with
+  Fontsource Inter; pinned `wawoff2` decodes its WOFF2 to a temporary TTF. `pnpm og:image` is manual,
+  never a build hook. Commit `public/og.png`; do not commit preview HTML or screenshots.
+- `siteBaseUrl` is the production origin; `pageMeta` owns all shared metadata. Canonicals and Open
+  Graph URLs omit trailing slashes, queries and fragments. Both prerendered 404 files have noindex
+  and no canonical. The sitemap lists exactly the five public routes.
+- SEO integration tests read actual `build/client` HTML, so run `pnpm build` before `pnpm test`.
+- Repair the contrast script's Windows entry-point check so `pnpm check:contrast` actually measures
+  and reports every pair on this platform.
+- The owner reviewed the previews and authorised the six follow-up fixes, branch push and one PR.
+  No merge is authorised. Show each reference once in the visible HTML header; the team table starts
+  at the shown price. Use "Visitor details" in both team alternatives and a soft discount callout only
+  when requested. The share-image subtitle includes students and uses a larger size for small previews.
+
 Newest last. Each entry: date — decision — why/notes.
 
 ## 2026-11-09 — Rendering
@@ -43,7 +69,7 @@ The section and its nav link stay hidden until 3 or more real, approved photos e
 
 ## 2026-11-09 — Repo
 
-Private `FranzAfun/eratechgh`, pnpm, `main` protected, short PRs, Netlify preview builds per PR.
+Public `FranzAfun/eratechgh`, pnpm, `main` protected, short PRs, Netlify preview builds per PR.
 
 ## 2026-11-09 — Implementation notes (scaffold)
 

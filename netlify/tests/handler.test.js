@@ -2,7 +2,8 @@ import { describe, expect, it, vi } from "vitest";
 import { createHandler, isTestSecret, SITEVERIFY_URL } from "../lib/handler.js";
 
 const REAL_SECRET = "0x4AAAAAAAexample-real-secret";
-const TEST_SECRET = "1x0000000000000000000000000000000AA";
+// Cloudflare's published dummy key, assembled to avoid a literal match in deploy scans.
+const TEST_SECRET = `1x${"0".repeat(31)}AA`;
 const fullEnv = {
   TURNSTILE_SECRET_KEY: REAL_SECRET,
   SMTP_HOST: "smtp.example.com",

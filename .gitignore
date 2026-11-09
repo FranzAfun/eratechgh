@@ -3,6 +3,7 @@ build/
 .react-router/
 .netlify/
 coverage/
+.email-previews/
 .env*
 !.env.example
 .DS_Store

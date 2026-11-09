@@ -1,6 +1,7 @@
 build/
 .react-router/
 .netlify/
+.email-previews/
 pnpm-lock.yaml
 design-system/
 docs/BRIEF.md

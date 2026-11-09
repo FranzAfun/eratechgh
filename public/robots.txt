@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://eratechgh.com/sitemap.xml

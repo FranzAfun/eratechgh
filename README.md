@@ -26,9 +26,11 @@ pnpm install       # install exact versions from the lockfile
 pnpm dev           # local dev server (pages only)
 pnpm build         # prerender every page to build/client and write the CSP to build/client/_headers
 pnpm preview       # serve build/client
+pnpm preview:emails  # write fictional team + visitor HTML previews locally; sends nothing
+pnpm og:image      # manually regenerate the committed public/og.png (never runs during build)
 pnpm lint          # ESLint + Prettier check
 pnpm format        # Prettier write
-pnpm test          # Vitest
+pnpm test          # Vitest, including SEO checks against build/client; run pnpm build first
 pnpm check:contrast  # measure every colour pair the site uses; fails below WCAG AA
 ```
 
@@ -49,16 +51,11 @@ Names only — see `.env.example`. Real values live in Netlify's environment set
 
 ### Local development with Turnstile test keys
 
-Cloudflare publishes public test keys that need no account. Put these in a local `.env` (git-ignored):
-
-```bash
-VITE_TURNSTILE_SITE_KEY=1x00000000000000000000AA       # always passes
-TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA  # always passes
-```
-
-Other test keys: site key `2x00000000000000000000AB` (always blocks), secret
-`2x0000000000000000000000000000000AA` (always fails). With test keys the function skips the hostname
-check (Cloudflare reports a dummy hostname for them).
+Use Cloudflare's published Turnstile test keys in a local `.env` (git-ignored):
+`VITE_TURNSTILE_SITE_KEY` and `TURNSTILE_SECRET_KEY`. Get the values from
+[Cloudflare's testing documentation](https://developers.cloudflare.com/turnstile/troubleshooting/testing/).
+With test keys the function skips the hostname check (Cloudflare reports a dummy hostname for them).
+Only variable names are documented here; never copy real values into the repo.
 
 The form posts JSON to `/api/request` (`netlify/functions/request.mjs`, logic in `netlify/lib/`). The
 validation rules are shared with the form: `src/lib/request-rules.js`.
@@ -66,6 +63,30 @@ validation rules are shared with the form: `src/lib/request-rules.js`.
 If the `SMTP_*` variables are missing and the Netlify context is not `production`, the function does a
 **dry run**: it logs both emails instead of sending them. In production, missing config returns a 500
 and logs a clear line.
+
+## Emails
+
+Each valid request sends two messages through nodemailer as `multipart/alternative`: the existing
+plain-text body and an HTML version with inline styles, a table layout and no remote images, fonts or
+tracking. The team receives every field in form order, the reference, shown price, consent and GMT
+time, with the visitor as Reply-To. The visitor receives their first name, service, reference and next
+steps only; their submitted project text is never echoed. Both include a hidden inbox preheader and
+one reply button. HTML values are escaped and email links use shared validation and URI encoding.
+
+Receiving: `projects@eratechgh.com`, forwarded via ImprovMX to the team inbox. Sending: Resend SMTP
+from `no-reply@eratechgh.com`; the domain is verified (deployment details supplied by the owner).
+Neither the forwarding destination nor SMTP credentials belong in the repo.
+
+Run `pnpm preview:emails`, then open `.email-previews/team.html` and `.email-previews/visitor.html`
+directly in a browser. These use obvious fictional placeholders, read no environment variables and
+send nothing. The directory is git-ignored; do not commit previews or screenshots. Browser previews
+are useful for layout review; actual mail-client dark-mode/Outlook rendering still needs inbox checks.
+
+The shared link-preview image is `public/og.png`. Run `pnpm og:image` by hand only when changing it,
+then review and commit the PNG. The generator uses pinned `@resvg/resvg-js`, the installed Fontsource
+Inter font and `wawoff2` to decode that font locally. No browser dependency is used. Normal builds
+copy the committed PNG and never regenerate it. Route metadata is centralised in `src/lib/meta.js`,
+with the production base URL in `src/content/site.js`.
 
 ## Deploy (Netlify)
 

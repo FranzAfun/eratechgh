@@ -1,7 +1,62 @@
 # Status
 
-- **Updated:** 2026-11-09 (v2 polish)
-- **Where we are:** Stages 1–10 merged. v2 polish (branding, dark top bands, nav, copy fixes) is in one PR on `fix/v2-polish`; nothing merged. Stopped — waiting for the owner.
+- **Updated:** 2026-11-09 (HTML emails and sharing)
+- **Live:** [eratechgh.com](https://eratechgh.com).
+- **Where we are:** HTML emails, local previews, share image and SEO basics are pushed on `feat/html-emails`, based on `main`, in [PR #14](https://github.com/FranzAfun/eratechgh/pull/14). The owner approved the previews and the six requested refinements are complete. Build, lint, all 84 tests and all 76 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. The PR is open for review; nothing merged by this work.
+
+## Email delivery and Netlify contexts
+
+Deployment details supplied by the owner: receiving at `projects@eratechgh.com`, forwarded via
+ImprovMX to the team inbox; sending via Resend SMTP from `no-reply@eratechgh.com`, with the domain
+verified. No forwarding destination or credentials are recorded here. Live SMTP delivery and Netlify
+configuration have not been inspected as part of this local change.
+
+Set these names separately in Netlify's environment settings for each context. Values stay there.
+
+| Context                    | Build-time names          | Function names                                                                                        |
+| -------------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Production                 | `VITE_TURNSTILE_SITE_KEY` | `TURNSTILE_SECRET_KEY`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `TEAM_INBOX` |
+| Deploy preview             | `VITE_TURNSTILE_SITE_KEY` | `TURNSTILE_SECRET_KEY`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `TEAM_INBOX` |
+| Branch deploy (if enabled) | `VITE_TURNSTILE_SITE_KEY` | `TURNSTILE_SECRET_KEY`, `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`, `TEAM_INBOX` |
+
+Production uses the verified site/mail setup. Non-production contexts use Turnstile test credentials
+and isolated test inboxes when sending; otherwise missing SMTP configuration produces a dry run.
+The `CONTEXT` name is supplied by Netlify. The same names may be configured in a git-ignored local
+`.env` for Netlify CLI development. Never put variable values or real customer details in docs.
+
+## Current work: HTML emails and sharing
+
+- The visitor plain-text body is unchanged; the team plain-text body changes only "Your details" to
+  "Visitor details". Both have HTML alternatives with an inline, 600 px table layout,
+  token colours, hidden escaped preheaders, validated/encoded reply links, no remote assets.
+- `pnpm preview:emails` writes fictional `.email-previews/team.html` and
+  `.email-previews/visitor.html`; the whole preview directory is ignored.
+- `pnpm og:image` manually creates `public/og.png` using pinned resvg, Fontsource Inter and a WOFF2
+  decoder. The 1200 × 630 PNG is committed; normal builds never run the generator.
+- Centralised route Open Graph/Twitter/canonical metadata, 404 noindex without canonical,
+  `robots.txt` and the five-route sitemap. Build-output tests cover the prerendered pages.
+- The owner approved the previews. Final refinements put the visitor reference chip in its dark
+  header, remove duplicate reference/service table rows from the team HTML, use "Visitor details"
+  in both team alternatives, and show the requested discount in a soft callout only when requested.
+  Preview/screenshot files stay uncommitted; [PR #14](https://github.com/FranzAfun/eratechgh/pull/14)
+  is open without merging.
+- Self-review: 4 px spacing, 6/8 px corners, aligned content, token-only email colours, hidden
+  preheaders, keyboard-accessible links and 48 px reply buttons. Browser review covers 360/390 px
+  phones and desktop; dark-preference emulation keeps the explicit light card legible. No external
+  assets or motion in emails. Actual mail-client rendering and live SMTP remain pending.
+- Text compatibility: compared all three services and both consultation prices against the approved
+  preview baseline; all four visitor bodies are unchanged and all four team bodies change only the
+  details heading. Tests cover HTML escaping, header controls,
+  validated/encoded mailto links, multipart output and actual prerendered metadata.
+- Share image: 1200 × 630, 173,643 bytes; manually regenerated with the larger subtitle "Parts,
+  project reviews and expert advice for students and makers in Ghana". Alt text matches the image.
+  Normal build leaves the image unchanged. Local previews are in the ignored `.email-previews/`.
+- Gate maintenance: fixed the Windows contrast CLI entry point and the pre-existing missing final
+  newline in `vite.config.js`; replaced one old named email test fixture with a sample address.
+- Netlify's initial preview failed because its secret scanner matched the configured
+  `TURNSTILE_SECRET_KEY` against Cloudflare's published dummy key in `netlify/tests/handler.test.js`.
+  The fixture now assembles the same public key instead of storing the full literal. Scanning and
+  Netlify settings remain unchanged. See PR #14 for the current preview checks.
 
 ## Done
 
@@ -19,19 +74,24 @@
 | 10 Request page     | `feat/request-page`     | [FranzAfun/eratechgh#10](https://github.com/FranzAfun/eratechgh/pull/10) | Dark page band, overlapping form card, picker cards, sticky "What happens next", required consent (form, rules, function, email)                                                                                                                       |
 | v2 polish           | `fix/v2-polish`         | [FranzAfun/eratechgh#11](https://github.com/FranzAfun/eratechgh/pull/11) | Wordmark \"ERA Tech · Project Desk\", names in one place, ERA Technologies in formal spots, dark top band + transparent header on request and 404 pages, ERA Store in nav, paid design FAQ, sourcing delivery wording, hero centred, no personal names |
 
-Stages 1–10 are merged. The v2 polish PR is based on `main`.
+Stages 1–10 and v2 polish are present in the `main` baseline for this work.
 
 ## Next
 
-Stopped — waiting for the owner.
+Review [PR #14](https://github.com/FranzAfun/eratechgh/pull/14); do not merge as part of this task.
+Actual mail-client/inbox acceptance remains separate from the approved browser previews.
 
 ## Need from the owner
 
-1. **Team inbox address** (`TEAM_INBOX`). Recommendation: a shared Project Desk mailbox or alias, not one person's inbox.
-2. **Sending mailbox + SMTP login** (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`). Recommendation: a dedicated no-reply mailbox on the ERA domain, port 587, with SPF, DKIM and DMARC set so confirmations don't land in spam.
-3. **Turnstile keys** for eratechgh.com (Managed widget): site key → `VITE_TURNSTILE_SITE_KEY`, secret → `TURNSTILE_SECRET_KEY`, production context only. Previews: Cloudflare's test keys (README).
-4. **Test inbox for deploy previews.** Recommendation: set `TEAM_INBOX` + SMTP for the deploy-preview context to a test mailbox. Without SMTP, previews dry-run and write the emails (with visitor details) to the function log.
-5. **Footer / fallback contact email** (`teamEmail` in `src/content/site.js`). Until then the footer links to the request form and the error message just says "try again".
+1. **Inbox acceptance of the HTML emails**, including dark mail apps and Outlook. The public inbox,
+   verified sending domain and providers have been supplied; SMTP secrets stay in Netlify only.
+2. **Per-context configuration acceptance.** Confirm the environment-name table above matches the
+   intended Netlify contexts; no configuration or credentials have been read or changed here.
+3. **Live Turnstile acceptance** for eratechgh.com; local tests do not prove the deployed widget.
+4. **Test inbox for deploy previews.** Keep preview delivery isolated. Without SMTP, previews dry-run
+   and write the emails (with visitor details) to the function log.
+5. **Footer / fallback contact email:** `teamEmail` in `src/content/site.js` is still hidden; this
+   email/SEO task does not change the footer.
 6. **Privacy policy check.** The consent box now links to https://eraaxis.com/privacy. Please confirm that policy covers this site and these requests (it is written for ERA, not specifically for Project Desk).
 7. **ERA Store offer list** — confirm each item (components and modules, Build Packs, ERA Dev Board, delivery + pickup, Mobile Money payments). Card payments are not mentioned anywhere until confirmed.
 8. **Real, approved project photos** (optional). "Our work" stays hidden until there are 3+.
@@ -42,14 +102,15 @@ Stopped — waiting for the owner.
 
 - Turnstile couldn't be reached from the build sandbox (network blocks Cloudflare); the widget was tested with a stub. Check the real widget on a Netlify preview with the test keys.
 - The function was tested with Vitest and a local end-to-end run (dry run), not on Netlify itself: `rateLimit` and the generated `_headers` CSP need a check on the first preview deploy.
-- Netlify's support for Node 26.13.0 and pnpm 12.18.0 is assumed from the pins; if the first build fails on either, lower `NODE_VERSION`/`PNPM_VERSION` in `netlify.toml`.
+- Local checks pass with the pinned Node 26.13.0 and pnpm 12.18.0. Netlify's runtime configuration
+  has not been inspected in this task.
 - Screenshots were taken with headless Chromium only (360, 390, 768, 1024, 1280, 1440 px + open drawer); not checked in Safari/Firefox or on real phones. `backdrop-filter` has a solid fallback.
 - Phones and tablets (< 1024 px): the living board sits faintly (25 %) behind the hero words and the glass quote card is hidden, so the first screen stays readable.
 - The locked Send button (before consent) is shown at 50 % opacity; disabled controls are exempt from contrast rules, and the hint under it explains what to do.
 - The FAQ accordion needs JavaScript to open answers (the answers are in the HTML for search engines).
 - The `dev-board-front.webp` asset looks like a 3D render rather than a photo, so the site uses the `dev-board-main-*` photos only (the render is not shipped).
 - Without `VITE_TURNSTILE_SITE_KEY` at build time the check is empty and sending says the check isn't set up.
-- Deploy previews without SMTP log emails including visitor details to the function log (see Need from Franz #4).
+- Deploy previews without SMTP log emails including visitor details to the function log (see Need from the owner #4).
 
 ## How to test
 
@@ -58,8 +119,11 @@ pnpm install
 pnpm build && pnpm lint && pnpm test && pnpm check:contrast
 ```
 
-Pages only: `pnpm preview`. Pages + function: create `.env` with the Turnstile test keys from the README
+Pages only: `pnpm preview`. Pages + function: create `.env` using the Turnstile test-key guidance in the README
 (leave SMTP empty for a dry run) and run `npx netlify-cli dev`.
+
+Email layout: `pnpm preview:emails`, then open both HTML files in `.email-previews/`.
+Sharing image: open `public/og.png`; regenerate only by hand with `pnpm og:image`.
 
 Click through:
 

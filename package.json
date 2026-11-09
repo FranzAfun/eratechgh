@@ -10,6 +10,8 @@
     "dev": "react-router dev",
     "build": "react-router build",
     "preview": "vite preview --outDir build/client",
+    "preview:emails": "node scripts/preview-emails.js",
+    "og:image": "node scripts/generate-og.js",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "vitest run",
@@ -29,6 +31,7 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@react-router/dev": "7.18.5",
+    "@resvg/resvg-js": "2.6.2",
     "@tailwindcss/vite": "4.3.5",
     "eslint": "10.14.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
@@ -38,6 +41,7 @@
     "prettier": "3.9.10",
     "tailwindcss": "4.3.5",
     "vite": "8.3.6",
-    "vitest": "5.1.0"
+    "vitest": "5.1.0",
+    "wawoff2": "2.0.1"
   }
 }

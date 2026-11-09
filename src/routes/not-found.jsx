@@ -2,7 +2,8 @@ import { Button } from "../components/ui/Button.jsx";
 import { site } from "../content/site.js";
 import { pageMeta } from "../lib/meta.js";
 
-export const meta = () => pageMeta(site.notFound.title, site.notFound.metaDescription);
+export const meta = () =>
+  pageMeta(site.notFound.title, site.notFound.metaDescription, "/404", { noindex: true });
 
 // The 404 page is a dark band: the header starts transparent over it, like "/".
 export const handle = { darkHero: true };

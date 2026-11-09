@@ -7,7 +7,7 @@
  * Add a pair here whenever a new colour combination ships.
  */
 import { readFileSync } from "node:fs";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const css = readFileSync(
   fileURLToPath(new URL("../src/styles/tokens.css", import.meta.url)),
@@ -175,4 +175,4 @@ function main() {
   if (failures) process.exit(1);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) main();
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) main();

@@ -1,5 +1,5 @@
 /**
- * Plain-text emails for a Project Desk request (BRIEF.md → Emails).
+ * Plain-text and HTML alternatives for a Project Desk request (BRIEF.md → Emails).
  * The visitor's confirmation never repeats their own text: only their first name and the service.
  */
 import { site } from "../../src/content/site.js";
@@ -10,6 +10,17 @@ import {
   DETAIL_FIELDS,
   priceLine,
 } from "../../src/lib/request-rules.js";
+import {
+  EMAIL_COLOURS,
+  calloutRow,
+  emailDocument,
+  escapeHtml,
+  fieldRow,
+  paragraph,
+  referenceChip,
+  replyButton,
+  sectionRow,
+} from "./email-html.js";
 
 /** Removes CR/LF (and other control characters) from anything that goes into a header. */
 export function headerSafe(value) {
@@ -88,6 +99,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
   const name = headerSafe(data.fullName);
   const email = headerSafe(data.email);
   const price = priceLine(data.service, data.discountRequested);
+  const first = firstName(data.fullName);
+  const rows = [fieldRow("Price shown", price)];
 
   const lines = [
     "New Project Desk request",
@@ -98,14 +111,26 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
   ];
   if (data.service === "consultation" && data.discountRequested) {
     lines.push("70 % requested — check eligibility");
+    rows.push(calloutRow("Discount requested: 70 % → GH₵75 — check eligibility"));
   }
   lines.push("", `— ${service.name} —`);
+  rows.push(sectionRow(service.name));
   for (const f of SERVICE_FIELDS[data.service]) {
     if (f === "discountRequested") continue;
     lines.push(fieldLine(f, data[f]));
+    rows.push(fieldRow(label(f), displayValue(f, data[f]), f));
   }
-  lines.push("", "— Your details —");
-  for (const f of DETAIL_FIELDS) lines.push(fieldLine(f, data[f]));
+  lines.push("", "— Visitor details —");
+  rows.push(sectionRow("Visitor details"));
+  for (const f of DETAIL_FIELDS) {
+    lines.push(fieldLine(f, data[f]));
+    rows.push(fieldRow(label(f), displayValue(f, data[f]), f));
+  }
+  rows.push(
+    fieldRow("ERA Store", data.storeOptIn ? "Yes — tell them when it opens" : "No"),
+    fieldRow("Consent", data.consent ? "yes" : "no"),
+    fieldRow("Sent", formatGmt(sentAt)),
+  );
   lines.push(
     "",
     `ERA Store: ${data.storeOptIn ? "Yes — tell them when it opens" : "No"}`,
@@ -124,13 +149,20 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
     replyTo: { name, address: email },
     subject: headerSafe(`[Project Desk] ${service.shortName} — ${name} — ${reference}`),
     text: lines.join("\n"),
+    html: emailDocument({
+      preheader: `${service.name} request from ${first}`,
+      heading: "New Project Desk request",
+      headerDetails: `<p style="margin:16px 0;font-size:16px;line-height:24px;color:${EMAIL_COLOURS.white};">${escapeHtml(service.name)}</p>${referenceChip(reference)}`,
+      content: `<table aria-label="Request details" width="100%" cellpadding="0" cellspacing="0" border="0" style="width:100%;table-layout:fixed;border-collapse:collapse;margin:0 0 24px;">${rows.join("")}</table>${paragraph("Reply to this email to answer the visitor directly.")}${replyButton(data.email, reference, `Reply to ${first}`)}`,
+      signOff: SIGN_OFF,
+    }),
   };
 
   const visitor = {
     from: { name: SENDER_NAME, address: headerSafe(mailFrom) },
     to: email,
     replyTo: headerSafe(teamInbox),
-    subject: `We got your request — ERA Tech (${reference})`,
+    subject: headerSafe(`We got your request — ERA Tech (${reference})`),
     text: [
       `Hi ${firstName(data.fullName)},`,
       "",
@@ -142,6 +174,13 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
       "",
       SIGN_OFF,
     ].join("\n"),
+    html: emailDocument({
+      preheader: `Your reference is ${reference}`,
+      heading: "We got your request",
+      headerDetails: `<p style="margin:16px 0 0;">${referenceChip(reference)}</p>`,
+      content: `${paragraph(`Hi ${first},`)}${paragraph(`Thanks — we received your ${service.name.toLowerCase()} request.`)}${paragraph(`What happens next: ${NEXT_STEP[data.service]}`)}${paragraph("Reply to this email to add details or photos.")}${replyButton(teamInbox, reference, "Reply to the team")}`,
+      signOff: SIGN_OFF,
+    }),
   };
 
   return { team, visitor };

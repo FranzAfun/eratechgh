@@ -70,7 +70,7 @@ describe("validateRequest — bad input", () => {
     ["fullName", "Sample <script>"],
     ["email", "not-an-email"],
     ["email", `${"a".repeat(250)}@x.com`],
-    ["email", "ama@example.com\r\nBcc: x@y.z"],
+    ["email", "sample@example.com\r\nBcc: x@y.z"],
     ["phone", "12345678"],
     ["phone", "0".repeat(21)],
     ["phone", "024-555-0101"],
