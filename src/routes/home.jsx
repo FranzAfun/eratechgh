@@ -1,10 +1,13 @@
 import { Check, ChevronDown } from "lucide-react";
-import { HeroVisual } from "../components/home/HeroVisual.jsx";
+import { Hero } from "../components/home/Hero.jsx";
 import { illustrations } from "../components/home/Illustrations.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { hasPortfolio, site } from "../content/site.js";
 import { pageMeta } from "../lib/meta.js";
+
+// The home page opens with a dark hero: the header starts transparent over it.
+export const handle = { darkHero: true };
 
 export const meta = () =>
   pageMeta(
@@ -26,14 +29,18 @@ export default function Home() {
       <HowItWorks />
       <Store />
       <Faq />
-      <section aria-labelledby="closing-title" className="on-dark bg-primary">
-        <div
-          className={`${wrap} flex flex-col gap-6 py-12 md:flex-row md:items-center md:justify-between`}
-        >
-          <h2 id="closing-title" className="text-h2 font-semibold text-text-inverse">
+      <section aria-labelledby="closing-title" className="on-dark closing-band text-center">
+        <div className="mx-auto max-w-content px-4 py-16 md:px-6 md:py-24">
+          <h2
+            id="closing-title"
+            className="mx-auto max-w-[20em] text-h1 font-semibold text-balance text-text-inverse"
+          >
             {h.closing.title}
           </h2>
-          <CtaPair />
+          <p className="mx-auto mt-4 max-w-text text-base text-text-on-dark">{h.closing.body}</p>
+          <div className="mt-8 flex justify-center">
+            <CtaPair />
+          </div>
         </div>
       </section>
     </>
@@ -43,7 +50,7 @@ export default function Home() {
 function CtaPair() {
   const { primary, secondary } = site.home.hero;
   return (
-    <div className="flex flex-col gap-3 sm:flex-row">
+    <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
       <Button to={primary.to} className="w-full sm:w-auto">
         {primary.label}
       </Button>
@@ -51,39 +58,6 @@ function CtaPair() {
         {secondary.label}
       </Button>
     </div>
-  );
-}
-
-function Hero() {
-  const t = site.home.hero;
-  return (
-    <section aria-labelledby="hero-title" className="bg-surface-soft">
-      <div
-        className={`${wrap} grid items-center gap-10 py-12 md:py-16 lg:grid-cols-[1.1fr_1fr] lg:py-20`}
-      >
-        <div>
-          <h1
-            id="hero-title"
-            className="max-w-[14em] text-hero font-semibold text-balance text-text-primary"
-          >
-            {t.title}
-          </h1>
-          <p className="mt-5 max-w-text text-base text-text-secondary md:text-h3 md:font-normal">
-            {t.body}
-          </p>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button to={t.primary.to} className="w-full sm:w-auto">
-              {t.primary.label}
-            </Button>
-            <Button to={t.secondary.to} variant="secondary" className="w-full sm:w-auto">
-              {t.secondary.label}
-            </Button>
-          </div>
-          <p className="mt-6 text-sm text-text-muted">{site.tagline}</p>
-        </div>
-        <HeroVisual />
-      </div>
-    </section>
   );
 }
 

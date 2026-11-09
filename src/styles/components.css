@@ -273,6 +273,124 @@
     }
   }
 
+  /* ── Hero (DESIGN-DIRECTION.md §3) ─────────────────────────────── */
+  .hero-ground {
+    background-color: var(--color-bg-dark);
+    background-image:
+      radial-gradient(60% 55% at 72% 45%, rgb(59 17 116 / 0.55), transparent 70%),
+      radial-gradient(35% 30% at 15% 10%, rgb(59 17 116 / 0.25), transparent 70%);
+  }
+  /* Breadboard dot grid, fading out towards the edges. */
+  .dot-grid {
+    background-image: radial-gradient(rgb(255 255 255 / 0.1) 1px, transparent 1.2px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at 60% 45%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 70% 65% at 60% 45%, #000 30%, transparent 80%);
+  }
+  /* Words fade up once on load. */
+  .hero-in {
+    animation: hero-in 750ms var(--ease-smooth-out) both;
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--distance-reveal));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-in {
+      animation: none;
+    }
+  }
+
+  /* ── Living circuit ──────────────────────────────────────────────── */
+  .lc-pulse {
+    stroke-dasharray: 10 200;
+    stroke-dashoffset: 10;
+    animation: lc-pulse 3.2s ease-in-out infinite;
+  }
+  @keyframes lc-pulse {
+    0% {
+      stroke-dashoffset: 10;
+    }
+    60%,
+    100% {
+      stroke-dashoffset: -100;
+    }
+  }
+  .lc-led {
+    opacity: 0.3;
+    animation: lc-led 3.2s ease-out infinite;
+  }
+  .lc-glow {
+    opacity: 0;
+    animation: lc-glow 3.2s ease-out infinite;
+  }
+  @keyframes lc-led {
+    0%,
+    56% {
+      opacity: 0.3;
+    }
+    62% {
+      opacity: 1;
+    }
+    90%,
+    100% {
+      opacity: 0.3;
+    }
+  }
+  @keyframes lc-glow {
+    0%,
+    56% {
+      opacity: 0;
+    }
+    62% {
+      opacity: 0.9;
+    }
+    90%,
+    100% {
+      opacity: 0;
+    }
+  }
+  /* Each LED lights when its trace's pulse arrives (same delay as the pulse). */
+  .lc-led-0,
+  .lc-glow-0 {
+    animation-delay: 0.6s;
+  }
+  .lc-led-1,
+  .lc-glow-1 {
+    animation-delay: 1.4s;
+  }
+  .lc-led-2,
+  .lc-glow-2 {
+    animation-delay: 2.2s;
+  }
+  .living-circuit.is-paused * {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lc-pulse {
+      display: none;
+    }
+    .lc-led,
+    .lc-glow {
+      animation: none;
+    }
+    .lc-led {
+      opacity: 0.9;
+    }
+    .lc-glow {
+      opacity: 0.45;
+    }
+  }
+
+  /* ── Closing band (DESIGN-DIRECTION.md §4) ───────────────────────── */
+  .closing-band {
+    background:
+      radial-gradient(50% 70% at 50% 0%, rgb(208 173 255 / 0.22), transparent 70%),
+      linear-gradient(135deg, #200940 0%, #3b1174 55%, #2f0e5d 100%);
+  }
+
   /* ── Mobile menu panel ───────────────────────────────────────────────── */
   .menu-panel {
     animation: dropdown-in var(--duration-fast) var(--ease-smooth-out);

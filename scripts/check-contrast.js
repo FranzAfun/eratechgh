@@ -131,6 +131,23 @@ export const PAIRS = [
   ["header CTA (glass state)", T("on-primary"), T("primary"), "text"],
   ["header CTA lilac border", T("accent"), [GLASS, T("background")], "ui"],
   ["drawer active row", T("accent"), [GLASS_FILL, T("surface-dark")], "text"],
+  ["hero eyebrow pill", T("text-on-dark"), ["rgb(208 173 255 / 0.1)", T("bg-dark")], "text"],
+  ["hero words on glow", T("text-on-dark"), ["rgb(59 17 116 / 0.55)", T("bg-dark")], "text"],
+  ["quote card rows", T("text-on-dark"), [GLASS_FILL, GLASS, T("bg-dark")], "text"],
+  ["quote card status", T("text-inverse"), ["rgb(208 173 255 / 0.1)", GLASS, T("bg-dark")], "text"],
+  [
+    "closing band heading at glow",
+    T("text-inverse"),
+    ["rgb(208 173 255 / 0.22)", T("primary")],
+    "text",
+  ],
+  [
+    "closing band lead at glow",
+    T("text-on-dark"),
+    ["rgb(208 173 255 / 0.22)", T("primary")],
+    "text",
+  ],
+  ["closing band glass button", T("text-inverse"), [GLASS_FILL, T("primary")], "text"],
   ["drawer row hover", T("text-inverse"), [GLASS_FILL, T("surface-dark")], "text"],
 ];
 
