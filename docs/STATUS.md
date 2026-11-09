@@ -1,17 +1,18 @@
 # Status
 
-- **Updated:** 2026-11-09 (stage 1)
-- **Where we are:** Stage 1 (scaffold) done; stage 2 (layout shell) next.
+- **Updated:** 2026-11-09 (stage 2)
+- **Where we are:** Stages 1–2 done (scaffold, layout shell); stage 3 (home page) next.
 
 ## Done
 
-| Stage      | Branch           | PR                                                                     | Summary                                                                     |
-| ---------- | ---------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| 1 Scaffold | `chore/scaffold` | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs |
+| Stage          | Branch              | PR                                                                     | Summary                                                                      |
+| -------------- | ------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| 1 Scaffold     | `chore/scaffold`    | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs  |
+| 2 Layout shell | `feat/layout-shell` | PR_2                                                                   | Header + mobile menu, footer, 404, base UI components, `src/content/site.js` |
 
 ## Next
 
-Stage 2 — `feat/layout-shell`: header, mobile menu, footer, 404 page, base UI components, `src/content/site.js`.
+Stage 3 — `feat/home`: all home sections from BRIEF.md.
 
 ## Need from Franz
 
@@ -26,7 +27,8 @@ Stage 2 — `feat/layout-shell`: header, mobile menu, footer, 404 page, base UI 
 
 ## Known issues
 
-- None yet.
+- `/request` shows a component preview (placeholder) until stage 4 replaces it with the form.
+- Footer privacy link and contact email are hidden while `privacyUrl` / `teamEmail` are `null`.
 
 ## How to test
 
