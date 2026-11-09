@@ -147,7 +147,7 @@ export const site = {
 
   home: {
     hero: {
-      eyebrow: `${siteTitle} — for makers in Ghana`,
+      eyebrow: `For students and makers in Ghana`,
       title: "Parts, project reviews and expert advice. One request.",
       body: "Tell us what you're building. We source your components, review your project or set up time with an expert, and you see the price before you pay anything.",
       primary: { label: "Source components", to: "/request/sourcing" },
