@@ -56,7 +56,7 @@ The `CONTEXT` name is supplied by Netlify. The same names may be configured in a
 - Netlify's initial preview failed because its secret scanner matched the configured
   `TURNSTILE_SECRET_KEY` against Cloudflare's published dummy key in `netlify/tests/handler.test.js`.
   The fixture now assembles the same public key instead of storing the full literal. Scanning and
-  Netlify settings remain unchanged; the preview is being checked again after this fixture fix.
+  Netlify settings remain unchanged. See PR #14 for the current preview checks.
 
 ## Done
 
