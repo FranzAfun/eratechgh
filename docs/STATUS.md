@@ -11,7 +11,7 @@
 | 2 Layout shell     | `feat/layout-shell`     | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js`         |
 | 3 Home             | `feat/home`             | [FranzAfun/eratechgh#3](https://github.com/FranzAfun/eratechgh/pull/3) | All home sections from the brief, original illustrations, ERA Store coming soon      |
 | 4 Request form     | `feat/request-form`     | [FranzAfun/eratechgh#4](https://github.com/FranzAfun/eratechgh/pull/4) | Service picker, per-service fields, shared rules, Turnstile, every send state        |
-| 5 Request function | `feat/request-function` | PR_5                                                                   | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests |
+| 5 Request function | `feat/request-function` | [FranzAfun/eratechgh#5](https://github.com/FranzAfun/eratechgh/pull/5) | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests |
 
 The PRs are stacked: each one targets `main` and contains the previous stages. Review and merge them in
 order (1 → 5); after each merge the next PR's diff shrinks to its own stage.
