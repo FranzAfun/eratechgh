@@ -360,6 +360,9 @@ ${followUsLine()}
     const { team, visitor } = build(consultation);
     for (const message of [team, visitor]) {
       expect(message.html).toContain('width="120" height="70" alt="ERA Tech · Project Desk"');
+      expect(message.html).toMatch(
+        /<td valign="middle" style="[^"]*font-size:18px;[^"]*font-weight:600;[^"]*"><span[^>]*>·<\/span> Project Desk<\/td>/,
+      );
       expect(message.html).toContain('class="email-footer"');
       expect(message.html).toContain("© 2026 ERA Technologies. All rights reserved.");
       expect(message.html).toContain("— ERA Technologies, Project Desk");
