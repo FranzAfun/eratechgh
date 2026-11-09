@@ -44,7 +44,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
 </g>
 <g font-family="Inter" font-weight="600">
   <text x="72" y="260" font-size="52" fill="${white}">${xml(brandName)} <tspan fill="${accent}">·</tspan> ${xml(productName)}</text>
-  <text x="72" y="328" font-size="25" font-weight="400" fill="${muted}">Parts, project reviews and expert advice for makers in Ghana</text>
+  <text x="72" y="328" font-size="28" font-weight="400" fill="${muted}">${xml(shareImage.subtitle)}</text>
 </g>
 <path d="M72 392h80" stroke="${accent}" stroke-width="4" stroke-linecap="round"/>
 </svg>`;
