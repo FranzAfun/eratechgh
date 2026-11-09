@@ -19,6 +19,7 @@
     "@react-router/node": "7.18.5",
     "isbot": "5.2.2",
     "lucide-react": "1.70.0",
+    "nodemailer": "10.4.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-router": "7.18.5",
