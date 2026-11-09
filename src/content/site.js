@@ -131,10 +131,18 @@ export const site = {
 
   home: {
     hero: {
-      title: "Parts, project reviews and expert advice in one request",
-      body: "Tell ERA Tech what you're building. We source your components, assess your project or set up a session with an expert, and confirm the price before you pay anything.",
+      eyebrow: "For students, makers and innovators in Ghana",
+      title: "Parts, project reviews and expert advice. One request.",
+      body: "Tell us what you're building. We source your components, review your project or set up time with an expert, and you see the price before you pay anything.",
       primary: { label: "Source components", to: "/request/sourcing" },
       secondary: { label: "Book a consultation", to: "/request/consultation" },
+      facts: ["Free sourcing quotes", "Assessments GH₵50", "Expert consultations"],
+      /** The glass card on the hero visual. Example part names only, no prices. */
+      card: {
+        title: "Your parts list",
+        rows: ["Microcontroller board", "Soil moisture sensor", "LEDs and resistors"],
+        status: "Quote ready",
+      },
     },
     services: {
       title: "Services",
@@ -240,7 +248,8 @@ export const site = {
       ],
     },
     closing: {
-      title: "Ready to start your project?",
+      title: "Got a project in mind? Let's get it moving.",
+      body: "Send one request. The ERA Tech team replies with the next step.",
     },
   },
 
