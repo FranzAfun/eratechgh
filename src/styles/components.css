@@ -27,6 +27,11 @@
   .btn[aria-disabled="true"] {
     cursor: default;
   }
+  /* Looks disabled but stays focusable (aria-disabled), e.g. Send before consent is ticked. */
+  .btn.is-locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 
   .btn-primary {
     background: var(--color-primary);
@@ -187,6 +192,10 @@
     transition:
       background-color var(--duration-quick) ease,
       border-color var(--duration-quick) ease;
+  }
+  .checkbox-input.is-invalid:not(:checked) {
+    border-color: var(--color-danger-text);
+    box-shadow: var(--shadow-field-focus-error);
   }
   .checkbox-input:checked {
     background: var(--color-primary);
@@ -464,6 +473,32 @@
   }
   .accordion-panel > * {
     min-height: 0;
+  }
+
+  /* ── Request page: service picker cards ──────────────────────────── */
+  .picker-card {
+    border: 1px solid var(--color-ui-border);
+    background: var(--color-surface);
+    transition:
+      border-color var(--duration-quick) ease,
+      background-color var(--duration-quick) ease,
+      box-shadow var(--duration-quick) ease;
+  }
+  .picker-card.is-checked {
+    border-color: var(--color-primary);
+    background: var(--color-surface-strong);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+  @media (hover: hover) {
+    .picker-card:not(.is-checked):hover {
+      background: var(--color-surface-soft);
+      border-color: var(--color-primary);
+    }
+  }
+  /* The radio is visually hidden; the card shows keyboard focus. */
+  .picker-card:has(:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
   }
 
   /* ── Mobile menu panel ───────────────────────────────────────────────── */

@@ -9,7 +9,6 @@ import {
   MAX_LENGTHS,
   MIN_FILL_MS,
   PREFERRED_TIMES,
-  priceLine,
   PROJECT_AREAS,
   SERVICE_FIELDS,
   todayGhana,
@@ -22,6 +21,7 @@ import { InfoNote } from "../ui/InfoNote.jsx";
 import { TextArea } from "../ui/TextArea.jsx";
 import { TextField } from "../ui/TextField.jsx";
 import { ServicePicker } from "./ServicePicker.jsx";
+import { SideCard } from "./SideCard.jsx";
 import { SentPanel } from "./SentPanel.jsx";
 import { Turnstile } from "./Turnstile.jsx";
 
@@ -44,6 +44,7 @@ const EMPTY = {
   preferredTime: "",
   discountRequested: false,
   storeOptIn: false,
+  consent: false,
   website: "", // honeypot: people never see or fill it
 };
 
@@ -56,6 +57,8 @@ const INPUT_ATTRS = {
 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+/** Milliseconds since the form appeared (event handlers only). */
+const elapsedSince = (start) => Date.now() - start;
 
 export function RequestForm({ service }) {
   const navigate = useNavigate();
@@ -120,6 +123,13 @@ export function RequestForm({ service }) {
     setFormError(null);
     setCheckError(null);
 
+    // Send is aria-disabled until consent is ticked; pressing it explains why.
+    if (!values.consent) {
+      setTouched((x) => ({ ...x, consent: true }));
+      focusFirstError({ consent: true });
+      return;
+    }
+
     const names = fieldOrder(service);
     const errors = {};
     for (const name of names) {
@@ -138,15 +148,15 @@ export function RequestForm({ service }) {
 
     setStatus("sending");
     // Min fill time is soft: a fast human just waits a moment instead of getting an error.
-    const wait = startedAt.current + MIN_FILL_MS + 250 - Date.now();
+    const wait = MIN_FILL_MS + 250 - elapsedSince(startedAt.current);
     if (wait > 0) await sleep(wait);
 
     const payload = { service };
-    for (const name of [...SERVICE_FIELDS[service], ...DETAIL_FIELDS, "storeOptIn"]) {
+    for (const name of [...SERVICE_FIELDS[service], ...DETAIL_FIELDS, "storeOptIn", "consent"]) {
       payload[name] = values[name];
     }
     payload.website = values.website;
-    payload.fillMs = Date.now() - startedAt.current;
+    payload.fillMs = elapsedSince(startedAt.current);
     payload.turnstileToken = token;
 
     let response = null;
@@ -202,125 +212,181 @@ export function RequestForm({ service }) {
     navigate(`/request/${slug}`, { preventScrollReset: true });
   };
 
-  if (status === "sent" && sent) {
-    return (
-      <Shell>
-        <SentPanel reference={sent.reference} email={sent.email} onAgain={sendAnother} />
-      </Shell>
-    );
-  }
-
   const busy = status === "sending";
+  const consentError = errorFor("consent");
 
   return (
-    <Shell>
-      <h1 className="text-h1 font-semibold">{t.title}</h1>
-      <p className="mt-3 text-base text-text-secondary">{t.intro}</p>
+    <>
+      <PageBand />
+      <div className="mx-auto max-w-content px-4 pb-16 md:px-6 md:pb-24">
+        <div className="relative -mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+          <div className="rounded-card border border-border bg-surface p-5 shadow-(--shadow-resting) sm:p-8">
+            {status === "sent" && sent ? (
+              <SentPanel reference={sent.reference} email={sent.email} onAgain={sendAnother} />
+            ) : (
+              <form key={formKey} noValidate onSubmit={onSubmit} aria-busy={busy}>
+                <ServicePicker value={service} onChange={pickService} />
 
-      <form key={formKey} noValidate onSubmit={onSubmit} className="mt-8" aria-busy={busy}>
-        <ServicePicker value={service} onChange={pickService} />
-
-        {service ? (
-          <>
-            <Group title={site.services.find((s) => s.slug === service).name}>
-              <ServiceFields
-                service={service}
-                field={field}
-                values={values}
-                set={set}
-                today={today}
-              />
-            </Group>
-
-            <Group title={t.detailsTitle}>
-              {DETAIL_FIELDS.map((name) => (
-                <TextField key={name} icon={ICONS[name]} {...INPUT_ATTRS[name]} {...field(name)} />
-              ))}
-            </Group>
-
-            <Group title={t.extrasTitle}>
-              <Checkbox
-                id="f-storeOptIn"
-                name="storeOptIn"
-                label={t.labels.storeOptIn}
-                checked={values.storeOptIn}
-                onChange={(e) => set("storeOptIn", e.target.checked)}
-              />
-            </Group>
-
-            {/* Honeypot: hidden from people and screen readers; bots tend to fill it. */}
-            <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
-              <label htmlFor="f-website">Website</label>
-              <input
-                id="f-website"
-                name="website"
-                type="text"
-                tabIndex={-1}
-                autoComplete="off"
-                value={values.website}
-                onChange={(e) => set("website", e.target.value)}
-              />
-            </div>
-
-            <Group title={t.checkTitle}>
-              <p id="check-hint" className="-mt-2 text-sm text-text-muted">
-                {t.checkHint}
-              </p>
-              {SITE_KEY ? (
-                <Turnstile
-                  key={formKey}
-                  siteKey={SITE_KEY}
-                  controlRef={turnstile}
-                  describedBy="check-hint"
-                  onToken={setToken}
-                />
-              ) : null}
-              {checkError ? (
-                <p role="alert" className="text-sm text-danger-text">
-                  {checkError}
-                </p>
-              ) : null}
-            </Group>
-
-            <div className="mt-8 border-t border-border pt-6">
-              {formError ? (
-                <p
-                  role="alert"
-                  className="mb-4 rounded-card border border-danger-text/30 bg-surface p-4 text-sm text-danger-text"
-                >
-                  {formError}
-                </p>
-              ) : null}
-              <Button type="submit" busy={busy} busyLabel={t.sending} className="w-full sm:w-auto">
-                {t.send}
-              </Button>
-              <p className="mt-4 text-sm text-text-muted">
-                {t.consent}
-                {site.privacyUrl ? (
+                {service ? (
                   <>
-                    {" "}
-                    <a
-                      className="text-primary-text underline underline-offset-3"
-                      href={site.privacyUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Group title={site.services.find((s) => s.slug === service).name}>
+                      <ServiceFields
+                        service={service}
+                        field={field}
+                        values={values}
+                        set={set}
+                        today={today}
+                      />
+                    </Group>
+
+                    <Group title={t.detailsTitle}>
+                      {DETAIL_FIELDS.map((name) => (
+                        <TextField
+                          key={name}
+                          icon={ICONS[name]}
+                          {...INPUT_ATTRS[name]}
+                          {...field(name)}
+                        />
+                      ))}
+                    </Group>
+
+                    <Group title={t.extrasTitle}>
+                      <Checkbox
+                        id="f-storeOptIn"
+                        name="storeOptIn"
+                        label={t.labels.storeOptIn}
+                        checked={values.storeOptIn}
+                        onChange={(e) => set("storeOptIn", e.target.checked)}
+                      />
+                    </Group>
+
+                    {/* Honeypot: hidden from people and screen readers; bots tend to fill it. */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute -left-[9999px] h-px w-px overflow-hidden"
                     >
-                      {t.privacy}
-                    </a>
-                    .
+                      <label htmlFor="f-website">Website</label>
+                      <input
+                        id="f-website"
+                        name="website"
+                        type="text"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        value={values.website}
+                        onChange={(e) => set("website", e.target.value)}
+                      />
+                    </div>
+
+                    <Group title={t.checkTitle}>
+                      <p id="check-hint" className="-mt-2 text-sm text-text-muted">
+                        {t.checkHint}
+                      </p>
+                      {SITE_KEY ? (
+                        <Turnstile
+                          key={formKey}
+                          siteKey={SITE_KEY}
+                          controlRef={turnstile}
+                          describedBy="check-hint"
+                          onToken={setToken}
+                        />
+                      ) : null}
+                      {checkError ? (
+                        <p role="alert" className="text-sm text-danger-text">
+                          {checkError}
+                        </p>
+                      ) : null}
+                    </Group>
+
+                    <div className="mt-8 border-t border-border pt-6">
+                      <SideCard
+                        compact
+                        service={service}
+                        discountRequested={values.discountRequested}
+                        className="mb-6 lg:hidden"
+                      />
+                      {formError ? (
+                        <p
+                          role="alert"
+                          className="mb-4 rounded-card border border-danger-text/30 bg-surface p-4 text-sm text-danger-text"
+                        >
+                          {formError}
+                        </p>
+                      ) : null}
+                      <Checkbox
+                        id="f-consent"
+                        name="consent"
+                        required
+                        label={<ConsentLabel />}
+                        checked={values.consent}
+                        onChange={(e) => set("consent", e.target.checked)}
+                        error={consentError}
+                        shake={shake.field === "consent" ? shake.n : 0}
+                        inputRef={(el) => {
+                          refs.current.consent = el;
+                        }}
+                      />
+                      <div className="mt-4">
+                        <Button
+                          type="submit"
+                          busy={busy}
+                          locked={!values.consent}
+                          busyLabel={t.sending}
+                          aria-describedby={!values.consent ? "send-hint" : undefined}
+                          className="w-full sm:w-auto"
+                        >
+                          {t.send}
+                        </Button>
+                        {!values.consent ? (
+                          <p id="send-hint" className="mt-2 text-sm text-text-muted">
+                            {t.consent.hint}
+                          </p>
+                        ) : null}
+                      </div>
+                    </div>
                   </>
                 ) : null}
-              </p>
-            </div>
-          </>
-        ) : null}
-      </form>
-    </Shell>
+              </form>
+            )}
+          </div>
+          <aside className="sticky top-24 hidden lg:block">
+            <SideCard service={service} discountRequested={values.discountRequested} />
+          </aside>
+        </div>
+      </div>
+    </>
   );
 }
 
-function Shell({ children }) {
-  return <section className="mx-auto max-w-form px-4 py-10 md:py-14">{children}</section>;
+function PageBand() {
+  return (
+    <div className="on-dark hero-ground relative isolate overflow-hidden text-text-inverse">
+      <div aria-hidden="true" className="dot-grid absolute inset-0 -z-10" />
+      <div className="mx-auto max-w-content px-4 pt-10 pb-20 md:px-6 md:pt-14 md:pb-24">
+        <p className="text-xs font-semibold tracking-eyebrow text-accent uppercase">{t.eyebrow}</p>
+        <h1 className="mt-3 text-h1 font-semibold">{t.title}</h1>
+        <p className="mt-3 max-w-text text-base text-text-on-dark">{t.intro}</p>
+      </div>
+    </div>
+  );
+}
+
+function ConsentLabel() {
+  const c = t.consent;
+  return (
+    <>
+      {c.before}
+      <a
+        href={site.privacyUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-medium text-primary-text underline underline-offset-3"
+      >
+        {c.link}
+        <span className="sr-only"> {c.newTab}</span>
+      </a>
+      {c.after}
+    </>
+  );
 }
 
 function Group({ title, children }) {
@@ -347,7 +413,6 @@ function ServiceFields({ service, field, values, set, today }) {
   if (service === "assessment") {
     return (
       <>
-        <PriceRow price={priceLine("assessment")} />
         <InfoNote>{t.notes.assessment}</InfoNote>
         <TextField {...field("projectTitle")} />
         <Dropdown
@@ -369,18 +434,12 @@ function ServiceFields({ service, field, values, set, today }) {
   }
   return (
     <>
-      <PriceRow price={priceLine("consultation", values.discountRequested)} />
       <InfoNote>{t.notes.consultation}</InfoNote>
       <TextField {...field("projectTitle")} />
       <TextArea rows={7} {...field("abstract")} />
       <TextArea rows={4} {...field("guidance")} />
       <div className="grid gap-4 sm:grid-cols-2">
-        <TextField
-          type="date"
-          min={addDays(today, 1)}
-
-          {...field("preferredDate")}
-        />
+        <TextField type="date" min={addDays(today, 1)} {...field("preferredDate")} />
         <Dropdown
           id={time.id}
           label={time.label}
@@ -402,16 +461,5 @@ function ServiceFields({ service, field, values, set, today }) {
         onChange={(e) => set("discountRequested", e.target.checked)}
       />
     </>
-  );
-}
-
-function PriceRow({ price }) {
-  return (
-    <p className="flex items-baseline justify-between gap-4 rounded-card bg-surface-soft px-4 py-3">
-      <span className="text-sm text-text-secondary">{t.priceLabel}</span>
-      <span aria-live="polite" className="text-h3 font-bold text-primary-text">
-        {price}
-      </span>
-    </p>
   );
 }

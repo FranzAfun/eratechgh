@@ -1,6 +1,11 @@
+import { CircleCheck } from "lucide-react";
 import { site } from "../../content/site.js";
+import { SERVICE_ICONS } from "../serviceIcons.js";
 
-/** Service picker: three radio cards. Choosing one changes the URL to /request/<service>. */
+/**
+ * Service picker: three selectable cards (icon, name, price) on native radios.
+ * Choosing one changes the URL to /request/<service>.
+ */
 export function ServicePicker({ value, onChange }) {
   const t = site.request;
   return (
@@ -11,29 +16,41 @@ export function ServicePicker({ value, onChange }) {
         {site.services.map((s) => {
           const id = `service-${s.slug}`;
           const checked = value === s.slug;
+          const Icon = SERVICE_ICONS[s.icon];
           return (
             <label
               key={s.slug}
               htmlFor={id}
-              className={`relative flex min-h-11 cursor-pointer flex-col gap-1 rounded-card border p-4 transition-colors has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-3 has-[:focus-visible]:outline-focus-ring ${
-                checked
-                  ? "border-primary bg-surface-strong"
-                  : "border-ui-border bg-surface hover:bg-surface-hover"
+              className={`picker-card relative flex cursor-pointer gap-3 rounded-card p-4 sm:flex-col sm:gap-4 ${
+                checked ? "is-checked" : ""
               }`}
             >
-              <span className="flex items-center gap-3">
-                <input
-                  id={id}
-                  type="radio"
-                  name="service"
-                  value={s.slug}
-                  checked={checked}
-                  onChange={() => onChange(s.slug)}
-                  className="size-5 flex-none accent-primary focus-visible:outline-none"
-                />
-                <span className="text-base font-semibold text-text-primary">{s.name}</span>
+              <input
+                id={id}
+                type="radio"
+                name="service"
+                value={s.slug}
+                checked={checked}
+                onChange={() => onChange(s.slug)}
+                className="sr-only"
+              />
+              <span
+                className={`grid size-11 flex-none place-items-center rounded-card ${
+                  checked ? "bg-primary text-on-primary" : "bg-surface-strong text-primary-text"
+                }`}
+              >
+                <Icon aria-hidden="true" size={22} strokeWidth={1.75} />
               </span>
-              <span className="pl-8 text-sm font-medium text-primary-text">{s.price}</span>
+              <span className="flex min-w-0 flex-col gap-1 pr-6">
+                <span className="text-base font-semibold text-text-primary">{s.name}</span>
+                <span className="text-sm font-semibold text-primary-text">{s.price}</span>
+              </span>
+              <CircleCheck
+                aria-hidden="true"
+                size={20}
+                strokeWidth={2}
+                className={`absolute top-4 right-4 text-primary-text transition-opacity ${checked ? "opacity-100" : "opacity-0"}`}
+              />
             </label>
           );
         })}
