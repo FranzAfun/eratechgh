@@ -232,7 +232,7 @@ export const site = {
         { icon: "package", text: "Build Packs" },
         { icon: "board", text: "ERA Dev Board" },
         { icon: "truck", text: "Delivery across Ghana, and pickup" },
-        { icon: "phone", text: "Mobile Money and card payments" },
+        { icon: "phone", text: "Mobile Money payments" },
       ],
       notify: "Want to know when it opens? Tick the box when you send a request.",
       logoAlt: "ERA Store",

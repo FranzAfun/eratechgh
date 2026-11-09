@@ -33,7 +33,7 @@ Stopped — waiting for the owner.
 4. **Test inbox for deploy previews.** Recommendation: set `TEAM_INBOX` + SMTP for the deploy-preview context to a test mailbox. Without SMTP, previews dry-run and write the emails (with visitor details) to the function log.
 5. **Footer / fallback contact email** (`teamEmail` in `src/content/site.js`). Until then the footer links to the request form and the error message just says "try again".
 6. **Privacy policy check.** The consent box now links to https://eraaxis.com/privacy. Please confirm that policy covers this site and these requests (it is written for ERA, not specifically for Project Desk).
-7. **ERA Store offer list** — confirm each item (components and modules, Build Packs, ERA Dev Board, delivery + pickup, Mobile Money + card).
+7. **ERA Store offer list** — confirm each item (components and modules, Build Packs, ERA Dev Board, delivery + pickup, Mobile Money payments). Card payments are not mentioned anywhere until confirmed.
 8. **Real, approved project photos** (optional). "Our work" stays hidden until there are 3+.
 9. **Copy review.** Home and request copy were rewritten in stages 8–10 (hero, section titles, service summaries, FAQ, request page, consent wording from DESIGN-DIRECTION.md §7). The hero card's part names ("Microcontroller board", "Soil moisture sensor", "LEDs and resistors") are illustrative examples. Please read it once (also the new branding copy: hero eyebrow "ERA Tech · Project Desk — for makers in Ghana", footer line, design FAQ).
 10. **Dev Board photo alt text** — "The ERA Dev Board: a blue board with a four-battery holder, power switch and two breadboard strips". Correct it if the description is off.
