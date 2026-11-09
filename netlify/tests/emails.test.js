@@ -7,6 +7,7 @@ const base = {
   phone: "+233 20 123 4567",
   town: "Ho",
   storeOptIn: true,
+  consent: true,
 };
 const consultation = {
   service: "consultation",
@@ -43,6 +44,7 @@ describe("emails", () => {
       "Preferred time: Afternoon (12–4)",
       "Phone / WhatsApp: +233 20 123 4567",
       "ERA Store: Yes",
+      "Consent: yes",
       "Sent: 9 Nov 2026, 14:05 GMT",
     ]) {
       expect(team.text).toContain(s);

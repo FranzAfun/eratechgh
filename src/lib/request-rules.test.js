@@ -15,6 +15,7 @@ const details = {
   phone: "+233 24 555 0101",
   town: "Kumasi",
   storeOptIn: false,
+  consent: true,
 };
 
 const good = {
@@ -104,6 +105,12 @@ describe("validateRequest — bad input", () => {
     expect(bad("consultation", { preferredTime: "night" }).preferredTime).toBeTruthy();
   });
 
+  it("requires consent: true", () => {
+    expect(bad("sourcing", { consent: false }).consent).toBeTruthy();
+    expect(bad("sourcing", { consent: undefined }).consent).toBeTruthy();
+    expect(bad("sourcing", { consent: "true" }).consent).toBeTruthy();
+  });
+
   it("rejects wrong types instead of coercing them", () => {
     expect(bad("consultation", { discountRequested: "yes" }).discountRequested).toBeTruthy();
     expect(bad("sourcing", { town: 42 }).town).toBeTruthy();
@@ -119,6 +126,7 @@ describe("helpers", () => {
   it("allowedKeys covers only the chosen service", () => {
     expect(allowedKeys("sourcing").has("components")).toBe(true);
     expect(allowedKeys("sourcing").has("abstract")).toBe(false);
+    expect(allowedKeys("assessment").has("consent")).toBe(true);
   });
 
   it("price lines", () => {

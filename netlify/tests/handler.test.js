@@ -22,6 +22,7 @@ const goodBody = () => ({
   phone: "0244 000 111",
   town: "Takoradi",
   storeOptIn: false,
+  consent: true,
   website: "",
   fillMs: 12000,
   turnstileToken: "token-abc",
@@ -167,6 +168,22 @@ describe("request handler", () => {
     expect(body.error).toBe("validation");
     expect(Object.keys(body.fields).sort()).toEqual(["phone", "town"]);
     expect(transport.sendMail).not.toHaveBeenCalled();
+  });
+
+  it("rejects requests without consent", async () => {
+    const { handler, transport } = setup();
+    for (const consent of [false, undefined]) {
+      const { status, body } = await call(handler, post({ ...goodBody(), consent }));
+      expect(status).toBe(400);
+      expect(body.fields.consent).toBeTruthy();
+    }
+    expect(transport.sendMail).not.toHaveBeenCalled();
+  });
+
+  it("team email shows consent", async () => {
+    const { handler, transport } = setup();
+    await call(handler, post(goodBody()));
+    expect(transport.sendMail.mock.calls[0][0].text).toContain("Consent: yes");
   });
 
   it("team email failure → error; confirmation failure → still sent", async () => {
