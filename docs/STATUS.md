@@ -2,7 +2,7 @@
 
 - **Updated:** 2026-11-09 (HTML emails and sharing)
 - **Live:** [eratechgh.com](https://eratechgh.com).
-- **Where we are:** HTML emails, local previews, share image and SEO basics are complete on `feat/html-emails`, based on `main`. The owner approved the previews and requested six final refinements, now implemented. Build, lint, all 84 tests and all 76 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Push and one PR are authorised; nothing merged by this work.
+- **Where we are:** HTML emails, local previews, share image and SEO basics are pushed on `feat/html-emails`, based on `main`, in [PR #14](https://github.com/FranzAfun/eratechgh/pull/14). The owner approved the previews and the six requested refinements are complete. Build, lint, all 84 tests and all 76 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. The PR is open for review; nothing merged by this work.
 
 ## Email delivery and Netlify contexts
 
@@ -38,7 +38,8 @@ The `CONTEXT` name is supplied by Netlify. The same names may be configured in a
 - The owner approved the previews. Final refinements put the visitor reference chip in its dark
   header, remove duplicate reference/service table rows from the team HTML, use "Visitor details"
   in both team alternatives, and show the requested discount in a soft callout only when requested.
-  Preview/screenshot files stay uncommitted; one PR is being opened without merging.
+  Preview/screenshot files stay uncommitted; [PR #14](https://github.com/FranzAfun/eratechgh/pull/14)
+  is open without merging.
 - Self-review: 4 px spacing, 6/8 px corners, aligned content, token-only email colours, hidden
   preheaders, keyboard-accessible links and 48 px reply buttons. Browser review covers 360/390 px
   phones and desktop; dark-preference emulation keeps the explicit light card legible. No external
@@ -73,8 +74,8 @@ Stages 1–10 and v2 polish are present in the `main` baseline for this work.
 
 ## Next
 
-Push `feat/html-emails` and open one PR for review; do not merge. Actual mail-client/inbox acceptance
-remains separate from the approved browser previews.
+Review [PR #14](https://github.com/FranzAfun/eratechgh/pull/14); do not merge as part of this task.
+Actual mail-client/inbox acceptance remains separate from the approved browser previews.
 
 ## Need from the owner
 
