@@ -1,0 +1,7 @@
+build/
+.react-router/
+.netlify/
+pnpm-lock.yaml
+design-system/
+docs/BRIEF.md
+public/*.svg

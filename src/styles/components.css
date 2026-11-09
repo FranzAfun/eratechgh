@@ -1,0 +1,204 @@
+/* Component states that are clearer in CSS than in class lists. */
+
+@layer components {
+  /* ── Buttons ─────────────────────────────────────────────────────────── */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: var(--tap-min);
+    padding: 0 20px;
+    border-radius: var(--radius-control);
+    border: 1px solid transparent;
+    font-size: var(--text-base);
+    line-height: 1.25;
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--duration-quick) ease,
+      border-color var(--duration-quick) ease,
+      box-shadow var(--duration-quick) ease,
+      color var(--duration-quick) ease;
+  }
+  .btn[aria-disabled="true"] {
+    cursor: default;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+  .btn-secondary {
+    background: var(--color-surface);
+    color: var(--color-primary-text);
+    border-color: var(--color-primary);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-primary-text);
+  }
+  .btn-link {
+    min-height: auto;
+    padding: 0;
+    color: var(--color-primary-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: var(--font-weight-medium);
+  }
+  /* On the dark band the secondary button inverts. White on #200940: 17.88. */
+  .on-dark .btn-secondary {
+    background: transparent;
+    color: var(--color-text-inverse);
+    border-color: var(--color-accent);
+  }
+  .on-dark .btn-primary {
+    background: var(--color-accent);
+    color: var(--color-primary-deep); /* #200940 on #D0ADFF: 9.45 */
+  }
+
+  @media (hover: hover) {
+    /* Filled hover: halo at once, the fill darkens after 100 ms over 150 ms. */
+    .btn-primary:not([aria-disabled="true"]):hover {
+      box-shadow: var(--shadow-primary-halo);
+      background: var(--color-primary-hover);
+      transition:
+        box-shadow 0ms,
+        background-color var(--duration-quick) ease var(--delay-filled-hover);
+    }
+    .on-dark .btn-primary:not([aria-disabled="true"]):hover {
+      background: #e0caff; /* #200940 on it: 11.97 */
+    }
+    .btn-secondary:not([aria-disabled="true"]):hover,
+    .btn-ghost:not([aria-disabled="true"]):hover {
+      background: var(--color-surface-hover);
+    }
+    .on-dark .btn-secondary:not([aria-disabled="true"]):hover {
+      background: rgb(255 255 255 / 0.08);
+    }
+    .btn-link:hover {
+      text-decoration-thickness: 2px;
+    }
+  }
+  .btn-primary:not([aria-disabled="true"]):active {
+    box-shadow: none;
+  }
+
+  /* ── Fields ──────────────────────────────────────────────────────────── */
+  .field-control {
+    display: block;
+    width: 100%;
+    min-height: var(--tap-min);
+    padding: 10px 12px;
+    border: 1px solid var(--color-ui-border);
+    border-radius: var(--radius-control);
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    font: inherit;
+    font-size: var(--text-base); /* 16 px: iOS doesn't zoom */
+    line-height: 1.5;
+    transition:
+      border-color var(--duration-quick) ease,
+      box-shadow var(--duration-quick) ease;
+  }
+  .field-control::placeholder {
+    color: var(--color-text-muted);
+  }
+  .field-control.has-icon {
+    padding-left: 40px;
+  }
+  /* Active: purple border + soft halo. No outline gap on fields. */
+  .field-control:focus,
+  .field-control:focus-visible,
+  .field-control[aria-expanded="true"] {
+    outline: none;
+    border-color: var(--color-focus-ring);
+    box-shadow: var(--shadow-field-focus);
+  }
+  .field-control[aria-invalid="true"] {
+    border-color: var(--color-danger-text);
+  }
+  .field-control[aria-invalid="true"]:focus,
+  .field-control[aria-invalid="true"]:focus-visible,
+  .field-control[aria-invalid="true"][aria-expanded="true"] {
+    border-color: var(--color-danger-text);
+    box-shadow: var(--shadow-field-focus-error);
+  }
+  textarea.field-control {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* One shake on the first error (reduced motion: no movement). */
+  .shake {
+    animation: shake 400ms var(--ease-smooth-out) 1;
+  }
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    20% {
+      transform: translateX(calc(var(--distance-base) * -1));
+    }
+    40% {
+      transform: translateX(var(--distance-base));
+    }
+    60% {
+      transform: translateX(calc(var(--distance-small) * -1));
+    }
+    80% {
+      transform: translateX(var(--distance-small));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shake {
+      animation: none;
+    }
+  }
+
+  /* ── Checkbox ────────────────────────────────────────────────────────── */
+  .checkbox-input {
+    appearance: none;
+    flex: none;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    border: 1.5px solid var(--color-ui-border);
+    border-radius: 4px;
+    background: var(--color-surface);
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    transition:
+      background-color var(--duration-quick) ease,
+      border-color var(--duration-quick) ease;
+  }
+  .checkbox-input:checked {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+  .checkbox-input:focus-visible {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* ── Dropdown list ───────────────────────────────────────────────────── */
+  .dropdown-list {
+    animation: dropdown-in var(--duration-fast) var(--ease-smooth-out);
+  }
+  @keyframes dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(calc(var(--distance-small) * -1));
+    }
+  }
+
+  /* ── Mobile menu panel ───────────────────────────────────────────────── */
+  .menu-panel {
+    animation: dropdown-in var(--duration-fast) var(--ease-smooth-out);
+  }
+}

@@ -1,0 +1,39 @@
+[build]
+  command = "pnpm build"
+  publish = "build/client"
+
+[build.environment]
+  NODE_VERSION = "26.13.0"
+  PNPM_VERSION = "12.18.0"
+
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Unknown URLs get the prerendered 404 page with a real 404 status.
+# (Netlify serves 404.html automatically; this rule makes it explicit.)
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+# Security headers for every page.
+# The Content-Security-Policy is NOT here: it lists hashes of React Router's inline
+# hydration scripts, which change with every build, so scripts/finalize-build.js writes
+# it to build/client/_headers at build time. It allows Turnstile
+# (script-src and frame-src https://challenges.cloudflare.com) and connect-src 'self'.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+
+# Hashed assets never change.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
