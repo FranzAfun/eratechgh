@@ -59,6 +59,9 @@ Other test keys: site key `2x00000000000000000000AB` (always blocks), secret
 `2x0000000000000000000000000000000AA` (always fails). With test keys the function skips the hostname
 check (Cloudflare reports a dummy hostname for them).
 
+The form posts JSON to `/api/request` (`netlify/functions/request.mjs`, logic in `netlify/lib/`). The
+validation rules are shared with the form: `src/lib/request-rules.js`.
+
 If the `SMTP_*` variables are missing and the Netlify context is not `production`, the function does a
 **dry run**: it logs both emails instead of sending them. In production, missing config returns a 500
 and logs a clear line.
