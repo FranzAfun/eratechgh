@@ -3,6 +3,7 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 @import "./tokens.css";
+@import "./components.css";
 
 @layer base {
   html {
@@ -34,6 +35,10 @@
   :focus-visible {
     outline: var(--focus-ring-width) solid var(--color-focus-ring);
     outline-offset: var(--focus-ring-offset);
+  }
+  /* Elements focused by script (skip link target, headings after send) get no ring. */
+  [tabindex="-1"]:focus-visible {
+    outline: none;
   }
   /* On dark bands the ring turns lilac (9.45 on #200940). */
   .on-dark :focus-visible {
