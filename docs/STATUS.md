@@ -5,8 +5,8 @@
 
 ## Done
 
-| Stage      | Branch           | PR            | Summary                                                                     |
-| ---------- | ---------------- | ------------- | --------------------------------------------------------------------------- |
+| Stage      | Branch           | PR                                                                     | Summary                                                                     |
+| ---------- | ---------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------- |
 | 1 Scaffold | `chore/scaffold` | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs |
 
 ## Next
