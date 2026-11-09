@@ -146,7 +146,7 @@ export function RequestForm({ service }) {
       payload[name] = values[name];
     }
     payload.website = values.website;
-    payload.startedAt = startedAt.current;
+    payload.fillMs = Date.now() - startedAt.current;
     payload.turnstileToken = token;
 
     let response = null;

@@ -42,8 +42,8 @@ export const SERVICE_FIELDS = {
   ],
 };
 
-/** Not user fields: honeypot, form start time, Turnstile token. */
-export const META_FIELDS = ["website", "startedAt", "turnstileToken"];
+/** Not user fields: honeypot, time since the form appeared (from the form start time), Turnstile token. */
+export const META_FIELDS = ["website", "fillMs", "turnstileToken"];
 
 export const EXTRA_FIELDS = ["storeOptIn"];
 
