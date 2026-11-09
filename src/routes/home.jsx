@@ -1,17 +1,7 @@
-import {
-  CircuitBoard,
-  ClipboardCheck,
-  Cpu,
-  MessagesSquare,
-  Minus,
-  Package,
-  PackageSearch,
-  Plus,
-  Smartphone,
-  Truck,
-} from "lucide-react";
+import { CircuitBoard, Cpu, Minus, Package, Plus, Smartphone, Truck } from "lucide-react";
 import { useId, useState } from "react";
 import { Hero } from "../components/home/Hero.jsx";
+import { SERVICE_ICONS } from "../components/serviceIcons.js";
 import { illustrations } from "../components/home/Illustrations.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { Reveal } from "../components/ui/Reveal.jsx";
@@ -28,11 +18,6 @@ export const meta = () =>
     "Component sourcing, project assessments and expert consultations for students, makers and innovators in Ghana. Send one request to the ERA Tech team.",
   );
 
-export const SERVICE_ICONS = {
-  sourcing: PackageSearch,
-  assessment: ClipboardCheck,
-  consultation: MessagesSquare,
-};
 const OFFER_ICONS = {
   cpu: Cpu,
   package: Package,
