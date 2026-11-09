@@ -1,7 +1,7 @@
 # Status
 
-- **Updated:** 2026-11-09 (stage 7)
-- **Where we are:** Stages 1–5 merged. v2 visual upgrade in progress: stages 6–7 done (brand foundation, header and footer); stage 8 (dark hero) next.
+- **Updated:** 2026-11-09 (stage 8)
+- **Where we are:** Stages 1–5 merged. v2 visual upgrade in progress: stages 6–8 done (brand foundation, header and footer, dark hero); stage 9 (home sections) next.
 
 ## Done
 
@@ -14,12 +14,13 @@
 | 5 Request function  | `feat/request-function` | [FranzAfun/eratechgh#5](https://github.com/FranzAfun/eratechgh/pull/5) | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests                  |
 | 6 Brand foundation  | `feat/brand-foundation` | [FranzAfun/eratechgh#6](https://github.com/FranzAfun/eratechgh/pull/6) | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL |
 | 7 Header and footer | `feat/header-footer`    | [FranzAfun/eratechgh#7](https://github.com/FranzAfun/eratechgh/pull/7) | Fixed glass header, right-side drawer (portal, focus trap, scroll lock), dark 4-column footer         |
+| 8 Dark hero         | `feat/dark-hero`        | PR_8                                                                   | Dark hero with our own living PCB and glass quote card, purple closing band                           |
 
 Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10).
 
 ## Next
 
-Stage 8 — `feat/dark-hero`: dark hero with the living PCB visual, purple closing band.
+Stage 9 — `feat/home-sections`: services, design band, how it works, ERA Store split card, FAQ accordion, reveals.
 
 ## Need from Franz
 
@@ -37,7 +38,7 @@ Stage 8 — `feat/dark-hero`: dark hero with the living PCB visual, purple closi
 - Turnstile couldn't be reached from the build sandbox (network blocks Cloudflare); the widget was tested with a stub. Check the real widget on a Netlify preview with the test keys.
 - The function was tested with Vitest and a local end-to-end run (dry run), not on Netlify itself: `rateLimit` and the generated `_headers` CSP need a check on the first preview deploy.
 - Netlify's support for Node 26.13.0 and pnpm 12.18.0 is assumed from the pins; if the first build fails on either, lower `NODE_VERSION`/`PNPM_VERSION` in `netlify.toml`.
-- The decorative hero card is hidden on phones (< 768 px) to keep the first screen short.
+- Phones and tablets (< 1024 px): the living board sits faintly (25 %) behind the hero words and the glass quote card is hidden, so the first screen stays readable.
 - Without `VITE_TURNSTILE_SITE_KEY` at build time the check is empty and sending says the check isn't set up.
 - Deploy previews without SMTP log emails including visitor details to the function log (see Need from Franz #4).
 
