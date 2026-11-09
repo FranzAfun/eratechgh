@@ -8,7 +8,7 @@
 | Stage          | Branch              | PR                                                                     | Summary                                                                      |
 | -------------- | ------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | 1 Scaffold     | `chore/scaffold`    | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs  |
-| 2 Layout shell | `feat/layout-shell` | PR_2                                                                   | Header + mobile menu, footer, 404, base UI components, `src/content/site.js` |
+| 2 Layout shell | `feat/layout-shell` | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js` |
 
 ## Next
 
