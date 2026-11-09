@@ -265,11 +265,15 @@ export const site = {
   },
 
   request: {
+    eyebrow: "Project Desk",
     title: "Start a request",
     intro:
-      "Pick a service and tell us about your project. The ERA Tech team replies with the next step.",
+      "Pick a service, tell us about your project, and the ERA Tech team replies with the next step.",
     pickerLabel: "What do you need?",
     pickerHint: "Choose a service to see its form.",
+    sideTitle: "What happens next",
+    sideEmpty: "Pick a service to see its price and what happens after you send.",
+    sideReply: "The team replies by email, phone or WhatsApp.",
     detailsTitle: "Your details",
     extrasTitle: "Extras",
     checkTitle: "Quick check",
@@ -277,8 +281,15 @@ export const site = {
     send: "Send request",
     sending: "Sending…",
     priceLabel: "Price",
-    consent: "We use these details only to reply to your request.",
-    privacy: "Privacy policy",
+    /** Consent checkbox (DESIGN-DIRECTION.md §7). The link wraps "privacy policy". */
+    consent: {
+      before:
+        "I agree to ERA Tech using these details to reply to my request, as described in the ",
+      link: "privacy policy",
+      after: ".",
+      newTab: "(opens in a new tab)",
+      hint: "Tick the privacy box to send.",
+    },
     labels: {
       fullName: "Full name",
       email: "Email",
