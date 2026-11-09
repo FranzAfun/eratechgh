@@ -1,7 +1,7 @@
 # Status
 
-- **Updated:** 2026-11-09 (stage 3)
-- **Where we are:** Stages 1–3 done (scaffold, layout shell, home); stage 4 (request form) next.
+- **Updated:** 2026-11-09 (stage 4)
+- **Where we are:** Stages 1–4 done (scaffold, layout shell, home, request form); stage 5 (function) next.
 
 ## Done
 
@@ -10,10 +10,11 @@
 | 1 Scaffold     | `chore/scaffold`    | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs     |
 | 2 Layout shell | `feat/layout-shell` | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js`    |
 | 3 Home         | `feat/home`         | [FranzAfun/eratechgh#3](https://github.com/FranzAfun/eratechgh/pull/3) | All home sections from the brief, original illustrations, ERA Store coming soon |
+| 4 Request form | `feat/request-form` | PR_4                                                                   | Service picker, per-service fields, shared rules, Turnstile, every send state   |
 
 ## Next
 
-Stage 4 — `feat/request-form`: the request form with every state.
+Stage 5 — `feat/request-function`: `netlify/functions/request.mjs`, emails, tests.
 
 ## Need from Franz
 
@@ -28,7 +29,9 @@ Stage 4 — `feat/request-form`: the request form with every state.
 
 ## Known issues
 
-- `/request` shows a component preview (placeholder) until stage 4 replaces it with the form.
+- `/api/request` doesn't exist until stage 5, so sending from this branch's preview shows the "couldn't send" error.
+- Turnstile couldn't be loaded from the build sandbox (network blocks Cloudflare); the widget was tested with a stub. Check it on the Netlify preview with the test keys.
+- Without `VITE_TURNSTILE_SITE_KEY` at build time the check box is empty and sending says the check isn't set up.
 - The decorative hero card is hidden on phones (< 768 px) to keep the first screen short.
 - "Our work" is hidden (no approved photos yet).
 - ERA Store offer list is shown as in the brief, pending ERA's confirmation.
