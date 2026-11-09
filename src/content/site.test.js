@@ -36,7 +36,7 @@ describe("site content", () => {
     expect(site.productName).toBe("Project Desk");
     expect(site.legalName).toBe("ERA Technologies");
     expect(site.siteTitle).toBe("ERA Tech · Project Desk");
-    expect(site.home.hero.eyebrow).toBe(site.productName);
+    expect(site.home.hero.eyebrow).toBe(`${site.productName} · For students and makers in Ghana`);
     expect(site.footer.copyright(2026)).toBe("© 2026 ERA Technologies. All rights reserved.");
     expect(site.request.consent.before).toMatch(/^I agree to ERA Technologies using these details/);
   });
