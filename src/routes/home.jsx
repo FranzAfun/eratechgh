@@ -237,7 +237,7 @@ function HowItWorks() {
 function Store() {
   const t = site.home.store;
   return (
-    <section aria-labelledby="store-title" className={section}>
+    <section id="store" aria-labelledby="store-title" className={section}>
       <div className={wrap}>
         <div className="grid gap-8 rounded-card border border-border p-4 sm:p-8 md:grid-cols-[auto_1fr] md:items-center md:gap-12">
           {/* Wide logo only at 80 px tall or more (DESIGN-SYSTEM.md → Logos). */}
