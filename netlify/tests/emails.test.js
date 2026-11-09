@@ -117,7 +117,7 @@ describe("emails", () => {
 });
 
 describe("HTML email alternatives", () => {
-  it("preserves both complete consultation text bodies byte for byte", () => {
+  it("preserves visitor text and changes only the team details heading", () => {
     const { team, visitor } = build(consultation);
     expect(team.text).toBe(`New Project Desk request
 
@@ -136,7 +136,7 @@ What guidance do you need most?: Choosing sensors
 Preferred date: 2026-11-20
 Preferred time: Afternoon (12–4)
 
-— Your details —
+— Visitor details —
 Full name: Sample Placeholder
 Email: sample.placeholder@example.com
 Phone / WhatsApp: +233 20 123 4567
@@ -180,8 +180,6 @@ Reply to this email to add details or photos.
       previous = position;
     }
     expect(labels).toEqual([
-      "Reference",
-      "Service",
       "Price shown",
       ...[
         ...SERVICE_FIELDS[data.service].filter((f) => f !== "discountRequested"),
@@ -199,6 +197,47 @@ Reply to this email to add details or photos.
     }
     expect(visitor.html).toContain("Reply to this email to add details or photos.");
     expect(visitor.html).toContain("— ERA Technologies, Project Desk");
+    expect(team.html).toContain(">Visitor details</th>");
+    expect(team.html).not.toContain(">Your details</th>");
+    expect(team.text).toContain("— Visitor details —");
+    expect(team.text).not.toContain("— Your details —");
+  });
+
+  it("shows the visitor reference chip only in the dark header, keeping the hidden preheader", () => {
+    const { visitor } = build(consultation);
+    const header = visitor.html.match(/<td bgcolor="#200940"[\s\S]*?<\/td>/)[0];
+    expect(header).toContain(">PD-7K3QX2</span>");
+    expect(visitor.html.match(/>PD-7K3QX2<\/span>/g)).toHaveLength(1);
+    expect(visitor.html).toContain("Your reference is PD-7K3QX2</div>");
+    expect(visitor.html).toContain("Thanks — we received your expert consultation request.</p>");
+    expect(visitor.html).not.toContain("request. Your reference is");
+  });
+
+  it("shows the requested discount as a callout only when requested", () => {
+    const { team } = build(consultation);
+    const copy = "Discount requested: 70 % → GH₵75 — check eligibility";
+    expect(team.html).toContain(
+      `background-color:#F7F5F9;color:#3B1174;border-radius:6px;font-size:14px;line-height:24px;">${copy}</p>`,
+    );
+    expect(team.html.match(/Discount requested:/g)).toHaveLength(1);
+    expect(team.text).toContain("70 % requested — check eligibility");
+    expect(team.text).not.toContain(copy);
+    const regular = build({ ...consultation, discountRequested: false });
+    expect(regular.team.html).not.toContain("Discount requested:");
+    expect(regular.team.html).toContain("GH₵250");
+    expect(regular.team.text).not.toContain("70 % requested");
+    for (const data of [
+      { service: "sourcing", components: "Sample parts", neededBy: "", ...base },
+      {
+        service: "assessment",
+        projectTitle: "Sample project",
+        projectArea: "",
+        description: "",
+        ...base,
+      },
+    ]) {
+      expect(build(data).team.html).not.toContain("Discount requested:");
+    }
   });
 
   it("escapes hostile names, long text, reference chips and both preheaders", () => {

@@ -61,6 +61,10 @@ export function sectionRow(title) {
   return `<tr><th colspan="2" style="padding:24px 0 4px;text-align:left;font-size:16px;line-height:24px;font-weight:600;color:${c.primary};">${escapeHtml(title)}</th></tr>`;
 }
 
+export function calloutRow(text) {
+  return `<tr><td colspan="2" style="padding:16px 0 0;"><p style="margin:0;padding:12px 16px;background-color:${c.soft};color:${c.primary};border-radius:6px;font-size:14px;line-height:24px;">${escapeHtml(text)}</p></td></tr>`;
+}
+
 /** content/headerDetails are composed only from the escaping helpers in this module. */
 export function emailDocument({ preheader, heading, headerDetails = "", content, signOff }) {
   return `<!doctype html>

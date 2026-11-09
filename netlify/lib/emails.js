@@ -12,6 +12,7 @@ import {
 } from "../../src/lib/request-rules.js";
 import {
   EMAIL_COLOURS,
+  calloutRow,
   emailDocument,
   escapeHtml,
   fieldRow,
@@ -99,11 +100,7 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
   const email = headerSafe(data.email);
   const price = priceLine(data.service, data.discountRequested);
   const first = firstName(data.fullName);
-  const rows = [
-    fieldRow("Reference", reference),
-    fieldRow("Service", service.name),
-    fieldRow("Price shown", price),
-  ];
+  const rows = [fieldRow("Price shown", price)];
 
   const lines = [
     "New Project Desk request",
@@ -114,9 +111,7 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
   ];
   if (data.service === "consultation" && data.discountRequested) {
     lines.push("70 % requested — check eligibility");
-    rows.push(
-      `<tr><td colspan="2" style="padding:12px 0;font-size:14px;line-height:24px;color:${EMAIL_COLOURS.secondary};">${escapeHtml("70 % requested — check eligibility")}</td></tr>`,
-    );
+    rows.push(calloutRow("Discount requested: 70 % → GH₵75 — check eligibility"));
   }
   lines.push("", `— ${service.name} —`);
   rows.push(sectionRow(service.name));
@@ -125,8 +120,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
     lines.push(fieldLine(f, data[f]));
     rows.push(fieldRow(label(f), displayValue(f, data[f]), f));
   }
-  lines.push("", "— Your details —");
-  rows.push(sectionRow("Your details"));
+  lines.push("", "— Visitor details —");
+  rows.push(sectionRow("Visitor details"));
   for (const f of DETAIL_FIELDS) {
     lines.push(fieldLine(f, data[f]));
     rows.push(fieldRow(label(f), displayValue(f, data[f]), f));
@@ -182,7 +177,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
     html: emailDocument({
       preheader: `Your reference is ${reference}`,
       heading: "We got your request",
-      content: `${paragraph(`Hi ${first},`)}${paragraph(`Thanks — we received your ${service.name.toLowerCase()} request. Your reference is ${reference}.`)}<p style="margin:0 0 24px;">${referenceChip(reference)}</p>${paragraph(`What happens next: ${NEXT_STEP[data.service]}`)}${paragraph("Reply to this email to add details or photos.")}${replyButton(teamInbox, reference, "Reply to the team")}`,
+      headerDetails: `<p style="margin:16px 0 0;">${referenceChip(reference)}</p>`,
+      content: `${paragraph(`Hi ${first},`)}${paragraph(`Thanks — we received your ${service.name.toLowerCase()} request.`)}${paragraph(`What happens next: ${NEXT_STEP[data.service]}`)}${paragraph("Reply to this email to add details or photos.")}${replyButton(teamInbox, reference, "Reply to the team")}`,
       signOff: SIGN_OFF,
     }),
   };
