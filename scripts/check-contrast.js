@@ -148,6 +148,14 @@ export const PAIRS = [
     "text",
   ],
   ["closing band glass button", T("text-inverse"), [GLASS_FILL, T("primary")], "text"],
+  ["eyebrow on light", T("primary-text"), T("surface-soft"), "text"],
+  ["eyebrow on soft glow", T("primary-text"), ["rgb(208 173 255 / 0.3)", T("background")], "text"],
+  ["words on soft glow", T("text-secondary"), ["rgb(208 173 255 / 0.3)", T("background")], "text"],
+  ["service badge", T("on-primary"), T("primary"), "text"],
+  ["design tile words", T("text-on-dark"), [GLASS_FILL, T("primary-deep")], "text"],
+  ["design caption at band bottom", T("text-on-dark"), [GLASS_FILL, T("bg-dark")], "text"],
+  ["how-it-works node", T("on-primary"), T("primary"), "text"],
+  ["store offers icon tile", T("primary-text"), T("surface-strong"), "ui"],
   ["drawer row hover", T("text-inverse"), [GLASS_FILL, T("surface-dark")], "text"],
 ];
 
