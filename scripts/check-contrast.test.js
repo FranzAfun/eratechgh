@@ -1,7 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { PAIRS, ratio } from "./check-contrast.js";
+import { execFileSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
 describe("check-contrast", () => {
+  it("executes the CLI and reports measured pairs on Windows and POSIX paths", () => {
+    const output = execFileSync(
+      process.execPath,
+      [fileURLToPath(new URL("./check-contrast.js", import.meta.url))],
+      { encoding: "utf8" },
+    );
+    expect(output).toContain(`${PAIRS.length} pairs, 0 below AA.`);
+  });
   it("matches published ratios", () => {
     expect(ratio("#ffffff", "#3b1174")).toBeCloseTo(13.83, 1);
     expect(ratio("#d0adff", "#040108")).toBeCloseTo(10.96, 1);
