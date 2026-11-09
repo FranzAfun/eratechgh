@@ -41,17 +41,38 @@ export const site = {
   ],
 
   header: {
+    brand: "ERA Tech",
+    label: "Project Desk",
+    homeLabel: "ERA Tech Project Desk, home",
     menuOpen: "Open menu",
     menuClose: "Close menu",
+    menuTitle: "Menu",
     navLabel: "Main",
     skipLink: "Skip to content",
   },
 
   footer: {
     navLabel: "Footer",
-    privacy: "Privacy policy",
+    about:
+      "ERA Tech helps students, makers and innovators in Ghana source components, check their project plans and get expert advice.",
+    servicesTitle: "Services",
+    siteTitle: "Site",
+    contactTitle: "Contact",
     contactLabel: "Email",
-    copyright: (year) => `© ${year} ERA Tech`,
+    contactFallback: "Send us a request",
+    contactFallbackNote: "The team replies by email, phone or WhatsApp.",
+    privacy: "Privacy policy",
+    copyright: (year) => `© ${year} ERA Tech. All rights reserved.`,
+    drawerCopyright: (year) => `© ${year} ERA Tech`,
+    /** Footer "Site" column: home sections (+ ERA Store) and the request page. */
+    siteLinks: [
+      { label: "Services", hash: "services" },
+      { label: "Design", hash: "design" },
+      { label: "Our work", hash: "work", requiresPortfolio: true },
+      { label: "How it works", hash: "how-it-works" },
+      { label: "ERA Store", hash: "store" },
+      { label: "FAQ", hash: "faq" },
+    ],
   },
 
   /** The three services. `slug` is the URL: /request/<slug>. Prices are exactly as approved; no "was" prices. */
@@ -303,4 +324,9 @@ export function hasPortfolio(s = site) {
 /** Nav items that should render right now. */
 export function visibleNav(s = site) {
   return s.nav.filter((item) => !item.requiresPortfolio || hasPortfolio(s));
+}
+
+/** Footer "Site" links that should render right now. */
+export function visibleSiteLinks(s = site) {
+  return s.footer.siteLinks.filter((item) => !item.requiresPortfolio || hasPortfolio(s));
 }

@@ -39,6 +39,11 @@
   /* Dark ground (DESIGN-DIRECTION.md v2): hero, header, footer, request page band */
   --color-bg-dark: #040108;
   --color-surface-dark: #090311; /* glass base, drawer */
+  /* Glass buttons and tiles on dark: white 6 % fill, white 12–28 % lines (decorative) */
+  --color-glass-fill: rgb(255 255 255 / 0.06);
+  --color-glass-fill-hover: rgb(255 255 255 / 0.12);
+  --color-glass-line: rgb(255 255 255 / 0.12);
+  --color-glass-line-strong: rgb(255 255 255 / 0.28);
 
   /* Surfaces */
   --color-background: #ffffff;
@@ -90,6 +95,7 @@
   --text-sm--line-height: 1.45;
   --text-xs: 0.75rem; /* 12: captions only */
   --text-xs--line-height: 1.4;
+  --tracking-eyebrow: 0.08em; /* xs uppercase eyebrows and footer headings */
 
   /* Motion */
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -118,11 +124,6 @@
   --glass-blur: 14px;
   --glass-border: rgb(208 173 255 / 0.14);
   --glass-solid: #090311;
-  /* Glass button and tiles on dark: white 6 % fill, white 12–24 % border */
-  --glass-fill: rgb(255 255 255 / 0.06);
-  --glass-fill-hover: rgb(255 255 255 / 0.12);
-  --glass-line: rgb(255 255 255 / 0.12);
-  --glass-line-strong: rgb(255 255 255 / 0.28);
 
   --tap-min: 44px;
   --header-height: 64px;
