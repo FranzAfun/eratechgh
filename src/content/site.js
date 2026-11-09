@@ -41,6 +41,17 @@ export const brandLogo = {
   email: { src: "/email/logo-white.png", width: 120, height: 70 },
 };
 
+const workImage = (id, width, height, kind, caption, alt) => ({
+  id,
+  src: `/images/work/${id}-640.webp`,
+  srcSet: `/images/work/${id}-640.webp 640w, /images/work/${id}-${width}.webp ${width}w`,
+  width,
+  height,
+  kind,
+  caption,
+  alt,
+});
+
 export const site = {
   brandName,
   productName,
@@ -54,10 +65,59 @@ export const site = {
   /** Public contact email for the footer and error messages — pending from ERA. While null, it's hidden. */
   teamEmail: null,
   /**
-   * Real, approved project photos only. "Our work" (and its nav link) shows at 3+ entries.
-   * Entry shape: { src, width, height, alt, caption }
+   * Owner-approved work images; kind distinguishes photographs from CAD/layout/render images.
+   * "Our work" and its nav links show only when at least three photographs are present.
    */
-  portfolio: [],
+  portfolio: [
+    workImage(
+      "01-sand-sieve-cad-exploded-view",
+      1029,
+      747,
+      "cad",
+      "3D CAD design",
+      "Exploded 3D CAD view of a sand sieving machine showing the fixed and removable mesh screens, vibration shaft, pulley, belt and synchronous motor",
+    ),
+    workImage(
+      "02-sand-sieve-machine-built",
+      1080,
+      810,
+      "photo",
+      "Built and tested",
+      "The finished sand sieving machine: a black steel frame with mesh screens, belt drive and electric motor, standing on grass",
+    ),
+    workImage(
+      "03-controller-prototype-perfboard",
+      1280,
+      960,
+      "photo",
+      "Prototype",
+      "Controller prototype on perfboard with an Arduino Nano, a GSM module and two 30 A relays",
+    ),
+    workImage(
+      "04-controller-pcb-layout",
+      1280,
+      853,
+      "layout",
+      "PCB layout",
+      "Two-layer PCB layout with a microcontroller, relays and power components",
+    ),
+    workImage(
+      "05-iot-board-3d-render",
+      1280,
+      960,
+      "render",
+      "3D render",
+      "3D render of a blue circuit board with a SIM card holder, wireless module and USB-C port",
+    ),
+    workImage(
+      "06-smart-lock-prototype",
+      1280,
+      960,
+      "photo",
+      null,
+      "Smart lock prototype on a workbench: an LCD unit reading 'Smart Lock System' beside a small wooden test door",
+    ),
+  ],
   /** The minimum number of real photos before "Our work" appears. */
   portfolioMinimum: 3,
 
@@ -227,8 +287,32 @@ export const site = {
     },
     work: {
       eyebrow: "Our work",
-      title: "Projects we've helped build",
-      intro: "",
+      title: "Real builds from the ERA Tech team",
+      intro: "From CAD and circuit layouts to workshop prototypes and finished builds.",
+      stories: [
+        {
+          id: "sand-sieve",
+          title: "Motorised sand sieving machine",
+          copy: "Designed in 3D CAD, then built: a motor-driven vibration shaft shakes two mesh screens to separate fine sand from coarse material.",
+          imageIds: ["01-sand-sieve-cad-exploded-view", "02-sand-sieve-machine-built"],
+        },
+        {
+          id: "prototype-to-pcb",
+          title: "From prototype to PCB",
+          copy: "Circuits are proven on perfboard first, then laid out as printed circuit boards and checked in 3D before fabrication.",
+          imageIds: [
+            "03-controller-prototype-perfboard",
+            "04-controller-pcb-layout",
+            "05-iot-board-3d-render",
+          ],
+        },
+        {
+          id: "smart-lock",
+          title: "Smart lock system",
+          copy: "A working smart lock prototype: an LCD control unit and the lock fitted to a test door, built and tested in the workshop.",
+          imageIds: ["06-smart-lock-prototype"],
+        },
+      ],
     },
     howItWorks: {
       eyebrow: "How it works",
@@ -393,7 +477,10 @@ export const site = {
 
 /** True when "Our work" may be shown. */
 export function hasPortfolio(s = site) {
-  return Array.isArray(s.portfolio) && s.portfolio.length >= s.portfolioMinimum;
+  return (
+    Array.isArray(s.portfolio) &&
+    s.portfolio.filter((image) => image.kind === "photo").length >= s.portfolioMinimum
+  );
 }
 
 /** Nav items that should render right now. */
