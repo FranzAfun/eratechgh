@@ -51,6 +51,11 @@ export function formatGmt(date) {
 
 const label = (name) => site.request.labels[name];
 
+/** Sender display name on both emails: "ERA Tech · Project Desk". */
+export const SENDER_NAME = site.siteTitle;
+/** Formal sign-off on both emails: "— ERA Technologies, Project Desk". */
+export const SIGN_OFF = `— ${site.legalName}, ${site.productName}`;
+
 function displayValue(name, value) {
   if (name === "projectArea") return PROJECT_AREAS.find((a) => a.value === value)?.label ?? "—";
   if (name === "preferredTime") return PREFERRED_TIMES.find((t) => t.value === value)?.label ?? "—";
@@ -109,10 +114,12 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
     `Sent: ${formatGmt(sentAt)}`,
     "",
     "Reply to this email to answer the visitor directly.",
+    "",
+    SIGN_OFF,
   );
 
   const team = {
-    from: { name: "ERA Tech Project Desk", address: headerSafe(mailFrom) },
+    from: { name: SENDER_NAME, address: headerSafe(mailFrom) },
     to: headerSafe(teamInbox),
     replyTo: { name, address: email },
     subject: headerSafe(`[Project Desk] ${service.shortName} — ${name} — ${reference}`),
@@ -120,7 +127,7 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
   };
 
   const visitor = {
-    from: { name: "ERA Tech", address: headerSafe(mailFrom) },
+    from: { name: SENDER_NAME, address: headerSafe(mailFrom) },
     to: email,
     replyTo: headerSafe(teamInbox),
     subject: `We got your request — ERA Tech (${reference})`,
@@ -133,7 +140,7 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
       "",
       "Reply to this email to add details or photos.",
       "",
-      "— ERA Tech team",
+      SIGN_OFF,
     ].join("\n"),
   };
 
