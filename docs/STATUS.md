@@ -1,18 +1,19 @@
 # Status
 
-- **Updated:** 2026-11-09 (stage 2)
-- **Where we are:** Stages 1–2 done (scaffold, layout shell); stage 3 (home page) next.
+- **Updated:** 2026-11-09 (stage 3)
+- **Where we are:** Stages 1–3 done (scaffold, layout shell, home); stage 4 (request form) next.
 
 ## Done
 
-| Stage          | Branch              | PR                                                                     | Summary                                                                      |
-| -------------- | ------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| 1 Scaffold     | `chore/scaffold`    | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs  |
-| 2 Layout shell | `feat/layout-shell` | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js` |
+| Stage          | Branch              | PR                                                                     | Summary                                                                         |
+| -------------- | ------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| 1 Scaffold     | `chore/scaffold`    | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs     |
+| 2 Layout shell | `feat/layout-shell` | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js`    |
+| 3 Home         | `feat/home`         | PR_3                                                                   | All home sections from the brief, original illustrations, ERA Store coming soon |
 
 ## Next
 
-Stage 3 — `feat/home`: all home sections from BRIEF.md.
+Stage 4 — `feat/request-form`: the request form with every state.
 
 ## Need from Franz
 
@@ -28,6 +29,9 @@ Stage 3 — `feat/home`: all home sections from BRIEF.md.
 ## Known issues
 
 - `/request` shows a component preview (placeholder) until stage 4 replaces it with the form.
+- The decorative hero card is hidden on phones (< 768 px) to keep the first screen short.
+- "Our work" is hidden (no approved photos yet).
+- ERA Store offer list is shown as in the brief, pending ERA's confirmation.
 - Footer privacy link and contact email are hidden while `privacyUrl` / `teamEmail` are `null`.
 
 ## How to test
