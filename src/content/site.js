@@ -81,24 +81,26 @@ export const site = {
       slug: "sourcing",
       name: "Component sourcing",
       shortName: "Sourcing",
+      icon: "sourcing",
       price: "Free quote",
-      priceNote: "Parts and delivery are paid only after you approve the itemised quote.",
+      priceNote: "You pay for parts and delivery only after you approve the quote.",
       summary:
-        "Send us your parts list. We find the components, check what's in stock and send you an itemised quote.",
+        "Send your parts list. We track down the components and send you an itemised quote, delivery included.",
       steps: [
         "List the parts and quantities you need",
         "Get an itemised quote with delivery",
-        "Approve and pay, then we get your parts to you",
+        "Approve and pay, and we get the parts to you",
       ],
-      cta: "Request a quote",
+      cta: "Get a free quote",
       featured: false,
     },
     {
       slug: "assessment",
       name: "Project assessment",
       shortName: "Assessment",
+      icon: "assessment",
       price: "GH₵50",
-      priceNote: "The fee doesn't cover parts or full design work.",
+      priceNote: "Covers the review. Parts and full design work are separate.",
       summary:
         "We review your project idea, recommend the parts it needs and quote them, so you start on the right track.",
       steps: [
@@ -114,15 +116,16 @@ export const site = {
       slug: "consultation",
       name: "Expert consultation",
       shortName: "Consultation",
+      icon: "consultation",
       price: "GH₵250",
       priceNote:
         "Did an assessment and bought the parts through us? Ask for 70 % off: GH₵75. We check eligibility.",
       summary:
-        "A session with an ERA Tech expert on your project: design choices, problems you're stuck on and next steps.",
+        "Time with an ERA Tech expert on your project: design choices, the problem you're stuck on, and what to do next.",
       steps: [
         "Share your abstract and what you need help with",
         "We confirm a time and send payment details",
-        "Meet the expert and get clear next steps",
+        "Meet the expert and leave with clear next steps",
       ],
       cta: "Book a consultation",
       featured: false,
@@ -145,14 +148,17 @@ export const site = {
       },
     },
     services: {
-      title: "Services",
+      eyebrow: "Services",
+      title: "Three ways we can help",
       intro:
-        "Pick what you need. Every request goes to the ERA Tech team, who reply with the next step.",
+        "Pick what you need. Every request goes straight to the ERA Tech team, who reply with the next step.",
       stepsLabel: "How it goes",
     },
     design: {
-      title: "What we can design",
-      intro: "Beyond sourcing and advice, ERA Tech designs and builds hardware with you.",
+      eyebrow: "Design",
+      title: "Need more than parts? We design too",
+      intro:
+        "ERA Tech also designs and builds hardware with you, from the circuit to the enclosure.",
       caption: "Illustration — not a client project",
       footnote: "Detailed design and fabrication are quoted separately.",
       tiles: [
@@ -179,11 +185,13 @@ export const site = {
       ],
     },
     work: {
-      title: "Our work",
-      intro: "Projects we've helped build.",
+      eyebrow: "Our work",
+      title: "Projects we've helped build",
+      intro: "",
     },
     howItWorks: {
-      title: "How it works",
+      eyebrow: "How it works",
+      title: "From request to parts in three steps",
       steps: [
         {
           title: "Tell us what you're building",
@@ -191,7 +199,7 @@ export const site = {
         },
         {
           title: "We confirm the next step",
-          body: "The team replies with your quote, payment details and timing.",
+          body: "The team replies with your quote, payment details and timing. Nothing happens without your OK.",
         },
         {
           title: "Get your parts or your session",
@@ -200,26 +208,29 @@ export const site = {
       ],
     },
     store: {
+      eyebrow: "ERA Store",
       title: "ERA Store is coming soon",
       badge: "Coming soon",
       intro: "Our online store for makers in Ghana. It will offer:",
       // Offer list from the brief, still to be confirmed by ERA (see docs/STATUS.md).
       offers: [
-        "Electronic components and modules",
-        "Build Packs",
-        "ERA Dev Board",
-        "Delivery across Ghana, and pickup",
-        "Mobile Money and card payments",
+        { icon: "cpu", text: "Electronic components and modules" },
+        { icon: "package", text: "Build Packs" },
+        { icon: "board", text: "ERA Dev Board" },
+        { icon: "truck", text: "Delivery across Ghana, and pickup" },
+        { icon: "phone", text: "Mobile Money and card payments" },
       ],
       notify: "Want to know when it opens? Tick the box when you send a request.",
       logoAlt: "ERA Store",
     },
     faq: {
-      title: "Questions",
+      eyebrow: "FAQ",
+      title: "Questions, answered",
+      intro: "Can't find yours? Ask it in your request.",
       items: [
         {
           q: "Is the sourcing quote really free?",
-          a: "Yes. We send you an itemised quote for free. You pay for the parts and delivery only after you approve it.",
+          a: "Yes. The itemised quote is free. You pay for the parts and delivery only after you approve it.",
         },
         {
           q: "What does the GH₵50 assessment cover?",
@@ -227,11 +238,11 @@ export const site = {
         },
         {
           q: "How does the 70 % off a consultation work?",
-          a: "If you did an ERA Tech assessment and bought the parts through ERA Tech, tick the box on the consultation form. We check your eligibility, and if it's confirmed the consultation costs GH₵75 instead of GH₵250.",
+          a: "If you did an ERA Tech assessment and bought the parts through ERA Tech, tick the box on the consultation form. We check your eligibility. If it's confirmed, the consultation costs GH₵75 instead of GH₵250.",
         },
         {
           q: "Is my consultation booked when I send the form?",
-          a: "No. The team gets back to you to confirm a time and payment. Nothing is booked until they do.",
+          a: "Not yet. The team gets back to you to confirm a time and payment. Nothing is booked until they do.",
         },
         {
           q: "Does a consultation include CAD, PCB design or a prototype?",
