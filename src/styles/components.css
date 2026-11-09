@@ -49,15 +49,21 @@
     text-underline-offset: 3px;
     font-weight: var(--font-weight-medium);
   }
-  /* On the dark band the secondary button inverts. White on #200940: 17.88. */
-  .on-dark .btn-secondary {
-    background: transparent;
-    color: var(--color-text-inverse);
-    border-color: var(--color-accent);
-  }
+  /* On dark grounds (.on-dark): primary is white filled, secondary is glass. */
   .on-dark .btn-primary {
-    background: var(--color-accent);
-    color: var(--color-primary-deep); /* #200940 on #D0ADFF: 9.45 */
+    background: var(--color-on-primary);
+    color: var(--color-primary); /* 13.83 */
+  }
+  .on-dark .btn-secondary {
+    background: var(--glass-fill);
+    color: var(--color-text-inverse);
+    border-color: var(--glass-line-strong);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .on-dark .btn-ghost,
+  .on-dark .btn-link {
+    color: var(--color-text-inverse);
   }
 
   @media (hover: hover) {
@@ -70,14 +76,19 @@
         background-color var(--duration-quick) ease var(--delay-filled-hover);
     }
     .on-dark .btn-primary:not([aria-disabled="true"]):hover {
-      background: #e0caff; /* #200940 on it: 11.97 */
+      background: var(--color-surface-hover); /* #3B1174 on #EBE7F1: 11.35 */
+      box-shadow: 0 0 0 3px rgb(208 173 255 / 0.35);
     }
     .btn-secondary:not([aria-disabled="true"]):hover,
     .btn-ghost:not([aria-disabled="true"]):hover {
       background: var(--color-surface-hover);
     }
     .on-dark .btn-secondary:not([aria-disabled="true"]):hover {
-      background: rgb(255 255 255 / 0.08);
+      background: var(--glass-fill-hover);
+      border-color: rgb(208 173 255 / 0.5);
+    }
+    .on-dark .btn-ghost:not([aria-disabled="true"]):hover {
+      background: var(--glass-fill-hover);
     }
     .btn-link:hover {
       text-decoration-thickness: 2px;
@@ -195,6 +206,26 @@
       opacity: 0;
       transform: translateY(calc(var(--distance-small) * -1));
     }
+  }
+
+  /* ── Reveal on scroll (see components/ui/Reveal.jsx) ──────────────── */
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(var(--distance-reveal));
+  }
+  [data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--duration-reveal) var(--ease-smooth-out),
+      transform var(--duration-reveal) var(--ease-smooth-out);
+  }
+
+  /* ── Glass surface ───────────────────────────────────────────────── */
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
   }
 
   /* ── Mobile menu panel ───────────────────────────────────────────────── */

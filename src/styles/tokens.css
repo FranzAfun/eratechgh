@@ -36,6 +36,10 @@
   --color-primary-text: #3b1174; /* brand as words: links, prices. 11.35+ */
   --color-on-primary: #ffffff;
 
+  /* Dark ground (DESIGN-DIRECTION.md v2): hero, header, footer, request page band */
+  --color-bg-dark: #040108;
+  --color-surface-dark: #090311; /* glass base, drawer */
+
   /* Surfaces */
   --color-background: #ffffff;
   --color-surface: #ffffff;
@@ -48,7 +52,7 @@
   --color-text-secondary: #4b5563; /* 6.20 */
   --color-text-muted: #606877; /* 4.60, the lowest allowed */
   --color-text-inverse: #ffffff;
-  --color-text-on-dark: #d8d0e6; /* secondary words on dark bands: 11.99 on #200940, 9.28 on #3B1174 */
+  --color-text-on-dark: #ebe7f1; /* body and small words on dark (v2 "muted on dark") */
 
   /* Lines */
   --color-border: #e5e7eb; /* decorative only */
@@ -89,6 +93,7 @@
 
   /* Motion */
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
   --default-transition-duration: 150ms;
   --default-transition-timing-function: var(--ease-smooth-out);
 }
@@ -103,6 +108,21 @@
   --delay-filled-hover: 100ms;
   --distance-small: 6px;
   --distance-base: 8px;
+  --distance-reveal: 12px;
+  --duration-reveal: 800ms;
+  --duration-drawer-in: 260ms;
+  --duration-drawer-out: 200ms;
+
+  /* Glass (header, drawer, hero card). Solid fallback where backdrop-filter is missing. */
+  --glass-bg: rgb(9 3 17 / 0.8);
+  --glass-blur: 14px;
+  --glass-border: rgb(208 173 255 / 0.14);
+  --glass-solid: #090311;
+  /* Glass button and tiles on dark: white 6 % fill, white 12–24 % border */
+  --glass-fill: rgb(255 255 255 / 0.06);
+  --glass-fill-hover: rgb(255 255 255 / 0.12);
+  --glass-line: rgb(255 255 255 / 0.12);
+  --glass-line-strong: rgb(255 255 255 / 0.28);
 
   --tap-min: 44px;
   --header-height: 64px;
@@ -141,5 +161,18 @@
   :root {
     --distance-small: 0px;
     --distance-base: 0px;
+    --distance-reveal: 0px;
+  }
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  :root {
+    --glass-bg: var(--glass-solid);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-bg: var(--glass-solid);
+    --glass-blur: 0px;
   }
 }
