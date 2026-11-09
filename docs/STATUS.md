@@ -14,7 +14,7 @@
 | 5 Request function  | `feat/request-function` | [FranzAfun/eratechgh#5](https://github.com/FranzAfun/eratechgh/pull/5) | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests                  |
 | 6 Brand foundation  | `feat/brand-foundation` | [FranzAfun/eratechgh#6](https://github.com/FranzAfun/eratechgh/pull/6) | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL |
 | 7 Header and footer | `feat/header-footer`    | [FranzAfun/eratechgh#7](https://github.com/FranzAfun/eratechgh/pull/7) | Fixed glass header, right-side drawer (portal, focus trap, scroll lock), dark 4-column footer         |
-| 8 Dark hero         | `feat/dark-hero`        | PR_8                                                                   | Dark hero with our own living PCB and glass quote card, purple closing band                           |
+| 8 Dark hero         | `feat/dark-hero`        | [FranzAfun/eratechgh#8](https://github.com/FranzAfun/eratechgh/pull/8) | Dark hero with our own living PCB and glass quote card, purple closing band                           |
 
 Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10).
 
