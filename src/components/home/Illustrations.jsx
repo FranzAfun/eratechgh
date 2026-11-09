@@ -14,6 +14,7 @@ const common = {
   strokeLinejoin: "round",
   "aria-hidden": "true",
   focusable: "false",
+  className: "trace-draw",
 };
 
 function Pcb() {

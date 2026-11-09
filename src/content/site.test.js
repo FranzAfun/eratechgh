@@ -3,7 +3,7 @@ import { hasPortfolio, site, visibleNav } from "./site.js";
 
 describe("site content", () => {
   it("never invents unknown values", () => {
-    expect(site.privacyUrl).toBeNull();
+    expect(site.privacyUrl).toBe("https://eraaxis.com/privacy");
     expect(site.teamEmail).toBeNull();
     expect(site.portfolio).toEqual([]);
   });

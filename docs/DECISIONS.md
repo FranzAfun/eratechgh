@@ -81,3 +81,26 @@ Private `FranzAfun/eratechgh`, pnpm, `main` protected, short PRs, Netlify previe
   every file in the functions folder as a function. There is still exactly one function.
 - **`/request` is a parent route** with the form; the three service URLs are child routes that only set
   the page title. Switching service changes the URL without losing what the visitor typed.
+
+## 2026-11-09 — Design direction v2 overrides parts of DESIGN-SYSTEM.md
+
+`docs/DESIGN-DIRECTION.md` (v2) wins where it differs: dark hero, glass header, right-side drawer, dark
+footer and purple closing band, plus our own living PCB visual (original SVG, not eraaxis.com's). Light
+sections in between. Everything else in DESIGN-SYSTEM.md still applies. New dark tokens live in
+`src/styles/tokens.css`; every pair used is measured by `pnpm check:contrast`, which fails below AA.
+
+## 2026-11-09 — Consent required, aria-disabled send
+
+The form has a required consent checkbox above Send. Send uses `aria-disabled` (looks disabled, stays
+focusable) until it's ticked; pressing it unticked focuses the checkbox and shows its error. The shared
+rules and the function require `consent: true`; the team email shows "Consent: yes".
+
+## 2026-11-09 — Privacy policy: https://eraaxis.com/privacy
+
+`site.privacyUrl` is set. It opens in a new tab (`rel="noopener noreferrer"`).
+
+## 2026-11-09 — ERA E favicon and real Dev Board photos reused from eraaxis.com assets
+
+`favicon.ico` / `favicon.png` and the Dev Board photos come from `design-system/assets/` (ERA's own
+assets). `favicon.svg` is redrawn from the E proportions in DESIGN-DIRECTION.md §9 (white in dark
+scheme); `apple-touch-icon.png` (180 px) is a white E on `#3B1174`.

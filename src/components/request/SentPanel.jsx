@@ -12,11 +12,11 @@ export function SentPanel({ reference, email, onAgain }) {
     window.scrollTo({ top: 0 });
   }, []);
   return (
-    <div className="rounded-card border border-border p-4 sm:p-8">
+    <div>
       <CircleCheck aria-hidden="true" size={32} strokeWidth={1.75} className="text-success-text" />
-      <h1 ref={heading} tabIndex={-1} className="mt-4 text-h1 font-semibold">
+      <h2 ref={heading} tabIndex={-1} className="mt-4 text-h1 font-semibold">
         {t.title}
-      </h1>
+      </h2>
       <p className="mt-4 text-sm text-text-secondary">{t.reference}</p>
       <p className="mt-1 font-mono text-h2 font-bold tracking-normal text-primary-text">
         {reference}

@@ -27,6 +27,11 @@
   .btn[aria-disabled="true"] {
     cursor: default;
   }
+  /* Looks disabled but stays focusable (aria-disabled), e.g. Send before consent is ticked. */
+  .btn.is-locked {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 
   .btn-primary {
     background: var(--color-primary);
@@ -49,15 +54,21 @@
     text-underline-offset: 3px;
     font-weight: var(--font-weight-medium);
   }
-  /* On the dark band the secondary button inverts. White on #200940: 17.88. */
-  .on-dark .btn-secondary {
-    background: transparent;
-    color: var(--color-text-inverse);
-    border-color: var(--color-accent);
-  }
+  /* On dark grounds (.on-dark): primary is white filled, secondary is glass. */
   .on-dark .btn-primary {
-    background: var(--color-accent);
-    color: var(--color-primary-deep); /* #200940 on #D0ADFF: 9.45 */
+    background: var(--color-on-primary);
+    color: var(--color-primary); /* 13.83 */
+  }
+  .on-dark .btn-secondary {
+    background: var(--color-glass-fill);
+    color: var(--color-text-inverse);
+    border-color: var(--color-glass-line-strong);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+  .on-dark .btn-ghost,
+  .on-dark .btn-link {
+    color: var(--color-text-inverse);
   }
 
   @media (hover: hover) {
@@ -70,14 +81,19 @@
         background-color var(--duration-quick) ease var(--delay-filled-hover);
     }
     .on-dark .btn-primary:not([aria-disabled="true"]):hover {
-      background: #e0caff; /* #200940 on it: 11.97 */
+      background: var(--color-surface-hover); /* #3B1174 on #EBE7F1: 11.35 */
+      box-shadow: 0 0 0 3px rgb(208 173 255 / 0.35);
     }
     .btn-secondary:not([aria-disabled="true"]):hover,
     .btn-ghost:not([aria-disabled="true"]):hover {
       background: var(--color-surface-hover);
     }
     .on-dark .btn-secondary:not([aria-disabled="true"]):hover {
-      background: rgb(255 255 255 / 0.08);
+      background: var(--color-glass-fill-hover);
+      border-color: rgb(208 173 255 / 0.5);
+    }
+    .on-dark .btn-ghost:not([aria-disabled="true"]):hover {
+      background: var(--color-glass-fill-hover);
     }
     .btn-link:hover {
       text-decoration-thickness: 2px;
@@ -177,6 +193,10 @@
       background-color var(--duration-quick) ease,
       border-color var(--duration-quick) ease;
   }
+  .checkbox-input.is-invalid:not(:checked) {
+    border-color: var(--color-danger-text);
+    box-shadow: var(--shadow-field-focus-error);
+  }
   .checkbox-input:checked {
     background: var(--color-primary);
     border-color: var(--color-primary);
@@ -195,6 +215,290 @@
       opacity: 0;
       transform: translateY(calc(var(--distance-small) * -1));
     }
+  }
+
+  /* ── Reveal on scroll (see components/ui/Reveal.jsx) ──────────────── */
+  [data-reveal="hidden"] {
+    opacity: 0;
+    transform: translateY(var(--distance-reveal));
+  }
+  [data-reveal="shown"] {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity var(--duration-reveal) var(--ease-smooth-out),
+      transform var(--duration-reveal) var(--ease-smooth-out);
+  }
+
+  /* ── Glass surface ───────────────────────────────────────────────── */
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  }
+
+  /* ── Drawer (DESIGN-DIRECTION.md §2) ─────────────────────────────── */
+  .drawer-scrim {
+    background: rgb(4 1 8 / 0.6);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity var(--duration-drawer-out) ease;
+  }
+  .drawer-scrim.is-open {
+    opacity: 1;
+    transition-duration: var(--duration-drawer-in);
+  }
+  .drawer-panel {
+    border-left: 1px solid var(--glass-border);
+    transform: translateX(100%);
+    transition: transform var(--duration-drawer-out) var(--ease-drawer);
+  }
+  .drawer-panel.is-open {
+    transform: none;
+    transition-duration: var(--duration-drawer-in);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .drawer-panel {
+      transform: none;
+      opacity: 0;
+      transition: opacity var(--duration-drawer-out) ease;
+    }
+    .drawer-panel.is-open {
+      opacity: 1;
+    }
+  }
+
+  /* ── Header CTA once the header is glass: filled primary + 1 px lilac border ── */
+  .on-dark .btn-solid-dark {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    border-color: var(--color-accent);
+  }
+  @media (hover: hover) {
+    .on-dark .btn-solid-dark:not([aria-disabled="true"]):hover {
+      background: var(--color-primary-hover);
+      box-shadow: var(--shadow-primary-halo);
+    }
+  }
+
+  /* ── Hero (DESIGN-DIRECTION.md §3) ─────────────────────────────── */
+  .hero-ground {
+    background-color: var(--color-bg-dark);
+    background-image:
+      radial-gradient(60% 55% at 72% 45%, rgb(59 17 116 / 0.55), transparent 70%),
+      radial-gradient(35% 30% at 15% 10%, rgb(59 17 116 / 0.25), transparent 70%);
+  }
+  /* Breadboard dot grid, fading out towards the edges. */
+  .dot-grid {
+    background-image: radial-gradient(rgb(255 255 255 / 0.1) 1px, transparent 1.2px);
+    background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 65% at 60% 45%, #000 30%, transparent 80%);
+    mask-image: radial-gradient(ellipse 70% 65% at 60% 45%, #000 30%, transparent 80%);
+  }
+  /* Words fade up once on load. */
+  .hero-in {
+    animation: hero-in 750ms var(--ease-smooth-out) both;
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(var(--distance-reveal));
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-in {
+      animation: none;
+    }
+  }
+
+  /* ── Living circuit ──────────────────────────────────────────────── */
+  .lc-pulse {
+    stroke-dasharray: 10 200;
+    stroke-dashoffset: 10;
+    animation: lc-pulse 3.2s ease-in-out infinite;
+  }
+  @keyframes lc-pulse {
+    0% {
+      stroke-dashoffset: 10;
+    }
+    60%,
+    100% {
+      stroke-dashoffset: -100;
+    }
+  }
+  .lc-led {
+    opacity: 0.3;
+    animation: lc-led 3.2s ease-out infinite;
+  }
+  .lc-glow {
+    opacity: 0;
+    animation: lc-glow 3.2s ease-out infinite;
+  }
+  @keyframes lc-led {
+    0%,
+    56% {
+      opacity: 0.3;
+    }
+    62% {
+      opacity: 1;
+    }
+    90%,
+    100% {
+      opacity: 0.3;
+    }
+  }
+  @keyframes lc-glow {
+    0%,
+    56% {
+      opacity: 0;
+    }
+    62% {
+      opacity: 0.9;
+    }
+    90%,
+    100% {
+      opacity: 0;
+    }
+  }
+  /* Each LED lights when its trace's pulse arrives (same delay as the pulse). */
+  .lc-led-0,
+  .lc-glow-0 {
+    animation-delay: 0.6s;
+  }
+  .lc-led-1,
+  .lc-glow-1 {
+    animation-delay: 1.4s;
+  }
+  .lc-led-2,
+  .lc-glow-2 {
+    animation-delay: 2.2s;
+  }
+  .living-circuit.is-paused * {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lc-pulse {
+      display: none;
+    }
+    .lc-led,
+    .lc-glow {
+      animation: none;
+    }
+    .lc-led {
+      opacity: 0.9;
+    }
+    .lc-glow {
+      opacity: 0.45;
+    }
+  }
+
+  /* ── Closing band (DESIGN-DIRECTION.md §4) ───────────────────────── */
+  .closing-band {
+    background:
+      radial-gradient(50% 70% at 50% 0%, rgb(208 173 255 / 0.22), transparent 70%),
+      linear-gradient(135deg, #200940 0%, #3b1174 55%, #2f0e5d 100%);
+  }
+
+  /* ── Light section with a soft glow (DESIGN-DIRECTION.md §4) ──────── */
+  .soft-glow {
+    background-image:
+      radial-gradient(40% 50% at 0% 0%, rgb(208 173 255 / 0.3), transparent 70%),
+      radial-gradient(40% 50% at 100% 100%, rgb(59 17 116 / 0.16), transparent 70%);
+  }
+
+  /* Service cards: border to primary + soft shadow on hover, no lift. */
+  .service-card {
+    transition:
+      border-color var(--duration-quick) ease,
+      box-shadow var(--duration-quick) ease;
+  }
+  @media (hover: hover) {
+    .service-card:hover {
+      border-color: var(--color-primary);
+      box-shadow:
+        var(--shadow-resting),
+        0 12px 32px rgb(59 17 116 / 0.12);
+    }
+  }
+
+  /* ── Design band: deep → dark with a faint grid ──────────────────── */
+  .design-band {
+    background: linear-gradient(180deg, var(--color-primary-deep) 0%, var(--color-bg-dark) 100%);
+  }
+  .line-grid {
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%);
+    mask-image: linear-gradient(180deg, #000, transparent 85%);
+  }
+  /* Illustrations draw their lines once when the tile is revealed. */
+  [data-reveal] .trace-draw :is(path, rect, circle):not([stroke-dasharray]) {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+  }
+  [data-reveal="shown"] .trace-draw :is(path, rect, circle):not([stroke-dasharray]) {
+    animation: trace-draw 1.6s var(--ease-smooth-out) 200ms forwards;
+  }
+  @keyframes trace-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* ── ERA Store photo on a soft lilac glow ────────────────────────── */
+  .store-photo {
+    background:
+      radial-gradient(60% 55% at 50% 50%, rgb(208 173 255 / 0.55), transparent 75%),
+      var(--color-surface-strong);
+  }
+
+  /* ── FAQ accordion: 250 ms height animation ──────────────────────── */
+  .accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    visibility: hidden;
+    transition:
+      grid-template-rows var(--duration-fast) var(--ease-smooth-out),
+      visibility 0s linear var(--duration-fast);
+  }
+  .accordion-panel.is-open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition:
+      grid-template-rows var(--duration-fast) var(--ease-smooth-out),
+      visibility 0s;
+  }
+  .accordion-panel > * {
+    min-height: 0;
+  }
+
+  /* ── Request page: service picker cards ──────────────────────────── */
+  .picker-card {
+    border: 1px solid var(--color-ui-border);
+    background: var(--color-surface);
+    transition:
+      border-color var(--duration-quick) ease,
+      background-color var(--duration-quick) ease,
+      box-shadow var(--duration-quick) ease;
+  }
+  .picker-card.is-checked {
+    border-color: var(--color-primary);
+    background: var(--color-surface-strong);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+  }
+  @media (hover: hover) {
+    .picker-card:not(.is-checked):hover {
+      background: var(--color-surface-soft);
+      border-color: var(--color-primary);
+    }
+  }
+  /* The radio is visually hidden; the card shows keyboard focus. */
+  .picker-card:has(:focus-visible) {
+    outline: var(--focus-ring-width) solid var(--color-focus-ring);
+    outline-offset: var(--focus-ring-offset);
   }
 
   /* ── Mobile menu panel ───────────────────────────────────────────────── */

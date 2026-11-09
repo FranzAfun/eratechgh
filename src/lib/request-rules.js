@@ -45,9 +45,10 @@ export const SERVICE_FIELDS = {
 /** Not user fields: honeypot, time since the form appeared (from the form start time), Turnstile token. */
 export const META_FIELDS = ["website", "fillMs", "turnstileToken"];
 
-export const EXTRA_FIELDS = ["storeOptIn"];
+/** Extras every service has. `consent` is required (must be true). */
+export const EXTRA_FIELDS = ["storeOptIn", "consent"];
 
-const BOOLEAN_FIELDS = new Set(["discountRequested", "storeOptIn"]);
+const BOOLEAN_FIELDS = new Set(["discountRequested", "storeOptIn", "consent"]);
 
 /** Every key a request for `service` may contain. Anything else is rejected. */
 export function allowedKeys(service) {
@@ -62,7 +63,7 @@ export function allowedKeys(service) {
 
 /** User-facing fields for a service, in form order (used for focusing the first error). */
 export function fieldOrder(service) {
-  return [...(SERVICE_FIELDS[service] ?? []), ...DETAIL_FIELDS];
+  return [...(SERVICE_FIELDS[service] ?? []), ...DETAIL_FIELDS, "consent"];
 }
 
 /** Today's date as YYYY-MM-DD in Ghana (GMT, no daylight saving). */
@@ -143,6 +144,7 @@ const RULES = {
     PREFERRED_TIMES.some((t) => t.value === v) ? null : "Choose a preferred time.",
   discountRequested: () => null,
   storeOptIn: () => null,
+  consent: (v) => (v === true ? null : "Tick the box to agree, so we can reply to your request."),
 };
 
 /** Normalises a raw value: strings are trimmed (CRLF → LF), booleans stay booleans. */

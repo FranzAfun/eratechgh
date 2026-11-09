@@ -104,6 +104,8 @@ export function buildEmails({ data, reference, sentAt, mailFrom, teamInbox }) {
   lines.push(
     "",
     `ERA Store: ${data.storeOptIn ? "Yes — tell them when it opens" : "No"}`,
+    // Only consented requests reach this point (shared rules require consent: true).
+    `Consent: ${data.consent ? "yes" : "no"}`,
     `Sent: ${formatGmt(sentAt)}`,
     "",
     "Reply to this email to answer the visitor directly.",

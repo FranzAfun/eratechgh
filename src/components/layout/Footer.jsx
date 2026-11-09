@@ -1,57 +1,93 @@
+import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
-import { site, visibleNav } from "../../content/site.js";
+import { site, visibleSiteLinks } from "../../content/site.js";
 
+const heading = "text-xs font-semibold tracking-eyebrow text-accent uppercase";
+const link =
+  "inline-flex min-h-11 items-center rounded-control text-sm text-text-on-dark no-underline hover:text-accent";
+
+/** Dark footer (DESIGN-DIRECTION.md §5): 4 columns on desktop, 2 on tablet, 1 on phones. */
 export function Footer() {
+  const t = site.footer;
   const year = new Date().getFullYear();
   return (
-    <footer className="border-t border-border bg-surface-soft">
-      <div className="mx-auto grid max-w-content gap-6 px-4 py-10 text-sm md:grid-cols-[1fr_auto] md:px-6">
-        <div>
-          <p className="text-base font-semibold text-text-primary">{site.wordmark}</p>
-          <p className="mt-2 text-text-secondary">{site.tagline}</p>
-          {site.teamEmail ? (
-            <p className="mt-3 text-text-secondary">
-              {site.footer.contactLabel}:{" "}
-              <a
-                className="font-medium text-primary-text underline"
-                href={`mailto:${site.teamEmail}`}
-              >
-                {site.teamEmail}
-              </a>
+    <footer className="on-dark border-t border-text-inverse/7 bg-bg-dark text-text-on-dark">
+      <div className="mx-auto max-w-content px-4 pt-14 pb-8 md:px-6">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+          <div className="max-w-80">
+            <p className="flex items-baseline gap-2 text-text-inverse">
+              <span className="text-h3 font-semibold">{site.header.brand}</span>
+              <span className="text-xs text-text-on-dark">{site.header.label}</span>
             </p>
-          ) : null}
-        </div>
-        <nav aria-label={site.footer.navLabel}>
-          <ul className="flex flex-wrap gap-x-1 gap-y-1 md:justify-end">
-            {visibleNav().map((item) => (
-              <li key={item.hash}>
-                <Link
-                  to={{ pathname: "/", hash: item.hash }}
-                  className="inline-flex min-h-11 items-center rounded-control px-2 text-text-secondary underline-offset-3 hover:text-text-primary hover:underline"
-                >
-                  {item.label}
+            <p className="mt-3 text-sm">{t.about}</p>
+          </div>
+
+          <nav aria-labelledby="footer-services">
+            <h2 id="footer-services" className={heading}>
+              {t.servicesTitle}
+            </h2>
+            <ul className="mt-3">
+              {site.services.map((s) => (
+                <li key={s.slug}>
+                  <Link to={`/request/${s.slug}`} className={link}>
+                    {s.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-labelledby="footer-site">
+            <h2 id="footer-site" className={heading}>
+              {t.siteTitle}
+            </h2>
+            <ul className="mt-3">
+              {visibleSiteLinks().map((item) => (
+                <li key={item.hash}>
+                  <Link to={{ pathname: "/", hash: item.hash }} className={link}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link to={site.startRequest.to} className={link}>
+                  {site.startRequest.label}
                 </Link>
               </li>
-            ))}
-            <li>
-              <Link
-                to={site.startRequest.to}
-                className="inline-flex min-h-11 items-center rounded-control px-2 text-text-secondary underline-offset-3 hover:text-text-primary hover:underline"
-              >
-                {site.startRequest.label}
-              </Link>
-            </li>
-          </ul>
-        </nav>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-6 text-text-muted md:col-span-2">
-          <span suppressHydrationWarning>{site.footer.copyright(year)}</span>
+            </ul>
+          </nav>
+
+          <div>
+            <h2 className={heading}>{t.contactTitle}</h2>
+            <div className="mt-3 text-sm">
+              {site.teamEmail ? (
+                <a href={`mailto:${site.teamEmail}`} className={link}>
+                  {site.teamEmail}
+                </a>
+              ) : (
+                <>
+                  <Link to={site.startRequest.to} className={link}>
+                    {t.contactFallback}
+                  </Link>
+                  <p className="mt-1">{t.contactFallbackNote}</p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-12 flex flex-col gap-3 border-t border-text-inverse/7 pt-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p suppressHydrationWarning>{t.copyright(year)}</p>
           {site.privacyUrl ? (
             <a
-              className="text-text-secondary underline underline-offset-3 hover:text-text-primary"
               href={site.privacyUrl}
-              rel="noopener"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center gap-1 self-start rounded-control text-text-on-dark hover:text-accent"
             >
-              {site.footer.privacy}
+              {t.privacy}
+              <ArrowUpRight aria-hidden="true" size={14} strokeWidth={1.75} />
+              <span className="sr-only"> (opens in a new tab)</span>
             </a>
           ) : null}
         </div>
