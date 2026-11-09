@@ -2,7 +2,7 @@
 
 - **Updated:** 2026-11-09 (logo, work stories and socials)
 - **Live:** [eratechgh.com](https://eratechgh.com).
-- **Where we are:** [PR #14](https://github.com/FranzAfun/eratechgh/pull/14) is merged in the `main` baseline. The logo/work/social/email follow-up is complete locally on `feat/logo-work-socials`. Build, lint, all 93 tests and all 82 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Independent design review passed. Screenshots await owner review before pushing/opening the new PR; nothing is merged by this work.
+- **Where we are:** [PR #14](https://github.com/FranzAfun/eratechgh/pull/14) is merged in the `main` baseline. The owner reviewed the logo/work/social/email screenshots and the four final refinements are complete on `feat/logo-work-socials`. Build, lint, all 93 tests and all 82 contrast pairs pass under Node 26.13.0 / pnpm 12.18.0. Updated screenshots and independent review pass; branch push and one PR are authorised. Nothing is merged by this work.
 
 ## Current work: supplied logo, work stories and socials
 
@@ -11,7 +11,8 @@
   Work files have 640 px plus native-width sources (1029/1080/1280); no upscaling. Largest WebP:
   271,180 bytes. Source checksums were unchanged; output metadata is stripped.
 - Top bar: supplied logo only at 40 px, with the existing 64 px bar height. The hero eyebrow is now
-  "Project Desk", per the owner's latest correction. Drawer/footer retain the combined wordmark at
+  "Project Desk · For students and makers in Ghana", checked on one line at 360/390/1440 px.
+  Drawer/footer retain the combined wordmark at
   36/48 px logo heights. The 1200 × 630 share image embeds the white logo and is 182,915 bytes.
 - Our work uses the three approved stories, exact copy/alts and 2/3/1 image arrangement. There are
   three actual photographs, so the section and nav are visible. CAD/layout/render chips stay explicit;
@@ -26,8 +27,10 @@
   360/390/768/1024/1280/1440 have no horizontal scroll; the header bar and offsets are unchanged.
 - Ten reviewed screenshots (hero, Our work, footer, team email and visitor email at 390/1440 px)
   are in `.email-previews/review/`; open its `index.html` for paired previews. Both email HTML files
-  are regenerated. All artifacts stay ignored. Owner acceptance and the new PR remain pending;
-  no live email was sent. Actual Outlook/dark mail-client and physical-device acceptance is separate.
+  are regenerated, with an additional 360 px hero capture. All artifacts stay ignored. The new PR
+  is being opened; no live email was sent. The owner approved the previews; final email headers use 18 px semibold
+  product text with middle alignment, and desktop smart-lock copy now aligns to the image's top edge.
+  Actual Outlook/dark mail-client and physical-device acceptance is separate.
 
 ## Email delivery and Netlify contexts
 
@@ -103,7 +106,7 @@ Stages 1–10 and v2 polish are present in the `main` baseline for this work.
 
 ## Next
 
-Owner review of new 390/1440 px screenshots, then one PR from `feat/logo-work-socials`. Do not merge.
+Push the final refinements and open one PR from `feat/logo-work-socials`. Do not merge.
 Actual mail-client/inbox acceptance remains separate from browser previews.
 
 ## Need from the owner

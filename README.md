@@ -107,7 +107,8 @@ pnpm og:image
 The script removes source metadata and verifies source-file checksums remain unchanged. Trimmed
 logo masters in all three colours live in `design-system/assets/logo/`. Site WebP/PNG variants are
 in `public/images/brand/`, with fixed 1x/2x sizes for 40 px header, 36 px drawer and 48 px footer logos.
-The top bar displays the logo alone; the hero eyebrow says "Project Desk". The drawer/footer retain
+The top bar displays the logo alone; the hero eyebrow says "Project Desk · For students and makers in Ghana"
+(checked on one line at 360 px). The drawer/footer retain
 the logo, lilac dot and Project Desk text. Favicons use only the ERA letters from the supplied logo,
 white on a rounded purple square; the previous E-based SVG is removed. The share image embeds the
 trimmed white logo and keeps its text and original PCB motif.
