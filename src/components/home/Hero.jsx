@@ -9,7 +9,7 @@ export function Hero() {
   return (
     <section
       aria-labelledby="hero-title"
-      className="on-dark hero-ground relative isolate overflow-hidden text-text-inverse lg:min-h-[100dvh]"
+      className="on-dark hero-ground relative isolate overflow-hidden text-text-inverse"
     >
       <div aria-hidden="true" className="dot-grid absolute inset-0 -z-10" />
 
@@ -21,7 +21,7 @@ export function Hero() {
         <LivingCircuit className="mr-[-18%] w-[115%] max-w-[640px] sm:mr-[-8%] sm:w-[80%]" />
       </div>
 
-      <div className="mx-auto grid max-w-content items-center gap-12 px-4 pt-28 pb-16 md:px-6 md:pt-32 md:pb-20 lg:min-h-[100dvh] lg:grid-cols-[1.05fr_1fr] lg:py-24">
+      <div className="mx-auto grid max-w-content items-center gap-12 px-4 pt-28 pb-16 md:px-6 md:pt-32 md:pb-20 lg:min-h-[min(100dvh,960px)] lg:grid-cols-[1.05fr_1fr] lg:pt-24 lg:pb-12">
         <div>
           <p className="hero-in inline-flex rounded-pill border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-medium text-text-on-dark sm:text-sm">
             {t.eyebrow}

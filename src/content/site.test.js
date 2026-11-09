@@ -16,6 +16,15 @@ describe("site content", () => {
     expect(visibleNav(three).map((n) => n.hash)).toContain("work");
   });
 
+  it("keeps the names in one place", () => {
+    expect(site.brandName).toBe("ERA Tech");
+    expect(site.productName).toBe("Project Desk");
+    expect(site.legalName).toBe("ERA Technologies");
+    expect(site.siteTitle).toBe("ERA Tech · Project Desk");
+    expect(site.footer.copyright(2026)).toBe("© 2026 ERA Technologies. All rights reserved.");
+    expect(site.request.consent.before).toMatch(/^I agree to ERA Technologies using these details/);
+  });
+
   it('never says "ERA AXIS"', () => {
     expect(JSON.stringify(site)).not.toMatch(/ERA AXIS/i);
   });

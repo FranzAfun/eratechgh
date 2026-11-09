@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
 import { site, visibleSiteLinks } from "../../content/site.js";
+import { Wordmark } from "./Wordmark.jsx";
 
 const heading = "text-xs font-semibold tracking-eyebrow text-accent uppercase";
 const link =
@@ -15,10 +16,7 @@ export function Footer() {
       <div className="mx-auto max-w-content px-4 pt-14 pb-8 md:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div className="max-w-80">
-            <p className="flex items-baseline gap-2 text-text-inverse">
-              <span className="text-h3 font-semibold">{site.header.brand}</span>
-              <span className="text-xs text-text-on-dark">{site.header.label}</span>
-            </p>
+            <Wordmark />
             <p className="mt-3 text-sm">{t.about}</p>
           </div>
 

@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 import { buildEmails, firstName, formatGmt, headerSafe } from "../lib/emails.js";
 
 const base = {
-  fullName: "Ama Mensah",
-  email: "ama.mensah@example.com",
+  fullName: "Sample Placeholder",
+  email: "sample.placeholder@example.com",
   phone: "+233 20 123 4567",
   town: "Ho",
   storeOptIn: true,
@@ -31,10 +31,14 @@ const build = (data) =>
 describe("emails", () => {
   it("team email: subject, reply-to and every field", () => {
     const { team } = build(consultation);
-    expect(team.subject).toBe("[Project Desk] Consultation — Ama Mensah — PD-7K3QX2");
+    expect(team.subject).toBe("[Project Desk] Consultation — Sample Placeholder — PD-7K3QX2");
     expect(team.to).toBe("team@example.com");
-    expect(team.replyTo).toEqual({ name: "Ama Mensah", address: "ama.mensah@example.com" });
-    expect(team.from).toEqual({ name: "ERA Tech Project Desk", address: "no-reply@example.com" });
+    expect(team.replyTo).toEqual({
+      name: "Sample Placeholder",
+      address: "sample.placeholder@example.com",
+    });
+    expect(team.from).toEqual({ name: "ERA Tech · Project Desk", address: "no-reply@example.com" });
+    expect(team.text.trim().endsWith("— ERA Technologies, Project Desk")).toBe(true);
     for (const s of [
       "Reference: PD-7K3QX2",
       "Service: Expert consultation",
@@ -54,9 +58,14 @@ describe("emails", () => {
   it("visitor email: reply-to team, first name and service only", () => {
     const { visitor } = build(consultation);
     expect(visitor.subject).toBe("We got your request — ERA Tech (PD-7K3QX2)");
-    expect(visitor.to).toBe("ama.mensah@example.com");
+    expect(visitor.to).toBe("sample.placeholder@example.com");
     expect(visitor.replyTo).toBe("team@example.com");
-    expect(visitor.text).toMatch(/^Hi Ama,/);
+    expect(visitor.from).toEqual({
+      name: "ERA Tech · Project Desk",
+      address: "no-reply@example.com",
+    });
+    expect(visitor.text.trim().endsWith("— ERA Technologies, Project Desk")).toBe(true);
+    expect(visitor.text).toMatch(/^Hi Sample,/);
     expect(visitor.text).toContain("expert consultation request");
     expect(visitor.text).toContain("Nothing is booked yet");
     // Never repeats the visitor's own text.
@@ -64,7 +73,7 @@ describe("emails", () => {
       "Smart irrigation",
       "abstract",
       "Choosing sensors",
-      "Mensah",
+      "Placeholder",
       "Ho\n",
       "+233",
     ]) {
@@ -89,14 +98,14 @@ describe("emails", () => {
   });
 
   it("strips CR/LF from header values", () => {
-    expect(headerSafe("Ama\r\nBcc: evil@example.com")).toBe("Ama Bcc: evil@example.com");
-    const { team } = build({ ...consultation, fullName: "Ama\r\nMensah" });
+    expect(headerSafe("Sample\r\nBcc: evil@example.com")).toBe("Sample Bcc: evil@example.com");
+    const { team } = build({ ...consultation, fullName: "Sample\r\nPlaceholder" });
     expect(team.subject).not.toMatch(/[\r\n]/);
     expect(team.replyTo.name).not.toMatch(/[\r\n]/);
   });
 
   it("helpers", () => {
-    expect(firstName("  Kofi Annan-Boateng ")).toBe("Kofi");
+    expect(firstName("  Test Maker-Person ")).toBe("Test");
     expect(formatGmt(new Date("2026-01-02T03:04:00Z"))).toBe("2 Jan 2026, 03:04 GMT");
   });
 });

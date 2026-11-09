@@ -361,7 +361,8 @@ function PageBand() {
   return (
     <div className="on-dark hero-ground relative isolate overflow-hidden text-text-inverse">
       <div aria-hidden="true" className="dot-grid absolute inset-0 -z-10" />
-      <div className="mx-auto max-w-content px-4 pt-10 pb-20 md:px-6 md:pt-14 md:pb-24">
+      {/* Top padding = header height (64 px) + space, because the band runs under the fixed header. */}
+      <div className="mx-auto max-w-content px-4 pt-26 pb-20 md:px-6 md:pt-30 md:pb-24">
         <p className="text-xs font-semibold tracking-eyebrow text-accent uppercase">{t.eyebrow}</p>
         <h1 className="mt-3 text-h1 font-semibold">{t.title}</h1>
         <p className="mt-3 max-w-text text-base text-text-on-dark">{t.intro}</p>

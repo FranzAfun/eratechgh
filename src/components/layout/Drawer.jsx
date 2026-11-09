@@ -1,15 +1,26 @@
-import { ChevronRight, CircleHelp, Image, LayoutGrid, ListOrdered, PenTool, X } from "lucide-react";
+import {
+  ChevronRight,
+  CircleHelp,
+  Image,
+  LayoutGrid,
+  ListOrdered,
+  PenTool,
+  Store,
+  X,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router";
 import { site, visibleNav } from "../../content/site.js";
 import { Button } from "../ui/Button.jsx";
+import { Wordmark } from "./Wordmark.jsx";
 
 const ICONS = {
   services: LayoutGrid,
   design: PenTool,
   work: Image,
   "how-it-works": ListOrdered,
+  store: Store,
   faq: CircleHelp,
 };
 const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
@@ -131,10 +142,7 @@ export function Drawer({ open, onClose, returnFocusRef, activeHash }) {
         className={`drawer-panel absolute top-0 right-0 flex h-dvh w-[86%] max-w-96 flex-col overflow-y-auto bg-surface-dark pb-[env(safe-area-inset-bottom)] ${visible ? "is-open" : ""}`}
       >
         <div className="flex h-16 flex-none items-center justify-between gap-3 border-b border-glass-line px-4">
-          <span className="flex items-baseline gap-2 text-text-inverse">
-            <span className="text-base font-semibold">{site.header.brand}</span>
-            <span className="text-xs text-text-on-dark">{site.header.label}</span>
-          </span>
+          <Wordmark size="sm" />
           <button
             ref={closeRef}
             type="button"

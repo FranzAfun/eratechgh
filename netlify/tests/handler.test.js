@@ -17,8 +17,8 @@ const goodBody = () => ({
   service: "sourcing",
   components: "ESP32 dev board x 2, DHT22 x 1",
   neededBy: "",
-  fullName: "Yaw Asante",
-  email: "yaw.asante@example.com",
+  fullName: "Example Builder",
+  email: "example.builder@example.com",
   phone: "0244 000 111",
   town: "Takoradi",
   storeOptIn: false,
@@ -81,8 +81,8 @@ describe("request handler", () => {
     const [team] = transport.sendMail.mock.calls[0];
     const [visitor] = transport.sendMail.mock.calls[1];
     expect(team.to).toBe("team@example.com");
-    expect(team.subject).toBe(`[Project Desk] Sourcing — Yaw Asante — ${body.reference}`);
-    expect(visitor.to).toBe("yaw.asante@example.com");
+    expect(team.subject).toBe(`[Project Desk] Sourcing — Example Builder — ${body.reference}`);
+    expect(visitor.to).toBe("example.builder@example.com");
     expect(visitor.replyTo).toBe("team@example.com");
   });
 

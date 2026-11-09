@@ -6,6 +6,7 @@ import { useActiveSection } from "../../hooks/useActiveSection.js";
 import { useScrolled } from "../../hooks/useScrolled.js";
 import { Button } from "../ui/Button.jsx";
 import { Drawer } from "./Drawer.jsx";
+import { Wordmark } from "./Wordmark.jsx";
 
 /**
  * Fixed header (DESIGN-DIRECTION.md §1). Over a dark hero (`overHero`) it starts transparent and turns
@@ -37,15 +38,8 @@ export function Header({ overHero = false }) {
         {site.header.skipLink}
       </a>
       <div className="mx-auto flex h-16 max-w-content items-center justify-between gap-4 px-4 md:px-6">
-        <Link
-          to="/"
-          aria-label={site.header.homeLabel}
-          className="flex items-baseline gap-2 rounded-control whitespace-nowrap text-text-inverse no-underline"
-        >
-          <span className="text-h3 font-semibold">{site.header.brand}</span>
-          <span className="rounded-pill border border-accent/30 bg-accent/10 px-2 py-0.5 text-xs font-medium text-text-on-dark">
-            {site.header.label}
-          </span>
+        <Link to="/" aria-label={site.header.homeLabel} className="rounded-control no-underline">
+          <Wordmark />
         </Link>
 
         <nav aria-label={site.header.navLabel} className="hidden lg:block">

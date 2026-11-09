@@ -15,9 +15,8 @@ export const handle = { darkHero: true };
 export const meta = () =>
   pageMeta(
     null,
-    "Component sourcing, project assessments and expert consultations for students, makers and innovators in Ghana. Send one request to the ERA Tech team.",
+    "ERA Tech · Project Desk: component sourcing, project assessments and expert consultations for students, makers and innovators in Ghana. One request to the ERA Tech team.",
   );
-
 const OFFER_ICONS = {
   cpu: Cpu,
   package: Package,
