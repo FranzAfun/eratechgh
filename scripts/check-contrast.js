@@ -116,6 +116,22 @@ export const PAIRS = [
   ["white on glass button (deep)", T("text-inverse"), [GLASS_FILL, T("primary-deep")], "text"],
   ["muted on glass tile (deep)", T("text-on-dark"), [GLASS_FILL, T("primary-deep")], "text"],
   ["muted on glass tile (bg-dark)", T("text-on-dark"), [GLASS_FILL, T("bg-dark")], "text"],
+  [
+    "header label pill",
+    T("text-on-dark"),
+    ["rgb(208 173 255 / 0.1)", GLASS, T("background")],
+    "text",
+  ],
+  [
+    "header label pill over hero",
+    T("text-on-dark"),
+    ["rgb(208 173 255 / 0.1)", T("bg-dark")],
+    "text",
+  ],
+  ["header CTA (glass state)", T("on-primary"), T("primary"), "text"],
+  ["header CTA lilac border", T("accent"), [GLASS, T("background")], "ui"],
+  ["drawer active row", T("accent"), [GLASS_FILL, T("surface-dark")], "text"],
+  ["drawer row hover", T("text-inverse"), [GLASS_FILL, T("surface-dark")], "text"],
 ];
 
 function main() {
