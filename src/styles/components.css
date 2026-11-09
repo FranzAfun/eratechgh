@@ -55,9 +55,9 @@
     color: var(--color-primary); /* 13.83 */
   }
   .on-dark .btn-secondary {
-    background: var(--glass-fill);
+    background: var(--color-glass-fill);
     color: var(--color-text-inverse);
-    border-color: var(--glass-line-strong);
+    border-color: var(--color-glass-line-strong);
     -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
   }
@@ -84,11 +84,11 @@
       background: var(--color-surface-hover);
     }
     .on-dark .btn-secondary:not([aria-disabled="true"]):hover {
-      background: var(--glass-fill-hover);
+      background: var(--color-glass-fill-hover);
       border-color: rgb(208 173 255 / 0.5);
     }
     .on-dark .btn-ghost:not([aria-disabled="true"]):hover {
-      background: var(--glass-fill-hover);
+      background: var(--color-glass-fill-hover);
     }
     .btn-link:hover {
       text-decoration-thickness: 2px;
@@ -226,6 +226,51 @@
     background: var(--glass-bg);
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
     backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+  }
+
+  /* ── Drawer (DESIGN-DIRECTION.md §2) ─────────────────────────────── */
+  .drawer-scrim {
+    background: rgb(4 1 8 / 0.6);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity var(--duration-drawer-out) ease;
+  }
+  .drawer-scrim.is-open {
+    opacity: 1;
+    transition-duration: var(--duration-drawer-in);
+  }
+  .drawer-panel {
+    border-left: 1px solid var(--glass-border);
+    transform: translateX(100%);
+    transition: transform var(--duration-drawer-out) var(--ease-drawer);
+  }
+  .drawer-panel.is-open {
+    transform: none;
+    transition-duration: var(--duration-drawer-in);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .drawer-panel {
+      transform: none;
+      opacity: 0;
+      transition: opacity var(--duration-drawer-out) ease;
+    }
+    .drawer-panel.is-open {
+      opacity: 1;
+    }
+  }
+
+  /* ── Header CTA once the header is glass: filled primary + 1 px lilac border ── */
+  .on-dark .btn-solid-dark {
+    background: var(--color-primary);
+    color: var(--color-on-primary);
+    border-color: var(--color-accent);
+  }
+  @media (hover: hover) {
+    .on-dark .btn-solid-dark:not([aria-disabled="true"]):hover {
+      background: var(--color-primary-hover);
+      box-shadow: var(--shadow-primary-halo);
+    }
   }
 
   /* ── Mobile menu panel ───────────────────────────────────────────────── */
