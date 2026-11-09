@@ -1,24 +1,25 @@
 # Status
 
-- **Updated:** 2026-11-09 (stage 6)
-- **Where we are:** Stages 1–5 merged. v2 visual upgrade in progress: stage 6 (brand foundation) done; stage 7 (header and footer) next.
+- **Updated:** 2026-11-09 (stage 7)
+- **Where we are:** Stages 1–5 merged. v2 visual upgrade in progress: stages 6–7 done (brand foundation, header and footer); stage 8 (dark hero) next.
 
 ## Done
 
-| Stage              | Branch                  | PR                                                                     | Summary                                                                                               |
-| ------------------ | ----------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| 1 Scaffold         | `chore/scaffold`        | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs                           |
-| 2 Layout shell     | `feat/layout-shell`     | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js`                          |
-| 3 Home             | `feat/home`             | [FranzAfun/eratechgh#3](https://github.com/FranzAfun/eratechgh/pull/3) | All home sections from the brief, original illustrations, ERA Store coming soon                       |
-| 4 Request form     | `feat/request-form`     | [FranzAfun/eratechgh#4](https://github.com/FranzAfun/eratechgh/pull/4) | Service picker, per-service fields, shared rules, Turnstile, every send state                         |
-| 5 Request function | `feat/request-function` | [FranzAfun/eratechgh#5](https://github.com/FranzAfun/eratechgh/pull/5) | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests                  |
-| 6 Brand foundation | `feat/brand-foundation` | [FranzAfun/eratechgh#6](https://github.com/FranzAfun/eratechgh/pull/6) | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL |
+| Stage               | Branch                  | PR                                                                     | Summary                                                                                               |
+| ------------------- | ----------------------- | ---------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| 1 Scaffold          | `chore/scaffold`        | [FranzAfun/eratechgh#1](https://github.com/FranzAfun/eratechgh/pull/1) | React Router 7 static app, routes + 404, tokens, Netlify config + CSP, docs                           |
+| 2 Layout shell      | `feat/layout-shell`     | [FranzAfun/eratechgh#2](https://github.com/FranzAfun/eratechgh/pull/2) | Header + mobile menu, footer, 404, base UI components, `src/content/site.js`                          |
+| 3 Home              | `feat/home`             | [FranzAfun/eratechgh#3](https://github.com/FranzAfun/eratechgh/pull/3) | All home sections from the brief, original illustrations, ERA Store coming soon                       |
+| 4 Request form      | `feat/request-form`     | [FranzAfun/eratechgh#4](https://github.com/FranzAfun/eratechgh/pull/4) | Service picker, per-service fields, shared rules, Turnstile, every send state                         |
+| 5 Request function  | `feat/request-function` | [FranzAfun/eratechgh#5](https://github.com/FranzAfun/eratechgh/pull/5) | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests                  |
+| 6 Brand foundation  | `feat/brand-foundation` | [FranzAfun/eratechgh#6](https://github.com/FranzAfun/eratechgh/pull/6) | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL |
+| 7 Header and footer | `feat/header-footer`    | PR_7                                                                   | Fixed glass header, right-side drawer (portal, focus trap, scroll lock), dark 4-column footer         |
 
 Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10).
 
 ## Next
 
-Stage 7 — `feat/header-footer`: glass header, mobile drawer, dark footer.
+Stage 8 — `feat/dark-hero`: dark hero with the living PCB visual, purple closing band.
 
 ## Need from Franz
 
