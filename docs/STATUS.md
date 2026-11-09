@@ -12,7 +12,7 @@
 | 3 Home             | `feat/home`             | [FranzAfun/eratechgh#3](https://github.com/FranzAfun/eratechgh/pull/3) | All home sections from the brief, original illustrations, ERA Store coming soon                       |
 | 4 Request form     | `feat/request-form`     | [FranzAfun/eratechgh#4](https://github.com/FranzAfun/eratechgh/pull/4) | Service picker, per-service fields, shared rules, Turnstile, every send state                         |
 | 5 Request function | `feat/request-function` | [FranzAfun/eratechgh#5](https://github.com/FranzAfun/eratechgh/pull/5) | `/api/request`: checks, Turnstile, validation, team + visitor emails, dry run, tests                  |
-| 6 Brand foundation | `feat/brand-foundation` | PR_6                                                                   | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL |
+| 6 Brand foundation | `feat/brand-foundation` | [FranzAfun/eratechgh#6](https://github.com/FranzAfun/eratechgh/pull/6) | Dark/glass tokens, on-dark buttons, Reveal, favicons, Dev Board photos, `check:contrast`, privacy URL |
 
 Stages 6–10 are stacked PRs into `main`: merge them in order (6 → 10).
 
